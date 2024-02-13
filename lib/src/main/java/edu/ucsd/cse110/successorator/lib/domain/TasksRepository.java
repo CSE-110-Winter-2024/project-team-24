@@ -5,31 +5,31 @@ import java.util.List;
 import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 
-public class FinishedFlashcardRepository implements FlashcardRepository {
+public class TasksRepository implements ITasksRepository {
     private final InMemoryDataSource dataSource;
 
-    public FinishedFlashcardRepository(InMemoryDataSource dataSource) {
+    public TasksRepository(InMemoryDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     @Override
-    public Subject<Flashcard> find(int id) {
+    public Subject<Task> find(int id) {
         return dataSource.getFlashcardSubject(id);
     }
 
     @Override
-    public Subject<List<Flashcard>> findAll() {
+    public Subject<List<Task>> findAll() {
         return dataSource.getAllFlashcardsSubject();
     }
 
     @Override
-    public void save(Flashcard flashcard) {
-        dataSource.putFlashcard(flashcard);
+    public void save(Task task) {
+        dataSource.putFlashcard(task);
     }
 
     @Override
-    public void save(List<Flashcard> flashcards) {
-        dataSource.putFlashcards(flashcards);
+    public void save(List<Task> tasks) {
+        dataSource.putFlashcards(tasks);
     }
 
     @Override
@@ -38,15 +38,15 @@ public class FinishedFlashcardRepository implements FlashcardRepository {
     }
 
     @Override
-    public void append(Flashcard flashcard) {
-        dataSource.putFlashcard(flashcard.withSortOrder(dataSource.getMaxSortOrder() + 1));
+    public void append(Task task) {
+        dataSource.putFlashcard(task.withSortOrder(dataSource.getMaxSortOrder() + 1));
     }
 
     @Override
-    public void prepend(Flashcard flashcard) {
+    public void prepend(Task task) {
         dataSource.shiftSortOrders(0, dataSource.getMaxSortOrder(), 1);
 
-        dataSource.putFlashcard(flashcard.withSortOrder(dataSource.getMinSortOrder() - 1));
+        dataSource.putFlashcard(task.withSortOrder(dataSource.getMinSortOrder() - 1));
     }
 
     @Override

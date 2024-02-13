@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import edu.ucsd.cse110.successorator.lib.domain.Flashcard;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
@@ -16,20 +16,20 @@ public class InMemoryDataSource {
     private int minSortOrder = Integer.MAX_VALUE;
     private int maxSortOrder = Integer.MIN_VALUE;
 
-    private final Map<Integer, Flashcard> flashcards
+    private final Map<Integer, Task> flashcards
             = new HashMap<>();
-    private final Map<Integer, MutableSubject<Flashcard>> flashcardSubjects
+    private final Map<Integer, MutableSubject<Task>> flashcardSubjects
             = new HashMap<>();
-    private final MutableSubject<List<Flashcard>> allFlashcardsSubject
+    private final MutableSubject<List<Task>> allFlashcardsSubject
             = new SimpleSubject<>();
 
     public InMemoryDataSource() {
     }
 
-    public final static List<Flashcard> DEFAULT_CARDS = List.of(
-            new Flashcard(0, "Study for Midterm", 0, false),
-            new Flashcard(1, "Play League of Legends", 1, false),
-            new Flashcard(2, "Do Math homework", 2, true)
+    public final static List<Task> DEFAULT_CARDS = List.of(
+            new Task(0, "Study for Midterm", 0, false),
+            new Task(1, "Play League of Legends", 1, false),
+            new Task(2, "Do Math homework", 2, true)
     );
 
     public static InMemoryDataSource fromDefault() {
@@ -38,24 +38,24 @@ public class InMemoryDataSource {
         return data;
     }
 
-    public List<Flashcard> getFlashcards() {
+    public List<Task> getFlashcards() {
         return List.copyOf(flashcards.values());
     }
 
-    public Flashcard getFlashcard(int id) {
+    public Task getFlashcard(int id) {
         return flashcards.get(id);
     }
 
-    public Subject<Flashcard> getFlashcardSubject(int id) {
+    public Subject<Task> getFlashcardSubject(int id) {
         if (!flashcardSubjects.containsKey(id)) {
-            var subject = new SimpleSubject<Flashcard>();
+            var subject = new SimpleSubject<Task>();
             subject.setValue(getFlashcard(id));
             flashcardSubjects.put(id, subject);
         }
         return flashcardSubjects.get(id);
     }
 
-    public Subject<List<Flashcard>> getAllFlashcardsSubject() {
+    public Subject<List<Task>> getAllFlashcardsSubject() {
         return allFlashcardsSubject;
     }
 
@@ -67,7 +67,7 @@ public class InMemoryDataSource {
         return maxSortOrder;
     }
 
-    public void putFlashcard(Flashcard card) {
+    public void putFlashcard(Task card) {
         var fixedCard = preInsert(card);
 
         flashcards.put(fixedCard.id(), fixedCard);
@@ -80,7 +80,7 @@ public class InMemoryDataSource {
         allFlashcardsSubject.setValue(getFlashcards());
     }
 
-    public void putFlashcards(List<Flashcard> cards) {
+    public void putFlashcards(List<Task> cards) {
         var fixedCards = cards.stream()
                 .map(this::preInsert)
                 .collect(Collectors.toList());
@@ -123,7 +123,7 @@ public class InMemoryDataSource {
      * Private utility method to maintain state of the fake DB: ensures that new
      * cards inserted have an id, and updates the nextId if necessary.
      */
-    private Flashcard preInsert(Flashcard card) {
+    private Task preInsert(Task card) {
         var id = card.id();
         if (id == null) {
             // If the card has no id, give it one.
@@ -145,12 +145,12 @@ public class InMemoryDataSource {
     private void postInsert() {
         // Keep the min and max sort orders up to date.
         minSortOrder = flashcards.values().stream()
-                .map(Flashcard::sortOrder)
+                .map(Task::sortOrder)
                 .min(Integer::compareTo)
                 .orElse(Integer.MAX_VALUE);
 
         maxSortOrder = flashcards.values().stream()
-                .map(Flashcard::sortOrder)
+                .map(Task::sortOrder)
                 .max(Integer::compareTo)
                 .orElse(Integer.MIN_VALUE);
     }
@@ -165,7 +165,7 @@ public class InMemoryDataSource {
     private void assertSortOrderConstraints() {
         // Get all the sort orders...
         var sortOrders = flashcards.values().stream()
-                .map(Flashcard::sortOrder)
+                .map(Task::sortOrder)
                 .collect(Collectors.toList());
 
         // Non-negative...
