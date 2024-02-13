@@ -18,4 +18,6 @@ public interface FlashcardRepository {
     void append(Flashcard flashcard);
 
     void prepend(Flashcard flashcard);
+
+    int size();
 }

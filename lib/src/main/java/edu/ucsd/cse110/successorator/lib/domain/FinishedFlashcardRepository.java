@@ -48,4 +48,9 @@ public class FinishedFlashcardRepository implements FlashcardRepository {
 
         dataSource.putFlashcard(flashcard.withSortOrder(dataSource.getMinSortOrder() - 1));
     }
+
+    @Override
+    public int size() {
+        return dataSource.getFlashcards().size();
+    }
 }

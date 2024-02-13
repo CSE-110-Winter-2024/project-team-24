@@ -29,7 +29,7 @@ public class InMemoryDataSource {
     public final static List<Flashcard> DEFAULT_CARDS = List.of(
             new Flashcard(0, "Study for Midterm", 0, false),
             new Flashcard(1, "Play League of Legends", 1, false),
-            new Flashcard(2, "Do Math homework", 2, false)
+            new Flashcard(2, "Do Math homework", 2, true)
     );
 
     public static InMemoryDataSource fromDefault() {
