@@ -11,17 +11,20 @@ public class Flashcard implements Serializable {
     private final @Nullable Integer id;
     private final @NonNull String task;
     private final @NonNull Integer sortOrder;
+    private final @NonNull boolean checkedOff;
 
-    public Flashcard(@Nullable Integer id, @NonNull String task, int sortOrder) {
+    public Flashcard(@Nullable Integer id, @NonNull String task, int sortOrder, boolean checkedOff) {
         this.id = id;
         this.task = task;
         this.sortOrder = sortOrder;
+        this.checkedOff = false;
     }
 
     private @Nullable Integer id() { return id; }
     public int sortOrder() { return sortOrder; }
-    public Flashcard withSortOrder(int sortOrder) { return new Flashcard(this.id, this.task, sortOrder);  }
-    public Flashcard withId(int id) { return new Flashcard(id, this.task, this.sortOrder); }
+    public Flashcard withSortOrder(int sortOrder) { return new Flashcard(this.id, this.task, sortOrder, checkedOff);  }
+    public Flashcard withId(int id) { return new Flashcard(id, this.task, this.sortOrder, checkedOff); }
+    public Flashcard withCheckOff(boolean checkOff) { return new Flashcard(id, task, sortOrder, checkOff); }
 
 
     @Override
