@@ -2,22 +2,55 @@ package edu.ucsd.cse110.successorator.lib.domain;
 
 import java.util.List;
 
+import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 
-public interface TasksRepository {
-    Subject<Task> find(int id);
+public class TasksRepository implements ITasksRepository {
+    private final InMemoryDataSource dataSource;
 
-    Subject<List<Task>> findAll();
+    public TasksRepository(InMemoryDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
-    void save(Task task);
+    @Override
+    public Subject<Task> find(int id) {
+        return dataSource.getFlashcardSubject(id);
+    }
 
-    void save(List<Task> tasks);
+    @Override
+    public Subject<List<Task>> findAll() {
+        return dataSource.getAllFlashcardsSubject();
+    }
 
-    void remove(int id);
+    @Override
+    public void save(Task task) {
+        dataSource.putFlashcard(task);
+    }
 
-    void append(Task task);
+    @Override
+    public void save(List<Task> tasks) {
+        dataSource.putFlashcards(tasks);
+    }
 
-    void prepend(Task task);
+    @Override
+    public void remove(int id) {
+        dataSource.removeFlashcard(id);
+    }
 
-    int size();
+    @Override
+    public void append(Task task) {
+        dataSource.putFlashcard(task.withSortOrder(dataSource.getMaxSortOrder() + 1));
+    }
+
+    @Override
+    public void prepend(Task task) {
+        dataSource.shiftSortOrders(0, dataSource.getMaxSortOrder(), 1);
+
+        dataSource.putFlashcard(task.withSortOrder(dataSource.getMinSortOrder() - 1));
+    }
+
+    @Override
+    public int size() {
+        return dataSource.getFlashcards().size();
+    }
 }
