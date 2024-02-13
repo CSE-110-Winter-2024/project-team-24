@@ -20,7 +20,7 @@ public class Flashcard implements Serializable {
         this.checkedOff = false;
     }
 
-    private @Nullable Integer id() { return id; }
+    public @Nullable Integer id() { return id; }
     public int sortOrder() { return sortOrder; }
     public Flashcard withSortOrder(int sortOrder) { return new Flashcard(this.id, this.task, sortOrder, checkedOff);  }
     public Flashcard withId(int id) { return new Flashcard(id, this.task, this.sortOrder, checkedOff); }
