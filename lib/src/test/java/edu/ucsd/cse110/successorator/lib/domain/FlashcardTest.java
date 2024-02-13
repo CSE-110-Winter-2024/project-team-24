@@ -30,4 +30,13 @@ public class FlashcardTest {
         var actual = card.withSortOrder(42);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testWithCheckOff() {
+        var card = new Flashcard(1, "Testing checkoff", 0, false);
+        var expected = new Flashcard(1, "Testing checkoff", 0, true);
+
+        var actual = card.withCheckOff(true);
+        assertEquals(actual, expected);
+    }
 }
