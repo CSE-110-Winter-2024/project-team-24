@@ -85,7 +85,7 @@ public class TaskViewModel extends ViewModel {
         var isShowingFront = this.isCheckedOff.getValue();
         if (isShowingFront == null) return;
 
-//        Cross off the card
+        //Otherwise cross off the card:
     }
 
 
