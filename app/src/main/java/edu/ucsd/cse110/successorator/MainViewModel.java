@@ -14,7 +14,7 @@ import edu.ucsd.cse110.successorator.lib.domain.TasksRepository;
 
 public class MainViewModel extends ViewModel {
     // Domain state (true "Model" state)
-
+    TasksRepository TasksRepository;
     public static final ViewModelInitializer<MainViewModel> initializer =
             new ViewModelInitializer<>(
                     MainViewModel.class,
@@ -25,6 +25,6 @@ public class MainViewModel extends ViewModel {
                     });
 
     public MainViewModel(TasksRepository tasksrepository) {
-
+        this.TasksRepository = tasksrepository;
     }
 }
