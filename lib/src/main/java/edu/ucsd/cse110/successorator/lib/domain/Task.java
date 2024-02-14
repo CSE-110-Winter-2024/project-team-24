@@ -23,6 +23,7 @@ public class Task implements Serializable {
     public @Nullable Integer id() { return id; }
     public int sortOrder() { return sortOrder; }
     public String getTask() { return task; }
+    public boolean getCheckOff() { return checkedOff; }
     public Task withSortOrder(int sortOrder) { return new Task(this.id, this.task, sortOrder, checkedOff);  }
     public Task withId(int id) { return new Task(id, this.task, this.sortOrder, checkedOff); }
     public Task withCheckOff(boolean checkOff) { return new Task(id, task, sortOrder, checkOff); }

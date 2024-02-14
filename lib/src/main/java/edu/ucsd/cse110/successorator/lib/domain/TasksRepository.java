@@ -42,6 +42,12 @@ public class TasksRepository implements ITasksRepository {
         dataSource.putFlashcard(task.withSortOrder(dataSource.getMaxSortOrder() + 1));
     }
 
+    public void toggleTaskStrikethrough(Task task) {
+        task = task.withCheckOff(!task.getCheckOff());
+        save(task);
+    }
+
+
     @Override
     public void prepend(Task task) {
         dataSource.shiftSortOrders(0, dataSource.getMaxSortOrder(), 1);

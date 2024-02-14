@@ -29,7 +29,7 @@ public class InMemoryDataSource {
     public final static List<Task> DEFAULT_CARDS = List.of(
             new Task(0, "Study for Midterm", 0, false),
             new Task(1, "Play League of Legends", 1, false),
-            new Task(2, "Do Math homework", 2, true)
+            new Task(2, "Do Math homework", 2, false)
     );
 
     public static InMemoryDataSource fromDefault() {
