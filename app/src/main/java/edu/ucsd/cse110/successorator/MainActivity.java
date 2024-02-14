@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.ui.TaskListFragment;
+import edu.ucsd.cse110.successorator.ui.mitList.dialog.CreateTaskDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding view;
@@ -28,5 +29,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.action_bar, menu);
         return true;
     }
+
+
 
 }
