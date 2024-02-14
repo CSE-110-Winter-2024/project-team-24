@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
+import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
+import edu.ucsd.cse110.successorator.ui.TaskListFragment;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -14,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         var view = ActivityMainBinding.inflate(getLayoutInflater(), null, false);
-        view.placeholderText.setText(R.string.hello_world);
 
         setContentView(view.getRoot());
     }
