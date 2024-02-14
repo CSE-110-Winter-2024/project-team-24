@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.successorator.ui.mitList.dialog;
+package edu.ucsd.cse110.successorator.ui.taskList.dialog;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import edu.ucsd.cse110.successorator.MainActivity;
 import edu.ucsd.cse110.successorator.*;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
-import edu.ucsd.cse110.successorator.ui.mitList.dialog.CreateTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
 
 
 public class TaskListFragment extends Fragment {
