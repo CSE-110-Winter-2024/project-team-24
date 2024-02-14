@@ -21,7 +21,6 @@ public class TaskViewModel extends ViewModel {
     private final TasksRepository tasksRepository;
     private final MutableSubject<Task> topTask;
     private final MutableSubject<List<Task>> orderedTasks;
-//    private final MutableSubject<Boolean> isCheckedOff;
     private final MutableSubject<String> displayedText;
 
     public static final ViewModelInitializer<TaskViewModel> initializer =
@@ -38,7 +37,6 @@ public class TaskViewModel extends ViewModel {
 
         // Create the observable subjects.
         this.orderedTasks = new SimpleSubject<>();
-//        this.isCheckedOff = new SimpleSubject<>();
         this.topTask = new SimpleSubject<>();
         this.displayedText = new SimpleSubject<>();
 
