@@ -15,6 +15,7 @@ import java.util.List;
 
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
+import edu.ucsd.cse110.successorator.ui.mitList.dialog.CreateTaskDialogFragment;
 
 
 public class TaskListFragment extends Fragment {
@@ -61,6 +62,11 @@ public class TaskListFragment extends Fragment {
         // Set the adapter on the ListView
         view.cardList.setAdapter(adapter);
 
+
+        view.cardList.setOnItemClickListener((parent, view, position, id) -> {
+            var dialogFragment = CreateTaskDialogFragment.newInstance();
+            dialogFragment.show(getParentFragmentManager(), "CreateTaskDialogFragment");
+        });
         return view.getRoot();
     }
 }
