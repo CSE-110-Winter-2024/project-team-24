@@ -20,12 +20,33 @@ public class Task implements Serializable {
         this.checkedOff = checkedOff;
     }
 
-    public @Nullable Integer id() { return id; }
-    public int sortOrder() { return sortOrder; }
-    public String getTask() { return task; }
-    public Task withSortOrder(int sortOrder) { return new Task(this.id, this.task, sortOrder, checkedOff);  }
-    public Task withId(int id) { return new Task(id, this.task, this.sortOrder, checkedOff); }
-    public Task withCheckOff(boolean checkOff) { return new Task(id, task, sortOrder, checkOff); }
+    public @Nullable Integer id() {
+        return id;
+    }
+
+    public int sortOrder() {
+        return sortOrder;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public boolean getCheckOff() {
+        return checkedOff;
+    }
+
+    public Task withSortOrder(int sortOrder) {
+        return new Task(this.id, this.task, sortOrder, checkedOff);
+    }
+
+    public Task withId(int id) {
+        return new Task(id, this.task, this.sortOrder, checkedOff);
+    }
+
+    public Task withCheckOff(boolean checkOff) {
+        return new Task(id, task, sortOrder, checkOff);
+    }
 
 
     @Override
@@ -35,6 +56,7 @@ public class Task implements Serializable {
         Task task = (Task) o;
         return Objects.equals(id, task.id) && Objects.equals(this.task, task.task) && Objects.equals(sortOrder, task.sortOrder);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, task, sortOrder);

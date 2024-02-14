@@ -35,6 +35,11 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         }
 
         binding.taskText.setText(task.getTask());
+        if (task.getCheckOff()) {
+            binding.taskText.setPaintFlags(binding.taskText.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            binding.taskText.setPaintFlags(binding.taskText.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+        }
 
         return binding.getRoot();
     }
