@@ -16,69 +16,60 @@ import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 
-public class MainViewModel extends ViewModel {
+public class TaskViewModel extends ViewModel {
     // Domain state (true "Model" state)
     private final TasksRepository tasksRepository;
-
-    // UI state
-//    private final Subject<List<Integer>> cardOrdering;
-    private final MutableSubject<List<Task>> orderedCards;
+    private final MutableSubject<Task> topTask;
+    private final MutableSubject<List<Task>> orderedTasks;
     private final MutableSubject<Boolean> isCheckedOff;
     private final MutableSubject<String> displayedText;
 
-    public static final ViewModelInitializer<MainViewModel> initializer =
+    public static final ViewModelInitializer<TaskViewModel> initializer =
             new ViewModelInitializer<>(
-                    MainViewModel.class,
+                    TaskViewModel.class,
                     creationExtras -> {
                         var app = (SuccessoratorApplication) creationExtras.get(APPLICATION_KEY);
                         assert app != null;
-                        return new MainViewModel(app.getTasksRepository());
+                        return new TaskViewModel(app.getTasksRepository());
                     });
 
-    public MainViewModel(FlashcardRepository flashcardRepository) {
-        this.flashcardRepository = flashcardRepository;
+    public TaskViewModel(TasksRepository tasksRepository) {
+        this.tasksRepository = tasksRepository;
 
         // Create the observable subjects.
-        this.orderedCards = new SimpleSubject<>();
-        this.topCard = new SimpleSubject<>();
-        this.isShowingFront = new SimpleSubject<>();
+        this.orderedTasks = new SimpleSubject<>();
+        this.isCheckedOff = new SimpleSubject<>();
+        this.topTask = new SimpleSubject<>();
         this.displayedText = new SimpleSubject<>();
 
-        // Initialize...
-        isShowingFront.setValue(true);
 
-        // When the list of cards changes (or is first loaded), reset the ordering.
-        flashcardRepository.findAll().observe(cards -> {
-            if (cards == null) return; // not ready yet, ignore
+        isCheckedOff.setValue(false);
 
-            var newOrderedCards = cards.stream().sorted(Comparator.comparingInt(Flashcard::sortOrder)).collect(Collectors.toList());
-            orderedCards.setValue(newOrderedCards);
+        // When the list of cards changes (or is first loaded), reset the ordering:
+        tasksRepository.findAll().observe(cards -> {
+            if (cards == null) return;
+
+            var newOrderedCards = cards.stream().sorted(Comparator.comparingInt(Task::sortOrder)).collect(Collectors.toList());
+            orderedTasks.setValue(newOrderedCards);
         });
 
-        // When the ordering changes, update the top card.
-        orderedCards.observe(cards -> {
+        // When the ordering changes, update the top card:
+        orderedTasks.observe(cards -> {
             if (cards == null || cards.size() == 0) return;
             var card = cards.get(0);
-            this.topCard.setValue(card);
+            this.topTask.setValue(card);
         });
 
-        // When the top card changes, update the displayed text and display the front side.
-        topCard.observe(card -> {
-            if (card == null) return;
-
-            displayedText.setValue(card.front());
-            isShowingFront.setValue(true);
-        });
-
-        // When isShowingFront changes, update the displayed text.
-        isShowingFront.observe(isShowingFront -> {
+        // When isCheckedOff is true, cross off the card.
+        isCheckedOff.observe(isShowingFront -> {
             if (isShowingFront == null) return;
 
-            var card = topCard.getValue();
-            if (card == null) return;
+//            var card = topCard.getValue();
+//            if (card == null) return;
+//
+//            var text = isShowingFront ? card.front() : card.back();
+//            displayedText.setValue(text);
 
-            var text = isShowingFront ? card.front() : card.back();
-            displayedText.setValue(text);
         });
     }
 
@@ -86,47 +77,25 @@ public class MainViewModel extends ViewModel {
         return displayedText;
     }
 
-    public Subject<List<Flashcard>> getOrderedCards() {
-        return orderedCards;
+    public Subject<List<Task>> getOrderedCards() {
+        return orderedTasks;
     }
 
-    public void flipTopCard() {
-        var isShowingFront = this.isShowingFront.getValue();
+    public void crossCard() {
+        var isShowingFront = this.isCheckedOff.getValue();
         if (isShowingFront == null) return;
-        this.isShowingFront.setValue(!isShowingFront);
+
+//        Cross off the card
     }
 
-    public void stepForward() {
-        var cards = this.orderedCards.getValue();
-        if (cards == null) return;
 
-        var newCards = Flashcards.rotate(cards, -1);
-        flashcardRepository.save(newCards);
+    public void append(Task card) {
+        tasksRepository.append(card);
     }
 
-    public void stepBackward() {
-        var cards = this.orderedCards.getValue();
-        if (cards == null) return;
-
-        var newCards = Flashcards.rotate(cards, 1);
-        flashcardRepository.save(newCards);
+    public void prepend(Task card) {
+        tasksRepository.prepend(card);
     }
 
-    public void shuffle() {
-        var cards = this.orderedCards.getValue();
-        if (cards == null) return;
-
-        var newCards = Flashcards.rotate(cards, 1);
-        flashcardRepository.save(newCards);
-    }
-
-    public void append(Flashcard card) {
-        flashcardRepository.append(card);
-    }
-
-    public void prepend(Flashcard card) {
-        flashcardRepository.prepend(card);
-    }
-
-    public void remove(int id) {flashcardRepository.remove(id);}
+    public void remove(int id) {tasksRepository.remove(id);}
 }
