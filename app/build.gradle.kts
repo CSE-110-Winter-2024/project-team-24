@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "edu.ucsd.cse110.successorator.app"
+    namespace = "edu.ucsd.cse110.successorator"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "edu.ucsd.cse110.successorator.app"
+        applicationId = "edu.ucsd.cse110.successorator"
         minSdk = 31
         targetSdk = 34
         versionCode = 1

@@ -8,14 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Consumer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import edu.ucsd.cse110.successorator.app.databinding.ListItemTaskBinding;
-import edu.ucsd.cse110.successorator.app.databinding.ListItemTaskBinding;
+import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
@@ -32,8 +29,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         ListItemTaskBinding binding;
         if (convertView != null) {
             binding = ListItemTaskBinding.bind(convertView);
-        }
-        else {
+        } else {
             var layoutInflater = LayoutInflater.from(getContext());
             binding = ListItemTaskBinding.inflate(layoutInflater, parent, false);
         }
