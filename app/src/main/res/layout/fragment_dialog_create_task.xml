@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/card_front_edit_text"
+        android:id="@+id/add_task_dialog"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
