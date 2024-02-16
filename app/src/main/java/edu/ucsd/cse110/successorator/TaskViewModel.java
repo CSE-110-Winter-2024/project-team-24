@@ -21,7 +21,6 @@ public class TaskViewModel extends ViewModel {
     private final TasksRepository tasksRepository;
     private final MutableSubject<Task> topTask;
     private final MutableSubject<List<Task>> orderedTasks;
-    private final MutableSubject<Boolean> isCheckedOff;
     private final MutableSubject<String> displayedText;
 
     public static final ViewModelInitializer<TaskViewModel> initializer =
@@ -38,12 +37,9 @@ public class TaskViewModel extends ViewModel {
 
         // Create the observable subjects.
         this.orderedTasks = new SimpleSubject<>();
-        this.isCheckedOff = new SimpleSubject<>();
         this.topTask = new SimpleSubject<>();
         this.displayedText = new SimpleSubject<>();
 
-
-        isCheckedOff.setValue(false);
 
         // When the list of cards changes (or is first loaded), reset the ordering:
         tasksRepository.findAll().observe(cards -> {
@@ -59,36 +55,16 @@ public class TaskViewModel extends ViewModel {
             var card = cards.get(0);
             this.topTask.setValue(card);
         });
-
-        // When isCheckedOff is true, cross off the card.
-        isCheckedOff.observe(isShowingFront -> {
-            if (isShowingFront == null) return;
-
-//            var card = topCard.getValue();
-//            if (card == null) return;
-//
-//            var text = isShowingFront ? card.front() : card.back();
-//            displayedText.setValue(text);
-
-        });
     }
 
+    public void toggleTaskStrikethrough(Task task) { tasksRepository.toggleTaskStrikethrough(task); }
     public Subject<String> getDisplayedText() {
         return displayedText;
     }
 
-    public Subject<List<Task>> getOrderedCards() {
+    public Subject<List<Task>> getOrderedTasks() {
         return orderedTasks;
     }
-
-    public void crossCard() {
-        var isShowingFront = this.isCheckedOff.getValue();
-        if (isShowingFront == null) return;
-
-        //Otherwise cross off the card:
-    }
-
-
     public void append(Task card) {
         tasksRepository.append(card);
     }
