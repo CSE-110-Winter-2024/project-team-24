@@ -35,7 +35,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         ListItemTaskBinding binding;
         if (convertView != null) {
             binding = ListItemTaskBinding.bind(convertView);
-        } else {
+        }
+        else {
             var layoutInflater = LayoutInflater.from(getContext());
             binding = ListItemTaskBinding.inflate(layoutInflater, parent, false);
         }

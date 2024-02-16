@@ -14,17 +14,17 @@ public class TasksRepository implements ITasksRepository {
 
     @Override
     public Subject<Task> find(int id) {
-        return dataSource.getFlashcardSubject(id);
+        return dataSource.getTaskSubject(id);
     }
 
     @Override
     public Subject<List<Task>> findAll() {
-        return dataSource.getAllFlashcardsSubject();
+        return dataSource.getAllTasksSubject();
     }
 
     @Override
     public void save(Task task) {
-        dataSource.putFlashcard(task);
+        dataSource.putTask(task);
     }
 
     @Override
@@ -39,24 +39,30 @@ public class TasksRepository implements ITasksRepository {
 
     @Override
     public void append(Task task) {
-        dataSource.putFlashcard(task.withSortOrder(dataSource.getMaxSortOrder() + 1));
+        dataSource.putTask(task.withSortOrder(dataSource.getMaxSortOrder() + 1));
+    }
+    @Override
+    public void prepend(Task task) {
+        dataSource.putTask(task.withSortOrder(dataSource.getMinSortOrder() - 1));
     }
 
     public void toggleTaskStrikethrough(Task task) {
-        task = task.withCheckOff(!task.getCheckOff());
+
+        boolean newState = !(task.getCheckOff());
+
+        if (!task.getCheckOff()) {
+            remove(task.id());
+            append(new Task(task.id(), task.getTask(), task.sortOrder(), newState));
+        }
+        else {
+            remove(task.id());
+            prepend(new Task(task.id(), task.getTask(), task.sortOrder(), newState));
+        }
         save(task);
-    }
-
-
-    @Override
-    public void prepend(Task task) {
-        dataSource.shiftSortOrders(0, dataSource.getMaxSortOrder(), 1);
-
-        dataSource.putFlashcard(task.withSortOrder(dataSource.getMinSortOrder() - 1));
     }
 
     @Override
     public int size() {
-        return dataSource.getFlashcards().size();
+        return dataSource.getTasks().size();
     }
 }

@@ -49,7 +49,7 @@ public class TaskListFragment extends Fragment {
 
         // Initialize the Adapter (with an empty list for now)
         this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough);
-        activityModel.getOrderedCards().observe(tasks -> {
+        activityModel.getOrderedTasks().observe(tasks -> {
             if (tasks == null) return;
             adapter.clear();
             adapter.addAll(new ArrayList<>(tasks)); // remember the mutable copy here!

@@ -16,9 +16,9 @@ public class InMemoryDataSource {
     private int minSortOrder = Integer.MAX_VALUE;
     private int maxSortOrder = Integer.MIN_VALUE;
 
-    private final Map<Integer, Task> flashcards
+    private final Map<Integer, Task> tasks
             = new HashMap<>();
-    private final Map<Integer, MutableSubject<Task>> flashcardSubjects
+    private final Map<Integer, MutableSubject<Task>> taskSubjects
             = new HashMap<>();
     private final MutableSubject<List<Task>> allFlashcardsSubject
             = new SimpleSubject<>();
@@ -38,24 +38,24 @@ public class InMemoryDataSource {
         return data;
     }
 
-    public List<Task> getFlashcards() {
-        return List.copyOf(flashcards.values());
+    public List<Task> getTasks() {
+        return List.copyOf(tasks.values());
     }
 
-    public Task getFlashcard(int id) {
-        return flashcards.get(id);
+    public Task getTask(int id) {
+        return tasks.get(id);
     }
 
-    public Subject<Task> getFlashcardSubject(int id) {
-        if (!flashcardSubjects.containsKey(id)) {
+    public Subject<Task> getTaskSubject(int id) {
+        if (!taskSubjects.containsKey(id)) {
             var subject = new SimpleSubject<Task>();
-            subject.setValue(getFlashcard(id));
-            flashcardSubjects.put(id, subject);
+            subject.setValue(getTask(id));
+            taskSubjects.put(id, subject);
         }
-        return flashcardSubjects.get(id);
+        return taskSubjects.get(id);
     }
 
-    public Subject<List<Task>> getAllFlashcardsSubject() {
+    public Subject<List<Task>> getAllTasksSubject() {
         return allFlashcardsSubject;
     }
 
@@ -63,21 +63,19 @@ public class InMemoryDataSource {
         return minSortOrder;
     }
 
-    public int getMaxSortOrder() {
-        return maxSortOrder;
-    }
+    public int getMaxSortOrder() { return maxSortOrder; }
 
-    public void putFlashcard(Task card) {
+    public void putTask(Task card) {
         var fixedCard = preInsert(card);
 
-        flashcards.put(fixedCard.id(), fixedCard);
+        tasks.put(fixedCard.id(), fixedCard);
         postInsert();
         assertSortOrderConstraints();
 
-        if (flashcardSubjects.containsKey(fixedCard.id())) {
-            flashcardSubjects.get(fixedCard.id()).setValue(fixedCard);
+        if (taskSubjects.containsKey(fixedCard.id())) {
+            taskSubjects.get(fixedCard.id()).setValue(fixedCard);
         }
-        allFlashcardsSubject.setValue(getFlashcards());
+        allFlashcardsSubject.setValue(getTasks());
     }
 
     public void putFlashcards(List<Task> cards) {
@@ -85,33 +83,33 @@ public class InMemoryDataSource {
                 .map(this::preInsert)
                 .collect(Collectors.toList());
 
-        fixedCards.forEach(card -> flashcards.put(card.id(), card));
+        fixedCards.forEach(card -> tasks.put(card.id(), card));
         postInsert();
         assertSortOrderConstraints();
 
         fixedCards.forEach(card -> {
-            if (flashcardSubjects.containsKey(card.id())) {
-                flashcardSubjects.get(card.id()).setValue(card);
+            if (taskSubjects.containsKey(card.id())) {
+                taskSubjects.get(card.id()).setValue(card);
             }
         });
-        allFlashcardsSubject.setValue(getFlashcards());
+        allFlashcardsSubject.setValue(getTasks());
     }
 
     public void removeFlashcard(int id) {
-        var card = flashcards.get(id);
+        var card = tasks.get(id);
         var sortOrder = card.sortOrder();
 
-        flashcards.remove(id);
+        tasks.remove(id);
         shiftSortOrders(sortOrder, maxSortOrder, -1);
 
-        if (flashcardSubjects.containsKey(id)) {
-            flashcardSubjects.get(id).setValue(null);
+        if (taskSubjects.containsKey(id)) {
+            taskSubjects.get(id).setValue(null);
         }
-        allFlashcardsSubject.setValue(getFlashcards());
+        allFlashcardsSubject.setValue(getTasks());
     }
 
     public void shiftSortOrders(int from, int to, int by) {
-        var cards = flashcards.values().stream()
+        var cards = tasks.values().stream()
                 .filter(card -> card.sortOrder() >= from && card.sortOrder() <= to)
                 .map(card -> card.withSortOrder(card.sortOrder() + by))
                 .collect(Collectors.toList());
@@ -144,12 +142,12 @@ public class InMemoryDataSource {
      */
     private void postInsert() {
         // Keep the min and max sort orders up to date.
-        minSortOrder = flashcards.values().stream()
+        minSortOrder = tasks.values().stream()
                 .map(Task::sortOrder)
                 .min(Integer::compareTo)
                 .orElse(Integer.MAX_VALUE);
 
-        maxSortOrder = flashcards.values().stream()
+        maxSortOrder = tasks.values().stream()
                 .map(Task::sortOrder)
                 .max(Integer::compareTo)
                 .orElse(Integer.MIN_VALUE);
@@ -164,7 +162,7 @@ public class InMemoryDataSource {
      */
     private void assertSortOrderConstraints() {
         // Get all the sort orders...
-        var sortOrders = flashcards.values().stream()
+        var sortOrders = tasks.values().stream()
                 .map(Task::sortOrder)
                 .collect(Collectors.toList());
 

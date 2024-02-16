@@ -62,7 +62,7 @@ public class TaskViewModel extends ViewModel {
         return displayedText;
     }
 
-    public Subject<List<Task>> getOrderedCards() {
+    public Subject<List<Task>> getOrderedTasks() {
         return orderedTasks;
     }
     public void append(Task card) {
