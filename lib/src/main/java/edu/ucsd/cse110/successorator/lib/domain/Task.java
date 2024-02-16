@@ -8,21 +8,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Task implements Serializable {
-    private final @Nullable Integer id;
+    private final @NonNull Integer id;
     private final @NonNull String task;
     private final @NonNull Integer sortOrder;
     private final @NonNull Boolean checkedOff;
 
-    public Task(@Nullable Integer id, @NonNull String task, int sortOrder, boolean checkedOff) {
+    public Task(@NonNull Integer id, @NonNull String task, int sortOrder, boolean checkedOff) {
         this.id = id;
         this.task = task;
         this.sortOrder = sortOrder;
         this.checkedOff = checkedOff;
     }
 
-    public @Nullable Integer id() { return id; }
+    public @NonNull Integer id() { return id; }
     public int sortOrder() { return sortOrder; }
     public String getTask() { return task; }
+    public boolean getCheckOff() { return checkedOff; }
     public Task withSortOrder(int sortOrder) { return new Task(this.id, this.task, sortOrder, checkedOff);  }
     public Task withId(int id) { return new Task(id, this.task, this.sortOrder, checkedOff); }
     public Task withCheckOff(boolean checkOff) { return new Task(id, task, sortOrder, checkOff); }
