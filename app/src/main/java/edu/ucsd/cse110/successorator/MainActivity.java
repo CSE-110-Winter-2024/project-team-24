@@ -44,23 +44,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-//    private void swapFragments() {
-//        if (isShowingStudy) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, TaskListFragment.newInstance())
-//                    .commit();
-//        } else {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, StudyFragment.newInstance())
-//                    .commit();
-//        }
-//        isShowingStudy = !isShowingStudy;
-//    }
-
-
-
 }

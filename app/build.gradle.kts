@@ -40,6 +40,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation(project(":lib"))
     implementation(project(":lib"))
+    implementation("org.jetbrains:annotations:15.0")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     implementation(project(":lib"))
     implementation("androidx.appcompat:appcompat:1.6.1")

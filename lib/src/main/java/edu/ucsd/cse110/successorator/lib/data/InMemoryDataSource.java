@@ -29,8 +29,7 @@ public class InMemoryDataSource {
     private final MutableSubject<List<Task>> allFlashcardsSubject
             = new SimpleSubject<>();
 
-    public InMemoryDataSource() {
-    }
+    public InMemoryDataSource() {}
 
     public final static List<Task> DEFAULT_CARDS = List.of(
             new Task(0, "Study for Midterm", 0, false),
@@ -83,7 +82,7 @@ public class InMemoryDataSource {
             taskSubjects.get(fixedCard.id()).setValue(fixedCard);
         }
         allFlashcardsSubject.setValue(getTasks());
-        for (Task t : flashcards.values()) {
+        for (Task t : tasks.values()) {
             System.out.println(t.toString());
         }
     }
