@@ -1,6 +1,8 @@
 package edu.ucsd.cse110.successorator.lib.domain;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
@@ -48,14 +50,32 @@ public class TasksRepository implements ITasksRepository {
         dataSource.putTask(task.withSortOrder(dataSource.getMinSortOrder() - 1));
     }
 
+    public void appendToEndOfUnfinishedTasks(Task task, boolean newState) {
+        int maxSortOrder = dataSource.getMaxSortOrder();
+        int newSortOrder = maxSortOrder + 1;
+
+        List<Task> tasks = dataSource.getTasks();
+        Optional<Task> firstCheckedOff = tasks.stream()
+                .sorted(Comparator.comparing(Task::sortOrder))
+                .filter(Task::getCheckOff)
+                .findFirst();
+
+        if (firstCheckedOff.isPresent()) {
+            newSortOrder = firstCheckedOff.get().sortOrder();
+            System.out.println(firstCheckedOff.get().getTask());
+            System.out.println(newSortOrder);
+        }
+
+        dataSource.shiftSortOrders(newSortOrder, maxSortOrder, 1);
+        save(new Task(task.id(), task.getTask(), newSortOrder, newState));
+    }
+
     public void toggleTaskStrikethrough(Task task) {
         boolean newState = !(task.getCheckOff());
 
-//        task = task.withCheckOff(newState);
-
         if (!task.getCheckOff()) {
             remove(task.id());
-            append(new Task(task.id(), task.getTask(), task.sortOrder(), newState));
+            appendToEndOfUnfinishedTasks(task, newState);
         } else {
             remove(task.id());
             prepend(new Task(task.id(), task.getTask(), task.sortOrder(), newState));
