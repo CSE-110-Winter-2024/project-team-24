@@ -63,10 +63,10 @@ public class TaskListFragment extends Fragment {
         view.cardList.setAdapter(adapter);
 
 
-        view.cardList.setOnItemClickListener((parent, view, position, id) -> {
-            var dialogFragment = CreateTaskDialogFragment.newInstance();
-            dialogFragment.show(getParentFragmentManager(), "CreateTaskDialogFragment");
-        });
+//        view.cardList.setOnItemClickListener((parent, view, position, id) -> {
+//            var dialogFragment = CreateTaskDialogFragment.newInstance();
+//            dialogFragment.show(getParentFragmentManager(), "CreateTaskDialogFragment");
+//        });  // TODO: Implement this, as this causes it to open the add dialog when a card is clicked
         return view.getRoot();
     }
 }

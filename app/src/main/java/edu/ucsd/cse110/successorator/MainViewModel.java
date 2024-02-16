@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.TasksRepository;
 
 public class MainViewModel extends ViewModel {
@@ -26,5 +27,9 @@ public class MainViewModel extends ViewModel {
 
     public MainViewModel(TasksRepository tasksrepository) {
         this.TasksRepository = tasksrepository;
+    }
+
+    public void append(Task task) {
+        TasksRepository.append(task);
     }
 }

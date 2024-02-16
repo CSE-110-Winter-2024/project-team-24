@@ -40,6 +40,7 @@ public class TasksRepository implements ITasksRepository {
     @Override
     public void append(Task task) {
         dataSource.putFlashcard(task.withSortOrder(dataSource.getMaxSortOrder() + 1));
+
     }
 
     @Override
