@@ -40,4 +40,14 @@ public class Task implements Serializable {
     public int hashCode() {
         return Objects.hash(id, task, sortOrder);
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", task='" + task + '\'' +
+                ", sortOrder=" + sortOrder +
+                ", checkedOff=" + checkedOff +
+                '}';
+    }
 }
