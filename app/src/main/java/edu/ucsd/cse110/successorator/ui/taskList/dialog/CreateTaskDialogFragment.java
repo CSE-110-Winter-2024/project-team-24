@@ -45,22 +45,14 @@ public class CreateTaskDialogFragment extends DialogFragment {
         }
 
         private void onPositiveButtonClick(DialogInterface dialog, int which) {
-//            var front = view.cardFrontEditText.getText().toString();
-//            var back = view.cardBackEditText.getText().toString();
-//
-//            var card = new Flashcard(null, front, back, -1);
-//
-//            if (view.appendRadioBtn.isChecked()) {
-//                activityModel.append(card);
-//            }
-//            else if (view.prependRadioBtn.isChecked()) {
-//                activityModel.prepend(card);
-//            } else {
-//                throw new IllegalStateException("No radio button is checked.");
-//            }
-            var task = new Task(null, view.addTaskDialog.getText().toString(), 0, false);
+            String input = view.addTaskDialog.getText().toString();
+            if(input.length() == 0){
+                dialog.dismiss();
+                return;
+            }
+
+            var task = new Task(null, input, 0, false);
             activityModel.append(task);
-//            System.out.print(which);
 
 
             dialog.dismiss();
