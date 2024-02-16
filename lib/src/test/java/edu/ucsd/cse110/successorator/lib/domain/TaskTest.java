@@ -1,6 +1,6 @@
 package edu.ucsd.cse110.successorator.lib.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public class TaskTest {
 
     @Test
     public void withSortOrder() {
-        var card = new Task(1,"Testing Sorting Order", 0, false);
+        var card = new Task(1, "Testing Sorting Order", 0, false);
         var expected = new Task(1, "Testing Sorting Order", 42, false);
         var actual = card.withSortOrder(42);
         assertEquals(expected, actual);

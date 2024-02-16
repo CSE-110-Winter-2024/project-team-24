@@ -1,6 +1,6 @@
 package edu.ucsd.cse110.successorator.lib.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +13,14 @@ import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 public class TasksRepositoryTest {
 
     private InMemoryDataSource dataSource;
-    private TasksRepository repository;
+    private ITasksRepository repository;
 
     @Before
     public void setUp() {
         dataSource = InMemoryDataSource.fromDefault();
         repository = new TasksRepository(dataSource);
     }
+
     @Test
     public void find() {
         var expected = new Task(0, "Study for Midterm", 0, false);

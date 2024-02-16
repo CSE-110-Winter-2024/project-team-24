@@ -50,7 +50,7 @@ public class TasksRepository implements ITasksRepository {
         dataSource.putTask(task.withSortOrder(dataSource.getMinSortOrder() - 1));
     }
 
-    public void appendToEndOfUnfinishedTasks(Task task, boolean newState) {
+    public void appendToEndOfUnfinishedTasks(Task task) {
         int maxSortOrder = dataSource.getMaxSortOrder();
         int newSortOrder = maxSortOrder + 1;
 
@@ -67,18 +67,17 @@ public class TasksRepository implements ITasksRepository {
         }
 
         dataSource.shiftSortOrders(newSortOrder, maxSortOrder, 1);
-        save(new Task(task.id(), task.getTask(), newSortOrder, newState));
+        save(new Task(task.id(), task.getTask(), newSortOrder, task.getCheckOff()));
     }
 
     public void toggleTaskStrikethrough(Task task) {
         boolean newState = !(task.getCheckOff());
+        remove(task.id());
 
         if (!task.getCheckOff()) {
-            remove(task.id());
-            appendToEndOfUnfinishedTasks(task, newState);
+            appendToEndOfUnfinishedTasks(task.withCheckOff(newState));
         } else {
-            remove(task.id());
-            prepend(new Task(task.id(), task.getTask(), task.sortOrder(), newState));
+            prepend(task.withCheckOff(newState));
         }
     }
 

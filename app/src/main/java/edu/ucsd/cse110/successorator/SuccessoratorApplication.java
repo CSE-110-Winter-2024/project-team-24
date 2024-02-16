@@ -3,10 +3,11 @@ package edu.ucsd.cse110.successorator;
 import android.app.Application;
 
 import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
+import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.TasksRepository;
 
 public class SuccessoratorApplication extends Application {
-    private TasksRepository tasksRepository;
+    private ITasksRepository tasksRepository;
 
     @Override
     public void onCreate() {
@@ -16,7 +17,7 @@ public class SuccessoratorApplication extends Application {
         this.tasksRepository = new TasksRepository(dataSource);
     }
 
-    public TasksRepository getTasksRepository() {
+    public ITasksRepository getTasksRepository() {
         return tasksRepository;
     }
 }
