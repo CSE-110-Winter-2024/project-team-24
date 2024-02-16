@@ -58,8 +58,9 @@ public class CreateTaskDialogFragment extends DialogFragment {
 //            } else {
 //                throw new IllegalStateException("No radio button is checked.");
 //            }
-            var task = new Task(null, "hi", 0, false);
+            var task = new Task(null, view.addTaskDialog.getText().toString(), 0, false);
             activityModel.append(task);
+//            System.out.print(which);
 
 
             dialog.dismiss();

@@ -1,5 +1,11 @@
 package edu.ucsd.cse110.successorator.lib.data;
 
+//import static sun.jvm.hotspot.debugger.win32.coff.DebugVC50X86RegisterEnums.TAG;
+
+//import androidx.media3.common.util.Log;
+
+
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +35,8 @@ public class InMemoryDataSource {
     public final static List<Task> DEFAULT_CARDS = List.of(
             new Task(0, "Study for Midterm", 0, false),
             new Task(1, "Play League of Legends", 1, false),
-            new Task(2, "Do Math homework", 2, true)
+            new Task(2, "Do Math homework", 2, true),
+            new Task(3, "Do CSE 110 homework", 3, false)
     );
 
     public static InMemoryDataSource fromDefault() {
@@ -78,7 +85,14 @@ public class InMemoryDataSource {
             flashcardSubjects.get(fixedCard.id()).setValue(fixedCard);
         }
         allFlashcardsSubject.setValue(getFlashcards());
+//        System.out.println("putFlashcard: " + card.getTask() + " " + card.sortOrder() + " " + card.id()  + " " + flashcards.size() + " " + flashcardSubjects.size() + " " + allFlashcardsSubject.getValue().size() + " " + minSortOrder + " " + maxSortOrder);
+        for (Task t : flashcards.values()) {
+            System.out.println(t.toString());
+        }
     }
+
+
+
 
     public void putFlashcards(List<Task> cards) {
         var fixedCards = cards.stream()
