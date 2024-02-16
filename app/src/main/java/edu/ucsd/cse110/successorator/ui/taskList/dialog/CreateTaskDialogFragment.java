@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import edu.ucsd.cse110.successorator.*;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 
 public class CreateTaskDialogFragment extends DialogFragment {
@@ -57,6 +58,10 @@ public class CreateTaskDialogFragment extends DialogFragment {
 //            } else {
 //                throw new IllegalStateException("No radio button is checked.");
 //            }
+            var task = new Task(null, "hi", 0, false);
+            activityModel.append(task);
+
+
             dialog.dismiss();
         }
 
