@@ -38,13 +38,13 @@ public class TasksRepositoryTest {
     @Test
     public void findAll() {
         var flashcards = Objects.requireNonNull(repository.findAll().getValue());
-        assertEquals(3, flashcards.size());
+        assertEquals(4, flashcards.size());
 
         var card = new Task(10, "What is a democracy?! RAH", 10, false);
         repository.save(card);
 
         flashcards = Objects.requireNonNull(repository.findAll().getValue());
-        assertEquals(4, flashcards.size());
+        assertEquals(5, flashcards.size());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class TasksRepositoryTest {
         var card = new Task(10, "What is a democracy?! RAH", 10, false);
         repository.save(card);
 
-        assertEquals(4, repository.size());
+        assertEquals(5, repository.size());
         assertEquals(repository.find(10).getValue(), card);
     }
 
@@ -64,7 +64,7 @@ public class TasksRepositoryTest {
         );
         repository.save(flashcards);
 
-        assertEquals(5, repository.size());
+        assertEquals(6, repository.size());
         assertEquals(repository.find(10).getValue(), flashcards.get(0));
         assertEquals(repository.find(11).getValue(), flashcards.get(1));
     }
@@ -74,9 +74,9 @@ public class TasksRepositoryTest {
         var card = new Task(10, "What is a democracy?! RAH", 10, false);
         repository.save(card);
 
-        assertEquals(4, repository.size());
+        assertEquals(5, repository.size());
         repository.remove(10);
-        assertEquals(3, repository.size());
+        assertEquals(4, repository.size());
     }
 
     @Test
@@ -84,9 +84,9 @@ public class TasksRepositoryTest {
         var card = new Task(10, "What is a democracy?! RAH", -1, false);
         repository.append(card);
 
-        assertEquals(4, repository.size());
+        assertEquals(5, repository.size());
 
-        var expected = new Task(10, "What is a democracy?! RAH", 3, false);
+        var expected = new Task(10, "What is a democracy?! RAH", 4, false);
         assertEquals(expected, repository.find(10).getValue());
     }
 
@@ -95,7 +95,7 @@ public class TasksRepositoryTest {
         var card = new Task(10, "What is a democracy?! RAH", -1, false);
         repository.prepend(card);
 
-        assertEquals(4, repository.size());
+        assertEquals(5, repository.size());
 
         var expected = new Task(10, "What is a democracy?! RAH", 0, false);
         assertEquals(expected, repository.find(10).getValue());
@@ -103,10 +103,10 @@ public class TasksRepositoryTest {
 
     @Test
     public void size() {
-        assertEquals(3, repository.size());
+        assertEquals(4, repository.size());
 
         var card = new Task(10, "What is a democracy?! RAH", 10, false);
         repository.save(card);
-        assertEquals(4, repository.size());
+        assertEquals(5, repository.size());
     }
 }
