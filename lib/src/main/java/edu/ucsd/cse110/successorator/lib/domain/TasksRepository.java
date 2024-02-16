@@ -41,24 +41,25 @@ public class TasksRepository implements ITasksRepository {
     public void append(Task task) {
         dataSource.putTask(task.withSortOrder(dataSource.getMaxSortOrder() + 1));
     }
+
     @Override
     public void prepend(Task task) {
+        dataSource.shiftSortOrders(dataSource.getMinSortOrder(), dataSource.getMaxSortOrder(), 1);
         dataSource.putTask(task.withSortOrder(dataSource.getMinSortOrder() - 1));
     }
 
     public void toggleTaskStrikethrough(Task task) {
-
         boolean newState = !(task.getCheckOff());
+
+//        task = task.withCheckOff(newState);
 
         if (!task.getCheckOff()) {
             remove(task.id());
             append(new Task(task.id(), task.getTask(), task.sortOrder(), newState));
-        }
-        else {
+        } else {
             remove(task.id());
             prepend(new Task(task.id(), task.getTask(), task.sortOrder(), newState));
         }
-        save(task);
     }
 
     @Override

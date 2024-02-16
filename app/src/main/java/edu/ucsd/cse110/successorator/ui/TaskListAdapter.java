@@ -42,12 +42,11 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         }
 
         binding.taskText.setText(task.getTask());
+        updateTextView(binding.taskText, task);
+
         binding.taskText.setOnClickListener(v -> {
-            updateTextView(binding.taskText, task);
             consumer.accept(task);
-
         });
-
 
         return binding.getRoot();
     }
