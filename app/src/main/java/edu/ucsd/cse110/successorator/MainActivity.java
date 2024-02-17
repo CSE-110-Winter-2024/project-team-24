@@ -8,10 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.fragment.app.Fragment;
-
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
-import edu.ucsd.cse110.successorator.ui.TaskListFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
 
 public class MainActivity extends AppCompatActivity {

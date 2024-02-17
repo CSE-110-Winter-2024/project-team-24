@@ -5,7 +5,6 @@ package edu.ucsd.cse110.successorator.lib.data;
 //import androidx.media3.common.util.Log;
 
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +28,13 @@ public class InMemoryDataSource {
     private final MutableSubject<List<Task>> allFlashcardsSubject
             = new SimpleSubject<>();
 
-    public InMemoryDataSource() {}
+    public InMemoryDataSource() {
+    }
 
     public final static List<Task> DEFAULT_CARDS = List.of(
             new Task(0, "Study for Midterm", 0, false),
             new Task(1, "Play League of Legends", 1, false),
-            new Task(2, "Do Math homework", 2, true),
+            new Task(2, "Do Math homework", 2, false),
             new Task(3, "Do CSE 110 homework", 3, false)
     );
 
@@ -69,7 +69,9 @@ public class InMemoryDataSource {
         return minSortOrder;
     }
 
-    public int getMaxSortOrder() { return maxSortOrder; }
+    public int getMaxSortOrder() {
+        return maxSortOrder;
+    }
 
     public void putTask(Task card) {
         var fixedCard = preInsert(card);
@@ -86,8 +88,6 @@ public class InMemoryDataSource {
             System.out.println(t.toString());
         }
     }
-
-
 
 
     public void putFlashcards(List<Task> cards) {
@@ -138,8 +138,7 @@ public class InMemoryDataSource {
         if (id == null) {
             // If the card has no id, give it one.
             card = card.withId(nextId++);
-        }
-        else if (id > nextId) {
+        } else if (id > nextId) {
             // If the card has an id, update nextId if necessary to avoid giving out the same
             // one. This is important for when we pre-load cards like in fromDefault().
             nextId = id + 1;

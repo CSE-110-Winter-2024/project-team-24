@@ -21,6 +21,7 @@ import edu.ucsd.cse110.successorator.lib.domain.Task;
 public class TaskListAdapter extends ArrayAdapter<Task> {
 
     Consumer<Task> consumer;
+
     public TaskListAdapter(Context context, List<Task> tasks, Consumer<Task> consumer) {
         super(context, 0, new ArrayList<>(tasks));
         this.consumer = consumer;
@@ -35,8 +36,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         ListItemTaskBinding binding;
         if (convertView != null) {
             binding = ListItemTaskBinding.bind(convertView);
-        }
-        else {
+        } else {
             var layoutInflater = LayoutInflater.from(getContext());
             binding = ListItemTaskBinding.inflate(layoutInflater, parent, false);
         }
@@ -54,11 +54,11 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     private void updateTextView(TextView textView, Task task) {
         if (task.getCheckOff()) {
             textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-        else {
+        } else {
             textView.setPaintFlags(textView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
         }
     }
+
     @Override
     public boolean hasStableIds() {
         return true;
