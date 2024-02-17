@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.successorator.lib.domain;
+package edu.ucsd.cse110.successorator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,17 +8,16 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Objects;
 
-import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
+import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 public class TasksRepositoryTest {
-
-    private InMemoryDataSource dataSource;
     private ITasksRepository repository;
 
     @Before
     public void setUp() {
-        dataSource = InMemoryDataSource.fromDefault();
-        repository = new TasksRepository(dataSource);
+//        repository = new RoomTasksRepository(dataSource);
+        // TODO: Figure out how to add testing
     }
 
     @Test
