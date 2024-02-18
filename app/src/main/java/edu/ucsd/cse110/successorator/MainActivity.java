@@ -16,7 +16,8 @@ import edu.ucsd.cse110.successorator.lib.util.DateSubject;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 
 public class MainActivity extends AppCompatActivity {
-    ActionBarUpdater actionBarUpdater;
+    private ActionBarUpdater actionBarUpdater;
+    private ActivityMainBinding view;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
