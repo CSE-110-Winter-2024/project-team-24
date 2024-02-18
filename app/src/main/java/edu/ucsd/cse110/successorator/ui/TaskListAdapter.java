@@ -15,12 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
+import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
 
-    Consumer<Task> consumer;
+    private final Consumer<Task> consumer;
 
     public TaskListAdapter(Context context, List<Task> tasks, Consumer<Task> consumer) {
         super(context, 0, new ArrayList<>(tasks));
@@ -34,6 +36,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         assert task != null;
 
         ListItemTaskBinding binding;
+        FragmentTaskListBinding buttonBinding;
         if (convertView != null) {
             binding = ListItemTaskBinding.bind(convertView);
         } else {

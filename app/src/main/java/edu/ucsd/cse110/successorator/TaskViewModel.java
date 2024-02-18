@@ -9,8 +9,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.util.DateSubject;
 import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
@@ -56,9 +58,8 @@ public class TaskViewModel extends ViewModel {
         });
     }
 
-    public void toggleTaskStrikethrough(Task task) {
-        tasksRepository.toggleTaskStrikethrough(task);
-    }
+    public void dateAdvanced() { tasksRepository.dateAdvanced();  }
+    public void toggleTaskStrikethrough(Task task) { tasksRepository.toggleTaskStrikethrough(task); }
 
     public Subject<String> getDisplayedText() {
         return displayedText;

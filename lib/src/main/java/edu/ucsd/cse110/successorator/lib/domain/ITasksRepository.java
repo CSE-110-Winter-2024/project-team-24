@@ -24,4 +24,5 @@ public interface ITasksRepository {
     void prepend(Task task);
 
     int size();
+    void dateAdvanced();
 }
