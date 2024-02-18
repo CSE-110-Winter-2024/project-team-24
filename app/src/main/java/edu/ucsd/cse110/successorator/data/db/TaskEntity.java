@@ -23,10 +23,6 @@ public class TaskEntity {
     @ColumnInfo(name = "sort_order")
     public Integer sortOrder;
 
-    @ColumnInfo(name = "date")
-    public DateSubject date;
-
-
     TaskEntity(@NonNull String task, @NonNull boolean checkoff, Integer sortOrder) {
         this.task = task;
         this.checkoff = checkoff;
