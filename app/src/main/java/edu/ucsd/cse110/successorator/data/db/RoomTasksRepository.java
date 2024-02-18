@@ -100,5 +100,13 @@ public class RoomTasksRepository implements ITasksRepository {
     public void remove(int id) {
         tasksDao.delete(id);
     }
+
+    @Override
+    public void dateAdvanced() {
+        List<Task> tasks = Objects.requireNonNull(tasksDao.findAll().stream().map(TaskEntity::toTask).collect(Collectors.toList()));
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getCheckOff()) { remove(tasks.get(i).id()); }
+        }
+    }
 }
 

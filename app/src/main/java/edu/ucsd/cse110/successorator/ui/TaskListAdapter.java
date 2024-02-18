@@ -15,12 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
+import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
 
-    Consumer<Task> consumer;
+    private final Consumer<Task> consumer;
 
     public TaskListAdapter(Context context, List<Task> tasks, Consumer<Task> consumer) {
         super(context, 0, new ArrayList<>(tasks));
@@ -34,6 +36,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         assert task != null;
 
         ListItemTaskBinding binding;
+
         if (convertView != null) {
             binding = ListItemTaskBinding.bind(convertView);
         } else {
@@ -51,7 +54,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         return binding.getRoot();
     }
 
-    private void updateTextView(TextView textView, Task task) {
+    private static void updateTextView(TextView textView, Task task) {
         if (task.getCheckOff()) {
             textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
@@ -68,12 +71,6 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     public long getItemId(int position) {
         var task = getItem(position);
         assert task != null;
-
-        var id = task.id();
-        assert id != null;
-
-        return id;
+        return task.id();
     }
-
-
 }
