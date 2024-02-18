@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         var itemId = item.getItemId();
 
-        if (itemId == R.id.action_bar_menu_swap_views) {
+        if (itemId == R.id.add_task) {
             var dialogFragment = CreateTaskDialogFragment.newInstance();
             dialogFragment.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
         }

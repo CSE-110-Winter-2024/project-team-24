@@ -1,25 +1,20 @@
 package edu.ucsd.cse110.successorator;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
-import org.junit.Test;
 
-import java.util.List;
-import java.util.Objects;
-
+import edu.ucsd.cse110.successorator.data.db.RoomTasksRepository;
+import edu.ucsd.cse110.successorator.data.db.TaskDao;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 public class TasksRepositoryTest {
-//    private ITasksRepository repository;
-//
-//    @Before
-//    public void setUp() {
-//        repository = new RoomTasksRepository(dataSource);
-        // TODO: Figure out how to add testing
-//    }
-//
+    private ITasksRepository repository;
+
+    @Before
+    public void setUp() {
+        TaskDao taskDao;
+        repository = new RoomTasksRepository(taskDao);
+    }
+
 //    @Test
 //    public void find() {
 //        var expected = new Task(0, "Study for Midterm", 0, false);
