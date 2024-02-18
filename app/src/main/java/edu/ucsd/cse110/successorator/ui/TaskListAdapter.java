@@ -36,7 +36,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         assert task != null;
 
         ListItemTaskBinding binding;
-        FragmentTaskListBinding buttonBinding;
+
         if (convertView != null) {
             binding = ListItemTaskBinding.bind(convertView);
         } else {
@@ -54,7 +54,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         return binding.getRoot();
     }
 
-    private void updateTextView(TextView textView, Task task) {
+    private static void updateTextView(TextView textView, Task task) {
         if (task.getCheckOff()) {
             textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
@@ -71,12 +71,6 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     public long getItemId(int position) {
         var task = getItem(position);
         assert task != null;
-
-        var id = task.id();
-        assert id != null;
-
-        return id;
+        return task.id();
     }
-
-
 }

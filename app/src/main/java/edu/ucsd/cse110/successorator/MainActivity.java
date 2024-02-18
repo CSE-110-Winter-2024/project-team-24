@@ -17,18 +17,16 @@ import edu.ucsd.cse110.successorator.lib.util.DateSubject;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 
 public class MainActivity extends AppCompatActivity {
-    private ActionBarUpdater actionBarUpdater;
-    private ActivityMainBinding view;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.view = ActivityMainBinding.inflate(getLayoutInflater(), null, false);
+        edu.ucsd.cse110.successorator.databinding.ActivityMainBinding view = ActivityMainBinding.inflate(getLayoutInflater(), null, false);
 
         setContentView(view.getRoot());
 
         // Instantiate the actionBarUpdater
-        actionBarUpdater = new ActionBarUpdater(this);
+        ActionBarUpdater actionBarUpdater = new ActionBarUpdater(this);
 
         // Get DateSubject observable from Application, then add ActionBarUpdater as observer
         DateSubject dateSubject = ((SuccessoratorApplication) getApplicationContext()).getDateSubject();
