@@ -28,7 +28,7 @@ public class MainActivityTest {
     @Test
     public void addTask() {
         ActivityScenario.launch(MainActivity.class);
-        onView(withId(R.id.action_bar_menu_swap_views)).perform(click());
+        onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Test Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Create")).perform(click());
         onView(withText("Test Goal")).check(matches(isDisplayed()));
@@ -37,7 +37,7 @@ public class MainActivityTest {
     @Test
     public void addEmptyTask() {
         ActivityScenario.launch(MainActivity.class);
-        onView(withId(R.id.action_bar_menu_swap_views)).perform(click());
+        onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText(""), ViewActions.closeSoftKeyboard());
         onView(withText("Create")).perform(click());
         onView(withId(R.id.add_task_dialog)).check(doesNotExist());

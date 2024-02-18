@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import edu.ucsd.cse110.successorator.MainViewModel;
+import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
@@ -18,7 +18,7 @@ import edu.ucsd.cse110.successorator.lib.domain.Task;
 public class CreateTaskDialogFragment extends DialogFragment {
 
     private FragmentDialogCreateTaskBinding view;
-    private MainViewModel activityModel;
+    private TaskViewModel activityModel;
 
     CreateTaskDialogFragment() {
     }
@@ -67,9 +67,9 @@ public class CreateTaskDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         var modelOwner = requireActivity();
-        var modelFactory = ViewModelProvider.Factory.from(MainViewModel.initializer);
+        var modelFactory = ViewModelProvider.Factory.from(TaskViewModel.initializer);
         var modelProvider = new ViewModelProvider(modelOwner, modelFactory);
-        this.activityModel = modelProvider.get(MainViewModel.class);
+        this.activityModel = modelProvider.get(TaskViewModel.class);
     }
 
 

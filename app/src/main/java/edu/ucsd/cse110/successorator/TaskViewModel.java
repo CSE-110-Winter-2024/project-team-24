@@ -69,7 +69,7 @@ public class TaskViewModel extends ViewModel {
     }
 
     public void append(Task card) {
-        tasksRepository.append(card);
+        tasksRepository.appendToEndOfUnfinishedTasks(card);
     }
 
     public void prepend(Task card) {

@@ -40,7 +40,7 @@ public class InMemoryDataSource {
 
     public static InMemoryDataSource fromDefault() {
         var data = new InMemoryDataSource();
-        data.putFlashcards(DEFAULT_CARDS);
+        data.putTasks(DEFAULT_CARDS);
         return data;
     }
 
@@ -90,7 +90,7 @@ public class InMemoryDataSource {
     }
 
 
-    public void putFlashcards(List<Task> cards) {
+    public void putTasks(List<Task> cards) {
         var fixedCards = cards.stream()
                 .map(this::preInsert)
                 .collect(Collectors.toList());
@@ -107,7 +107,7 @@ public class InMemoryDataSource {
         allFlashcardsSubject.setValue(getTasks());
     }
 
-    public void removeFlashcard(int id) {
+    public void removeTask(int id) {
         var card = tasks.get(id);
         var sortOrder = card.sortOrder();
 
@@ -126,7 +126,7 @@ public class InMemoryDataSource {
                 .map(card -> card.withSortOrder(card.sortOrder() + by))
                 .collect(Collectors.toList());
 
-        putFlashcards(cards);
+        putTasks(cards);
     }
 
     /**
