@@ -9,16 +9,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
-import edu.ucsd.cse110.successorator.lib.domain.TasksRepository;
-import edu.ucsd.cse110.successorator.lib.domain.TasksRepository;
 import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 
 public class TaskViewModel extends ViewModel {
     // Domain state (true "Model" state)
-    private final TasksRepository tasksRepository;
+    private final ITasksRepository tasksRepository;
     private final MutableSubject<Task> topTask;
     private final MutableSubject<List<Task>> orderedTasks;
     private final MutableSubject<String> displayedText;
@@ -32,7 +31,7 @@ public class TaskViewModel extends ViewModel {
                         return new TaskViewModel(app.getTasksRepository());
                     });
 
-    public TaskViewModel(TasksRepository tasksRepository) {
+    public TaskViewModel(ITasksRepository tasksRepository) {
         this.tasksRepository = tasksRepository;
 
         // Create the observable subjects.
@@ -57,7 +56,10 @@ public class TaskViewModel extends ViewModel {
         });
     }
 
-    public void toggleTaskStrikethrough(Task task) { tasksRepository.toggleTaskStrikethrough(task); }
+    public void toggleTaskStrikethrough(Task task) {
+        tasksRepository.toggleTaskStrikethrough(task);
+    }
+
     public Subject<String> getDisplayedText() {
         return displayedText;
     }
@@ -65,13 +67,16 @@ public class TaskViewModel extends ViewModel {
     public Subject<List<Task>> getOrderedTasks() {
         return orderedTasks;
     }
+
     public void append(Task card) {
-        tasksRepository.append(card);
+        tasksRepository.appendToEndOfUnfinishedTasks(card);
     }
 
     public void prepend(Task card) {
         tasksRepository.prepend(card);
     }
 
-    public void remove(int id) {tasksRepository.remove(id);}
+    public void remove(int id) {
+        tasksRepository.remove(id);
+    }
 }

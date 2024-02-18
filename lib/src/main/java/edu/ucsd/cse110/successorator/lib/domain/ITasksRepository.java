@@ -17,6 +17,10 @@ public interface ITasksRepository {
 
     void append(Task task);
 
+    void appendToEndOfUnfinishedTasks(Task task);
+
+    void toggleTaskStrikethrough(Task task);
+
     void prepend(Task task);
 
     int size();

@@ -2,7 +2,9 @@ package edu.ucsd.cse110.successorator;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        var view = ActivityMainBinding.inflate(getLayoutInflater(), null, false);
+        this.view = ActivityMainBinding.inflate(getLayoutInflater(), null, false);
 
         setContentView(view.getRoot());
 
@@ -47,4 +48,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        var itemId = item.getItemId();
+
+        if (itemId == R.id.add_task) {
+            var dialogFragment = CreateTaskDialogFragment.newInstance();
+            dialogFragment.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

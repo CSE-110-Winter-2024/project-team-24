@@ -4,21 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 
 public class TaskListFragment extends Fragment {
@@ -65,6 +61,11 @@ public class TaskListFragment extends Fragment {
         // Set the adapter on the ListView
         view.cardList.setAdapter(adapter);
 
+
+//        view.cardList.setOnItemClickListener((parent, view, position, id) -> {
+//            var dialogFragment = CreateTaskDialogFragment.newInstance();
+//            dialogFragment.show(getParentFragmentManager(), "CreateTaskDialogFragment");
+//        });  // TODO: Implement this, as this causes it to open the add dialog when a card is clicked
         return view.getRoot();
     }
 }
