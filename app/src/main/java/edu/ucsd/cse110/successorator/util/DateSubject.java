@@ -62,6 +62,9 @@ public class DateSubject implements MutableSubject<Date> {
     }
 
     public void saveDate() {
+        if (sharedPreferences == null) {
+            return;
+        }
         sharedPreferences.edit().putLong("lastDate", currentDate.getTime()).apply();
     }
 
