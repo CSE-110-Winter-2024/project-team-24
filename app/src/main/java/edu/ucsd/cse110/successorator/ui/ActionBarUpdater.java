@@ -10,6 +10,7 @@ import edu.ucsd.cse110.successorator.lib.util.Observer;
 
 public class ActionBarUpdater implements Observer<Date> {
     private final AppCompatActivity activity;
+
     public ActionBarUpdater(AppCompatActivity activity) {
         this.activity = activity;
     }

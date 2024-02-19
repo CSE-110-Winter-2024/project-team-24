@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Date;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
+import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.DateSubject;
-import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -52,8 +52,13 @@ public class TaskViewModel extends ViewModel {
         });
     }
 
-    public void dateAdvanced() { tasksRepository.dateAdvanced();  }
-    public void toggleTaskStrikethrough(Task task) { tasksRepository.toggleTaskStrikethrough(task); }
+    public void dateAdvanced() {
+        tasksRepository.dateAdvanced();
+    }
+
+    public void toggleTaskStrikethrough(Task task) {
+        tasksRepository.toggleTaskStrikethrough(task);
+    }
 
     public Subject<List<Task>> getOrderedTasks() {
         return orderedTasks;

@@ -4,8 +4,6 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import java.util.Date;
-
 import edu.ucsd.cse110.successorator.data.db.RoomTasksRepository;
 import edu.ucsd.cse110.successorator.data.db.SuccessoratorDatabase;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;

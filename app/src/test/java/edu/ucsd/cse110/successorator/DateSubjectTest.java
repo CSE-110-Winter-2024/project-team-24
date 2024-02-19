@@ -1,14 +1,11 @@
 package edu.ucsd.cse110.successorator;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.Date;
-
-import static org.junit.Assert.*;
-
-import android.content.SharedPreferences;
-
-import androidx.annotation.Nullable;
 
 import edu.ucsd.cse110.successorator.util.DateSubject;
 

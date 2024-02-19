@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
