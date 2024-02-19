@@ -2,7 +2,6 @@ package edu.ucsd.cse110.successorator;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -46,6 +45,4 @@ public class MainActivityTest {
         onView(withText("Create")).perform(click());
         onView(withId(R.id.add_task_dialog)).check(doesNotExist());
     }
-
-
 }

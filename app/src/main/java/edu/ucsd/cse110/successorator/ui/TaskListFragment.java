@@ -11,14 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.util.DateSubject;
-import edu.ucsd.cse110.successorator.util.DateUpdater;
 
 
 public class TaskListFragment extends Fragment {
@@ -71,10 +69,6 @@ public class TaskListFragment extends Fragment {
             dateSubject.advanceDate();
             activityModel.dateAdvanced();
         });
-//        view.cardList.setOnClickListener(v -> {
-//            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().setDate(new Date());
-//        });
-
 
         return view.getRoot();
     }
