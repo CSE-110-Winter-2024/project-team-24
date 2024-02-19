@@ -13,8 +13,8 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 
 /**
@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    @BeforeEach
+    @Before
     public void setUp() {
         ActivityScenario.launch(MainActivity.class);
     }
@@ -46,5 +46,14 @@ public class MainActivityTest {
         onView(withId(R.id.add_task_dialog)).check(doesNotExist());
     }
 
+    @Test
+    public void checkoffTask() {
+        onView(withId(R.id.add_task)).perform(click());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("Test Goal"), ViewActions.closeSoftKeyboard());
+        onView(withText("Create")).perform(click());
+        onView(withText("Test Goal")).perform(click());
 
+        onView(withId(R.id.advanced_date)).perform(click());
+        onView(withText("Test Goal")).check(doesNotExist());
+    }
 }

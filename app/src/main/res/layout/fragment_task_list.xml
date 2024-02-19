@@ -7,7 +7,7 @@
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/advanced_date"
         android:layout_width="57dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
@@ -22,7 +22,7 @@
         android:id="@+id/card_list"
         android:layout_width="409dp"
         android:layout_height="683dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/advanced_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -67,7 +67,7 @@ public class TaskListFragment extends Fragment {
 
         // Set the adapter on the ListView
         view.cardList.setAdapter(adapter);
-        view.button2.setOnClickListener(v -> {
+        view.advancedDate.setOnClickListener(v -> {
             dateSubject.advanceDate();
 //            activityModel.dateAdvanced();
         });
