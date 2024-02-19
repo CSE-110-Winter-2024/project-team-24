@@ -69,12 +69,8 @@ public class TaskListFragment extends Fragment {
         view.cardList.setAdapter(adapter);
         view.advancedDate.setOnClickListener(v -> {
             dateSubject.advanceDate();
-//            activityModel.dateAdvanced();
+            activityModel.dateAdvanced();
         });
-//        view.cardList.setOnClickListener(v -> {
-//            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().setDate(new Date());
-//        });
-
 
         return view.getRoot();
     }

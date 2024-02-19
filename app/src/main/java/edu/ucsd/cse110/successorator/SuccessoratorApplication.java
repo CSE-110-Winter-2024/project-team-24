@@ -8,7 +8,6 @@ import java.util.Date;
 
 import edu.ucsd.cse110.successorator.data.db.RoomTasksRepository;
 import edu.ucsd.cse110.successorator.data.db.SuccessoratorDatabase;
-import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.DateUpdater;
@@ -33,8 +32,6 @@ public class SuccessoratorApplication extends Application {
         var sharedPreferences = getSharedPreferences("successorator", MODE_PRIVATE);
         var isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
         if (isFirstRun && database.taskDao().count() == 0) {
-            tasksRepository.save(InMemoryDataSource.DEFAULT_CARDS);
-
             sharedPreferences.edit().putBoolean("isFirstRun", false).apply();
         }
 

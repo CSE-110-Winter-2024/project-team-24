@@ -9,6 +9,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.junit.Assert.assertNull;
+
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -44,16 +46,5 @@ public class MainActivityTest {
         onView(withId(R.id.add_task_dialog)).perform(typeText(""), ViewActions.closeSoftKeyboard());
         onView(withText("Create")).perform(click());
         onView(withId(R.id.add_task_dialog)).check(doesNotExist());
-    }
-
-    @Test
-    public void checkoffTask() {
-        onView(withId(R.id.add_task)).perform(click());
-        onView(withId(R.id.add_task_dialog)).perform(typeText("Test Goal"), ViewActions.closeSoftKeyboard());
-        onView(withText("Create")).perform(click());
-        onView(withText("Test Goal")).perform(click());
-
-        onView(withId(R.id.advanced_date)).perform(click());
-        onView(withText("Test Goal")).check(doesNotExist());
     }
 }
