@@ -17,8 +17,8 @@ import java.util.List;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
-import edu.ucsd.cse110.successorator.lib.util.DateSubject;
-import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
+import edu.ucsd.cse110.successorator.util.DateSubject;
+import edu.ucsd.cse110.successorator.util.DateUpdater;
 
 
 public class TaskListFragment extends Fragment {
@@ -62,14 +62,19 @@ public class TaskListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = FragmentTaskListBinding.inflate(inflater, container, false);
 
+        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+        DateSubject dateSubject = app.getDateSubject();
+
         // Set the adapter on the ListView
         view.cardList.setAdapter(adapter);
-        view.button2.setOnClickListener(v -> {
-            SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-            DateSubject dateSubject = app.getDateSubject();
+        view.advancedDate.setOnClickListener(v -> {
             dateSubject.advanceDate();
-            activityModel.dateAdvanced();
+//            activityModel.dateAdvanced();
         });
+//        view.cardList.setOnClickListener(v -> {
+//            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().setDate(new Date());
+//        });
+
 
         return view.getRoot();
     }

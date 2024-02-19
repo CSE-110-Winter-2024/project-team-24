@@ -1,4 +1,6 @@
-package edu.ucsd.cse110.successorator.lib.util;
+package edu.ucsd.cse110.successorator.util;
+
+import android.content.SharedPreferences;
 
 import androidx.annotation.Nullable;
 
@@ -6,22 +8,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+
+import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
+import edu.ucsd.cse110.successorator.lib.util.Observer;
 
 public class DateSubject implements MutableSubject<Date> {
     private Date currentDate;
     private final List<Observer<Date>> observers = new ArrayList<>();
-
+    private SharedPreferences sharedPreferences;
 
     @Override
-    public void setValue(Date value) {
+    public void setDate(Date value) {
         this.currentDate = value;
+        this.saveDate();
         notifyObservers();
+    }
+
+    public void setSharedPreferences(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
     }
 
     @Nullable
     @Override
-    public Date getValue() {
+    public Date getDate() {
         return currentDate;
     }
 
@@ -49,6 +58,14 @@ public class DateSubject implements MutableSubject<Date> {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.DATE, 1);
-        setValue(calendar.getTime());
+        setDate(calendar.getTime());
+    }
+
+    public void saveDate() {
+        sharedPreferences.edit().putLong("lastDate", currentDate.getTime()).apply();
+    }
+
+    public void loadDate() {
+        this.setDate(new Date(sharedPreferences.getLong("lastDate", new Date().getTime())));
     }
 }

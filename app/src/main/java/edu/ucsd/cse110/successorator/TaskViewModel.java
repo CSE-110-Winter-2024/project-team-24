@@ -9,10 +9,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
-import edu.ucsd.cse110.successorator.lib.util.DateSubject;
 import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
@@ -43,14 +41,14 @@ public class TaskViewModel extends ViewModel {
             if (cards == null) return;
 
             var newOrderedCards = cards.stream().sorted(Comparator.comparingInt(Task::sortOrder)).collect(Collectors.toList());
-            orderedTasks.setValue(newOrderedCards);
+            orderedTasks.setDate(newOrderedCards);
         });
 
         // When the ordering changes, update the top card:
         orderedTasks.observe(cards -> {
             if (cards == null || cards.size() == 0) return;
             var card = cards.get(0);
-            this.topTask.setValue(card);
+            this.topTask.setDate(card);
         });
     }
 

@@ -15,7 +15,7 @@ public class LiveDataSubjectAdapter<T> implements Subject<T> {
 
     @Nullable
     @Override
-    public T getValue() {
+    public T getDate() {
         return adaptee.getValue();
     }
 

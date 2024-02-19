@@ -50,7 +50,7 @@ public class InMemoryDataSource {
     public Subject<Task> getTaskSubject(int id) {
         if (!taskSubjects.containsKey(id)) {
             var subject = new SimpleSubject<Task>();
-            subject.setValue(getTask(id));
+            subject.setDate(getTask(id));
             taskSubjects.put(id, subject);
         }
         return taskSubjects.get(id);
@@ -76,9 +76,9 @@ public class InMemoryDataSource {
         assertSortOrderConstraints();
 
         if (taskSubjects.containsKey(fixedCard.id())) {
-            taskSubjects.get(fixedCard.id()).setValue(fixedCard);
+            taskSubjects.get(fixedCard.id()).setDate(fixedCard);
         }
-        allFlashcardsSubject.setValue(getTasks());
+        allFlashcardsSubject.setDate(getTasks());
         for (Task t : tasks.values()) {
             System.out.println(t.toString());
         }
@@ -96,10 +96,10 @@ public class InMemoryDataSource {
 
         fixedCards.forEach(card -> {
             if (taskSubjects.containsKey(card.id())) {
-                taskSubjects.get(card.id()).setValue(card);
+                taskSubjects.get(card.id()).setDate(card);
             }
         });
-        allFlashcardsSubject.setValue(getTasks());
+        allFlashcardsSubject.setDate(getTasks());
     }
 
     public void removeTask(int id) {
@@ -110,9 +110,9 @@ public class InMemoryDataSource {
         shiftSortOrders(sortOrder, maxSortOrder, -1);
 
         if (taskSubjects.containsKey(id)) {
-            taskSubjects.get(id).setValue(null);
+            taskSubjects.get(id).setDate(null);
         }
-        allFlashcardsSubject.setValue(getTasks());
+        allFlashcardsSubject.setDate(getTasks());
     }
 
     public void shiftSortOrders(int from, int to, int by) {

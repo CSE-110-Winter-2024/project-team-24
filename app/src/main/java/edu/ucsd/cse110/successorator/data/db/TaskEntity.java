@@ -6,7 +6,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import edu.ucsd.cse110.successorator.lib.domain.Task;
-import edu.ucsd.cse110.successorator.lib.util.DateSubject;
 
 @Entity(tableName = "tasks")
 public class TaskEntity {

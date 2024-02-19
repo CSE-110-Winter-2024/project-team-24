@@ -12,9 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
+import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
@@ -48,6 +50,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         updateTextView(binding.taskText, task);
 
         binding.taskText.setOnClickListener(v -> {
+//            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().setDate(new Date());
             consumer.accept(task);
         });
 
