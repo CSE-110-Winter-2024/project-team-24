@@ -14,6 +14,7 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 
 /**
@@ -24,10 +25,13 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
+    @BeforeEach
+    public void setUp() {
+        ActivityScenario.launch(MainActivity.class);
+    }
 
     @Test
     public void addTask() {
-        ActivityScenario.launch(MainActivity.class);
         onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Test Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Create")).perform(click());
@@ -36,13 +40,10 @@ public class MainActivityTest {
 
     @Test
     public void addEmptyTask() {
-        ActivityScenario.launch(MainActivity.class);
         onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText(""), ViewActions.closeSoftKeyboard());
         onView(withText("Create")).perform(click());
         onView(withId(R.id.add_task_dialog)).check(doesNotExist());
-
-
     }
 
 

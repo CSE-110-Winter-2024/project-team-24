@@ -34,8 +34,10 @@ public class DateUpdater implements Observer<Date> {
 //            roomTasksRepository.dateAdvanced();
 //        }
 
-        if (day >= prevDay && prevMinute < 42 && minute >= 42) {
+        if (day >= prevDay && prevMinute < 10 && minute >= 10) {
             roomTasksRepository.dateAdvanced();
         }
+
+        this.date = value;
     }
 }

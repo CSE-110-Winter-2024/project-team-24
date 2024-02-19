@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(view.getRoot());
 
+        view.fragmentContainer.setOnClickListener(v -> {
+            ((SuccessoratorApplication) getApplicationContext()).getDateSubject().setDate(new Date());
+        });
+
         // Instantiate the actionBarUpdater
         ActionBarUpdater actionBarUpdater = new ActionBarUpdater(this);
 

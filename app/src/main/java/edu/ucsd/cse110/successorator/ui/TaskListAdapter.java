@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -49,8 +50,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         updateTextView(binding.taskText, task);
 
         binding.taskText.setOnClickListener(v -> {
+//            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().setDate(new Date());
             consumer.accept(task);
-            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().loadDate();
         });
 
         return binding.getRoot();
