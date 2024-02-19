@@ -11,9 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Date;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
-import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
-import edu.ucsd.cse110.successorator.lib.util.DateSubject;
+import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Set to current day, notifies ActionBarUpdater
         DateSubject dateSubject = ((SuccessoratorApplication) getApplicationContext()).getDateSubject();
-        dateSubject.setValue(new Date());
+        dateSubject.setDate(new Date());
+        dateSubject.loadDate();
     }
 
     @Override

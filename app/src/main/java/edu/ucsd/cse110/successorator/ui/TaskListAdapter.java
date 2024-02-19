@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
@@ -49,6 +50,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
 
         binding.taskText.setOnClickListener(v -> {
             consumer.accept(task);
+            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().loadDate();
         });
 
         return binding.getRoot();

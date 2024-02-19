@@ -1,21 +1,17 @@
 package edu.ucsd.cse110.successorator;
 
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.icu.util.Calendar;
-
-import java.util.Date;
 
 import androidx.room.Room;
+
+import java.util.Date;
 
 import edu.ucsd.cse110.successorator.data.db.RoomTasksRepository;
 import edu.ucsd.cse110.successorator.data.db.SuccessoratorDatabase;
 import edu.ucsd.cse110.successorator.lib.data.InMemoryDataSource;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
-import edu.ucsd.cse110.successorator.lib.util.DateSubject;
+import edu.ucsd.cse110.successorator.util.DateSubject;
+import edu.ucsd.cse110.successorator.util.DateUpdater;
 
 public class SuccessoratorApplication extends Application {
     private ITasksRepository tasksRepository;
@@ -24,7 +20,7 @@ public class SuccessoratorApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-    
+
         this.dateSubject = new DateSubject();
 
         var database = Room.databaseBuilder(
@@ -33,6 +29,7 @@ public class SuccessoratorApplication extends Application {
                 "successorator-database"
         ).allowMainThreadQueries().build();
         this.tasksRepository = new RoomTasksRepository(database.taskDao());
+
         var sharedPreferences = getSharedPreferences("successorator", MODE_PRIVATE);
         var isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
         if (isFirstRun && database.taskDao().count() == 0) {
@@ -41,6 +38,10 @@ public class SuccessoratorApplication extends Application {
             sharedPreferences.edit().putBoolean("isFirstRun", false).apply();
         }
 
+        this.dateSubject.setSharedPreferences(sharedPreferences);
+        this.dateSubject.loadDate();
+
+        this.dateSubject.observe(new DateUpdater(tasksRepository, dateSubject.getDate()));
     }
 
     public ITasksRepository getTasksRepository() {

@@ -10,13 +10,13 @@ public class SimpleSubject<T> implements MutableSubject<T> {
 
     @Override
     @Nullable
-    public T getValue() {
+    public T getDate() {
         return value;
     }
 
 
     @Override
-    public void setValue(T value) {
+    public void setDate(T value) {
         this.value = value;
         notifyObservers();
     }
