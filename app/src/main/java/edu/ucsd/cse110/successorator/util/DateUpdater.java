@@ -30,7 +30,7 @@ public class DateUpdater implements Observer<Date> {
         int prevHour = calendar.get(Calendar.HOUR_OF_DAY);
         int prevDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        if (day >= prevDay && prevHour < 2 && hour >= 2) {
+        if (day > prevDay || (day >= prevDay && prevHour < 2 && hour >= 2)) {
             roomTasksRepository.dateAdvanced();
         }
 
