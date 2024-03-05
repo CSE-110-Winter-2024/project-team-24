@@ -10,12 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 import android.util.Log;
-
+import java.util.Date;
 
 public class CreateTaskDialogFragment extends DialogFragment {
 
@@ -36,17 +37,15 @@ public class CreateTaskDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         this.view = FragmentDialogCreateTaskBinding.inflate(getLayoutInflater());
-        // Create the radio button list items
-        String[] items = {"One-Time", "Daily", "Weekly on Tu", "Monthly 3rd Tu", "Yearly on 2/20"};
-        // Set the default checked item (index of items array, in this case 'one-time' is checked by default)
-        int checkedItem = 0;
+        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+        Date today = app.getDateSubject().getDate();
 
         return new AlertDialog.Builder(getActivity())
                 .setView(view.getRoot())
-                .setTitle("New Task")
+//                .setTitle("New Task")
                 .setPositiveButton("Create", this::onPositiveButtonClick)
                 .setNegativeButton("Cancel", this::onNegativeButtonClick)
-                .setMessage("Please provide the new task.")
+//                .setMessage("Please provide the new task.")
                 .create();
     }
 
