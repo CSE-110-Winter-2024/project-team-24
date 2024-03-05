@@ -14,6 +14,8 @@ import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
+import android.util.Log;
+
 
 public class CreateTaskDialogFragment extends DialogFragment {
 
@@ -42,22 +44,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(view.getRoot())
                 .setTitle("New Task")
-                // Replace 'setPositiveButton' with 'setSingleChoiceItems' for radio buttons
-                .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle the radio button selection
-                    }
-                })
-                // Change button text to "Save" and handle click
-                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Handle the Save button click
-                        int selectedPosition = ((AlertDialog)dialogInterface).getListView().getCheckedItemPosition();
-                        // Do something with the position
-                    }
-                })
+                .setPositiveButton("Create", this::onPositiveButtonClick)
                 .setNegativeButton("Cancel", this::onNegativeButtonClick)
                 .setMessage("Please provide the new task.")
                 .create();
@@ -70,10 +57,22 @@ public class CreateTaskDialogFragment extends DialogFragment {
             return;
         }
 
+        if (view.radioOneTime.isChecked()) {
+            Log.i("OneTime Add", dialog.toString());
+        } else if (view.radioDaily.isChecked()) {
+            Log.i("Daily Add", dialog.toString());
+        } else if (view.radioWeekly.isChecked()) {
+            Log.i("Weekly Add", dialog.toString());
+        } else if (view.radioMonthly.isChecked()) {
+            Log.i("Monthly Add", dialog.toString());
+        } else if (view.radioYearly.isChecked()) {
+            Log.i("Yearly Add", dialog.toString());
+        } else {
+            throw new IllegalStateException("No Selection Made");
+        }
+
         var task = new Task(null, input, 0, false);
         activityModel.append(task);
-
-
         dialog.dismiss();
     }
 
