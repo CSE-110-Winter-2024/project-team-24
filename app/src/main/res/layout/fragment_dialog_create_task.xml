@@ -41,19 +41,20 @@
         <RadioButton
             android:id="@+id/radio_weekly"
             android:layout_width="238dp"
+            android:layout_height="wrap_content"
             android:text="Weekly on" />
 
         <RadioButton
             android:id="@+id/radio_monthly"
             android:layout_width="247dp"
             android:layout_height="wrap_content"
-            android:text="Monthly " />
+            android:text="Monthly on" />
 
         <RadioButton
             android:id="@+id/radio_yearly"
             android:layout_width="245dp"
             android:layout_height="wrap_content"
-            android:text="Yearly on " />
+            android:text="Yearly on" />
     </RadioGroup>
 
     <Button

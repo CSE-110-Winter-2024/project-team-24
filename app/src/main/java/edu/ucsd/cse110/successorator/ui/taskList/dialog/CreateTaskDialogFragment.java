@@ -16,7 +16,10 @@ import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 import android.util.Log;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class CreateTaskDialogFragment extends DialogFragment {
 
@@ -37,19 +40,51 @@ public class CreateTaskDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         this.view = FragmentDialogCreateTaskBinding.inflate(getLayoutInflater());
-        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        Date today = app.getDateSubject().getDate();
 
+        this.radioSetup();
         return new AlertDialog.Builder(getActivity())
                 .setView(view.getRoot())
-//                .setTitle("New Task")
-                .setPositiveButton("Create", this::onPositiveButtonClick)
-                .setNegativeButton("Cancel", this::onNegativeButtonClick)
-//                .setMessage("Please provide the new task.")
                 .create();
     }
 
-    private void onPositiveButtonClick(DialogInterface dialog, int which) {
+    private void radioSetup() {
+        view.radioOneTime.toggle();
+        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
+
+        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+        Date today = app.getDateSubject().getDate();
+        assert today != null;
+
+        SimpleDateFormat dayOfWeek = new SimpleDateFormat("EE", Locale.getDefault());
+        SimpleDateFormat dateFormatYearly = new SimpleDateFormat("M/d", Locale.getDefault());
+        SimpleDateFormat dateNumber = new SimpleDateFormat("d", Locale.getDefault());
+
+        int dayNumber = Integer.parseInt(dateNumber.format(today));
+        String dateSuffix;
+        if (dayNumber >= 11 && dayNumber <= 13) {
+            dateSuffix = "th";
+        } else {
+            switch (dayNumber % 10) {
+                case 1:
+                    dateSuffix = "st";
+                    break;
+                case 2:
+                    dateSuffix = "nd";
+                    break;
+                case 3:
+                    dateSuffix = "rd";
+                    break;
+                default:
+                    dateSuffix = "th";
+            }
+        }
+        view.radioWeekly.append(" " + dayOfWeek.format(today));
+        view.radioMonthly.append(" " + dayNumber + dateSuffix + " " + dayOfWeek.format(today));
+        view.radioYearly.append(" " + dateFormatYearly.format(today));
+    }
+
+
+    private void addTask(DialogInterface dialog) {
         String input = view.addTaskDialog.getText().toString();
         if (input.length() == 0) {
             dialog.dismiss();
@@ -75,9 +110,10 @@ public class CreateTaskDialogFragment extends DialogFragment {
         dialog.dismiss();
     }
 
-    private void onNegativeButtonClick(DialogInterface dialog, int which) {
-        dialog.cancel();
-    }
+    // might need in the future
+//    private void onNegativeButtonClick(DialogInterface dialog, int which) {
+//        dialog.cancel();
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
