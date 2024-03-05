@@ -34,15 +34,62 @@ public class MainActivityTest {
     public void addTask() {
         onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Test Goal"), ViewActions.closeSoftKeyboard());
-        onView(withText("Create")).perform(click());
-        onView(withText("Test Goal")).check(matches(isDisplayed()));
+        onView(withText("Save")).perform(click());
+        onView(withText("Test Goal 1")).check(matches(isDisplayed()));
     }
+
+
+    @Test
+    public void addOneTimeTask() {
+        onView(withId(R.id.add_task)).perform(click());
+        onView(withId(R.id.radio_one_time)).perform(click());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("One Time Goal"), ViewActions.closeSoftKeyboard());
+        onView(withText("Save")).perform(click());
+        onView(withText("One Time Goal 1")).check(matches(isDisplayed()));
+
+    }
+    @Test
+    public void addDailyTask() {
+        onView(withId(R.id.add_task)).perform(click());
+        onView(withId(R.id.radio_daily)).perform(click());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("Daily Goal"), ViewActions.closeSoftKeyboard());
+        onView(withText("Save")).perform(click());
+        onView(withText("Daily Goal 2")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void addWeeklyTask() {
+        onView(withId(R.id.add_task)).perform(click());
+        onView(withId(R.id.radio_weekly)).perform(click());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("Weekly Goal"), ViewActions.closeSoftKeyboard());
+        onView(withText("Save")).perform(click());
+        onView(withText("Weekly Goal 3")).check(matches(isDisplayed()));
+    }
+    @Test
+    public void addMonthlyTask() {
+        onView(withId(R.id.add_task)).perform(click());
+        onView(withId(R.id.radio_monthly)).perform(click());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("Monthly Goal"), ViewActions.closeSoftKeyboard());
+        onView(withText("Save")).perform(click());
+        onView(withText("Monthly Goal 4")).check(matches(isDisplayed()));
+    }
+    @Test
+    public void addYearlyTask() {
+        onView(withId(R.id.add_task)).perform(click());
+        onView(withId(R.id.radio_yearly)).perform(click());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("Yearly Goal"), ViewActions.closeSoftKeyboard());
+        onView(withText("Save")).perform(click());
+        onView(withText("Yearly Goal 5")).check(matches(isDisplayed()));
+    }
+
 
     @Test
     public void addEmptyTask() {
         onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText(""), ViewActions.closeSoftKeyboard());
-        onView(withText("Create")).perform(click());
+        onView(withText("Save")).perform(click());
         onView(withId(R.id.add_task_dialog)).check(doesNotExist());
     }
+
+
 }

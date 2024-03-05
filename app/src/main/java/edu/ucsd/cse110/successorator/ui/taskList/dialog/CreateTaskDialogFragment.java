@@ -90,22 +90,28 @@ public class CreateTaskDialogFragment extends DialogFragment {
             dialog.dismiss();
             return;
         }
+        String frequency = "";
 
         if (view.radioOneTime.isChecked()) {
             Log.i("OneTime Add", dialog.toString());
+            frequency = " 1";
         } else if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
+            frequency = " 2";
         } else if (view.radioWeekly.isChecked()) {
             Log.i("Weekly Add", dialog.toString());
+            frequency = " 3";
         } else if (view.radioMonthly.isChecked()) {
             Log.i("Monthly Add", dialog.toString());
+            frequency = " 4";
         } else if (view.radioYearly.isChecked()) {
             Log.i("Yearly Add", dialog.toString());
+            frequency = " 5";
         } else {
             throw new IllegalStateException("No Selection Made");
         }
 
-        var task = new Task(null, input, 0, false);
+        var task = new Task(null, input + frequency, 0, false);
         activityModel.append(task);
         dialog.dismiss();
     }
