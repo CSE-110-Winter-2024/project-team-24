@@ -3,4 +3,7 @@
     <string name="placeholder">Placeholder</string>
     <string name="hello_world">Hello, World!</string>
     <string name="add_task">Add Task</string>
+    <string name="task_hint">Type Task Here</string>
+    <string name="one_time_task">One Time</string>
+    <string name="daily_task">Daily</string>
 </resources>
