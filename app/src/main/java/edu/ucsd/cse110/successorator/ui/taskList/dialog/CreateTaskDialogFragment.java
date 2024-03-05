@@ -36,11 +36,11 @@ public class CreateTaskDialogFragment extends DialogFragment {
         this.view = FragmentDialogCreateTaskBinding.inflate(getLayoutInflater());
 
         return new AlertDialog.Builder(getActivity())
-                .setTitle("New Task")
-                .setMessage("Please provide the new task.")
                 .setView(view.getRoot())
+                .setTitle("New Task")
                 .setPositiveButton("Create", this::onPositiveButtonClick)
                 .setNegativeButton("Cancel", this::onNegativeButtonClick)
+                .setMessage("Please provide the new task.")
                 .create();
     }
 
