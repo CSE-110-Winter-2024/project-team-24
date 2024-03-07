@@ -13,11 +13,16 @@ import androidx.lifecycle.ViewModelProvider;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
+import edu.ucsd.cse110.successorator.lib.domain.DailyRecurring;
+import edu.ucsd.cse110.successorator.lib.domain.RecurringType;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.WeeklyRecurring;
+import edu.ucsd.cse110.successorator.util.DateSubject;
 
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,7 +57,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
         view.saveButton.setOnClickListener(v -> addTask(getDialog()));
 
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        Date today = app.getDateSubject().getDate();
+        Date today = app.getDateSubject().getItem();
         assert today != null;
 
         SimpleDateFormat dayOfWeek = new SimpleDateFormat("EE", Locale.getDefault());
@@ -92,15 +97,22 @@ public class CreateTaskDialogFragment extends DialogFragment {
         }
         String frequency = "";
 
+        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+        DateSubject dateSubject = app.getDateSubject();
+
+        RecurringType recurringType = null;
+
         if (view.radioOneTime.isChecked()) {
             Log.i("OneTime Add", dialog.toString());
             frequency = " 1";
         } else if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
             frequency = " 2";
+            recurringType = new DailyRecurring();
         } else if (view.radioWeekly.isChecked()) {
             Log.i("Weekly Add", dialog.toString());
             frequency = " 3";
+            recurringType = new WeeklyRecurring(dateSubject.getDayOfWeek());
         } else if (view.radioMonthly.isChecked()) {
             Log.i("Monthly Add", dialog.toString());
             frequency = " 4";
@@ -111,7 +123,11 @@ public class CreateTaskDialogFragment extends DialogFragment {
             throw new IllegalStateException("No Selection Made");
         }
 
-        var task = new Task(null, input + frequency, 0, false);
+        if (recurringType != null) {
+            dateSubject.observe(recurringType);
+        }
+        var task = new Task(null, input + frequency, 0, false, recurringType);
+
         activityModel.append(task);
         dialog.dismiss();
     }

@@ -66,12 +66,12 @@ public class RoomTasksRepository implements ITasksRepository {
 
         if (firstCheckedOff.isPresent()) {
             newSortOrder = firstCheckedOff.get().sortOrder();
-            System.out.println(firstCheckedOff.get().getTask());
+            System.out.println(firstCheckedOff.get().getTaskName());
             System.out.println(newSortOrder);
         }
 
         tasksDao.shiftSortOrders(newSortOrder, maxSortOrder, 1);
-        save(new Task(task.id(), task.getTask(), newSortOrder, task.getCheckOff()));
+        save(new Task(task.id(), task.getTaskName(), newSortOrder, task.getCheckOff()));
     }
 
     @Override

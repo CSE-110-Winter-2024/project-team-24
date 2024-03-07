@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import edu.ucsd.cse110.successorator.lib.domain.RecurringType;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 @Entity(tableName = "tasks")
@@ -22,19 +23,23 @@ public class TaskEntity {
     @ColumnInfo(name = "sort_order")
     public Integer sortOrder;
 
-    TaskEntity(@NonNull String task, @NonNull boolean checkoff, Integer sortOrder) {
-        this.task = task;
+    @ColumnInfo(name = "recurring_type")
+    public RecurringType recurringType;
+
+    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType) {
+        this.task = taskName;
         this.checkoff = checkoff;
         this.sortOrder = sortOrder;
+        this.recurringType = recurringType;
     }
 
     public static TaskEntity fromTask(@NonNull Task task) {
-        var card = new TaskEntity(task.getTask(), task.getCheckOff(), task.sortOrder());
+        var card = new TaskEntity(task.getTaskName(), task.getCheckOff(), task.sortOrder(), task.getRecurringType());
         card.id = task.id();
         return card;
     }
 
     public @NonNull Task toTask() {
-        return new Task(id, task, sortOrder, checkoff);
+        return new Task(id, task, sortOrder, checkoff, recurringType);
     }
 }

@@ -42,7 +42,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             binding = ListItemTaskBinding.inflate(layoutInflater, parent, false);
         }
 
-        binding.taskText.setText(task.getTask());
+        binding.taskText.setText(task.getTaskName());
         updateTextView(binding.taskText, task);
 
         binding.taskText.setOnClickListener(v -> {

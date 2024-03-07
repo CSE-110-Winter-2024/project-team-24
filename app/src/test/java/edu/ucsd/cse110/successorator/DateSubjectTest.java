@@ -18,25 +18,25 @@ public class DateSubjectTest {
     public void setUp() {
         dateSubject = new DateSubject();
         initialDate = new Date();
-        dateSubject.setDate(initialDate);
+        dateSubject.setItem(initialDate);
     }
 
     @Test
     public void testSetDate() {
         Date newDate = new Date(initialDate.getTime() + 1000 * 60 * 60 * 24); // Adds one day
-        dateSubject.setDate(newDate);
-        assertEquals(newDate, dateSubject.getDate());
+        dateSubject.setItem(newDate);
+        assertEquals(newDate, dateSubject.getItem());
     }
 
     @Test
     public void testGetDate() {
-        assertEquals(initialDate, dateSubject.getDate());
+        assertEquals(initialDate, dateSubject.getItem());
     }
 
     @Test
     public void testAdvanceDate() {
         dateSubject.advanceDate();
         Date expectedDate = new Date(initialDate.getTime() + 1000 * 60 * 60 * 24);
-        assertEquals(expectedDate, dateSubject.getDate());
+        assertEquals(expectedDate, dateSubject.getItem());
     }
 }

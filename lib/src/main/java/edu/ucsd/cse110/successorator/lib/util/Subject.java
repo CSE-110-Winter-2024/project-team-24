@@ -9,7 +9,7 @@ public interface Subject<T> {
      * @return The current (possibly null) value of the subject.
      */
     @Nullable
-    T getDate();
+    T getItem();
 
 
     /**

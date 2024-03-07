@@ -18,7 +18,7 @@ public class DateSubject implements MutableSubject<Date> {
     private SharedPreferences sharedPreferences;
 
     @Override
-    public void setDate(Date value) {
+    public void setItem(Date value) {
         this.currentDate = value;
         this.saveDate();
         notifyObservers();
@@ -30,7 +30,7 @@ public class DateSubject implements MutableSubject<Date> {
 
     @Nullable
     @Override
-    public Date getDate() {
+    public Date getItem() {
         return currentDate;
     }
 
@@ -58,7 +58,7 @@ public class DateSubject implements MutableSubject<Date> {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.DATE, 1);
-        setDate(calendar.getTime());
+        setItem(calendar.getTime());
     }
 
     public void saveDate() {
@@ -69,6 +69,12 @@ public class DateSubject implements MutableSubject<Date> {
     }
 
     public void loadDate() {
-        this.setDate(new Date(sharedPreferences.getLong("lastDate", new Date().getTime())));
+        this.setItem(new Date(sharedPreferences.getLong("lastDate", new Date().getTime())));
+    }
+
+    public int getDayOfWeek() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.DAY_OF_WEEK);
     }
 }

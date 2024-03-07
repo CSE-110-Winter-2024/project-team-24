@@ -41,14 +41,14 @@ public class TaskViewModel extends ViewModel {
             if (cards == null) return;
 
             var newOrderedCards = cards.stream().sorted(Comparator.comparingInt(Task::sortOrder)).collect(Collectors.toList());
-            orderedTasks.setDate(newOrderedCards);
+            orderedTasks.setItem(newOrderedCards);
         });
 
         // When the ordering changes, update the top card:
         orderedTasks.observe(cards -> {
             if (cards == null || cards.size() == 0) return;
             var card = cards.get(0);
-            this.topTask.setDate(card);
+            this.topTask.setItem(card);
         });
     }
 

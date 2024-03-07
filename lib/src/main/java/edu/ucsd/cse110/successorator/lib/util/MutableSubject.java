@@ -6,5 +6,5 @@ public interface MutableSubject<T> extends Subject<T> {
      *
      * @param value The new value of the subject.
      */
-    void setDate(T value);
+    void setItem(T value);
 }
