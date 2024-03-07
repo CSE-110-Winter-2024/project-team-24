@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class WeeklyRecurring implements RecurringType {
+public class WeeklyRecurring extends RecurringType {
     Date currDate;
     int dayOfWeek;
     public WeeklyRecurring(int dayOfWeek) {
@@ -22,5 +22,11 @@ public class WeeklyRecurring implements RecurringType {
     @Override
     public void onChanged(@Nullable Date value) {
         currDate = value;
+    }
+
+    @Override
+    public String toString() {
+        return "WeeklyRecurring-" +
+                "dayOfWeek=" + dayOfWeek;
     }
 }

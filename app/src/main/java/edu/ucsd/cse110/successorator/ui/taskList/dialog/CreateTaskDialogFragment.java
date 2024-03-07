@@ -108,7 +108,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
         } else if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
             frequency = " 2";
-            recurringType = new DailyRecurring();
+//            recurringType = new DailyRecurring();
         } else if (view.radioWeekly.isChecked()) {
             Log.i("Weekly Add", dialog.toString());
             frequency = " 3";

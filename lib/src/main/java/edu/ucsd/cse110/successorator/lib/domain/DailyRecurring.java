@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Date;
 
-public class DailyRecurring implements RecurringType {
+public class DailyRecurring extends RecurringType {
     @Override
     public Boolean checkIfToday() {
         return true;
@@ -13,5 +13,10 @@ public class DailyRecurring implements RecurringType {
     @Override
     public void onChanged(@Nullable Date value) {
 
+    }
+
+    @Override
+    public String toString() {
+        return "DailyRecurring-";
     }
 }
