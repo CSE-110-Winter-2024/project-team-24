@@ -14,8 +14,8 @@ public class TaskEntity {
     @ColumnInfo(name = "id")
     public Integer id = null;
 
-    @ColumnInfo(name = "task")
-    public String task;
+    @ColumnInfo(name = "taskName")
+    public String taskName;
 
     @ColumnInfo(name = "checkoff")
     public boolean checkoff;
@@ -27,7 +27,7 @@ public class TaskEntity {
     public RecurringType recurringType;
 
     TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType) {
-        this.task = taskName;
+        this.taskName = taskName;
         this.checkoff = checkoff;
         this.sortOrder = sortOrder;
         this.recurringType = recurringType;
@@ -40,6 +40,6 @@ public class TaskEntity {
     }
 
     public @NonNull Task toTask() {
-        return new Task(id, task, sortOrder, checkoff, recurringType);
+        return new Task(id, taskName, sortOrder, checkoff, recurringType);
     }
 }
