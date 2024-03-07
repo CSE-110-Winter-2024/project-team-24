@@ -64,7 +64,7 @@ public class TaskViewModel extends ViewModel {
         return orderedTasks;
     }
 
-    public void append(Task card) {
-        tasksRepository.appendToEndOfUnfinishedTasks(card);
+    public void append(Task task) {
+        tasksRepository.appendToEndOfUnfinishedTasks(task);
     }
 }

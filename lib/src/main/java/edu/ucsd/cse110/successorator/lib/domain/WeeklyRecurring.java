@@ -26,7 +26,6 @@ public class WeeklyRecurring extends RecurringType {
 
     @Override
     public String toString() {
-        return "WeeklyRecurring-" +
-                "dayOfWeek=" + dayOfWeek;
+        return "WeeklyRecurring-" + dayOfWeek;
     }
 }

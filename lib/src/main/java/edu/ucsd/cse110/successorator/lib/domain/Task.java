@@ -13,14 +13,6 @@ public class Task implements Serializable {
     private final @NonNull Boolean checkedOff;
     private final RecurringType recurringType;
 
-    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff) {
-        this.id = id;
-        this.taskName = taskName;
-        this.sortOrder = sortOrder;
-        this.checkedOff = checkedOff;
-        this.recurringType = null;
-    }
-
     public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType) {
         this.id = id;
         this.taskName = taskName;
