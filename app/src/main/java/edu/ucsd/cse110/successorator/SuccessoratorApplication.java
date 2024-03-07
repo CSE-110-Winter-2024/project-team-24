@@ -30,7 +30,7 @@ public class SuccessoratorApplication extends Application {
         ).allowMainThreadQueries().build();
         this.tasksRepository = new RoomTasksRepository(database.taskDao());
 
-        List<Task> tasks = this.tasksRepository.findAll().getItem();
+        List<Task> tasks = this.tasksRepository.findAll();
         if (tasks != null) {
             for (Task task : tasks) {
                 if (task.isRecurring()) {

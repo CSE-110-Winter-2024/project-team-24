@@ -7,7 +7,9 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 public interface ITasksRepository {
     Subject<Task> find(int id);
 
-    Subject<List<Task>> findAll();
+    List<Task> findAll();
+
+    Subject<List<Task>> findAllAsLiveData();
 
     void save(Task task);
 

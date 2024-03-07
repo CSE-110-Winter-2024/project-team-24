@@ -37,7 +37,7 @@ public class TaskViewModel extends ViewModel {
         this.topTask = new SimpleSubject<>();
 
         // When the list of cards changes (or is first loaded), reset the ordering:
-        tasksRepository.findAll().observe(cards -> {
+        tasksRepository.findAllAsLiveData().observe(cards -> {
             if (cards == null) return;
 
             var newOrderedCards = cards.stream().sorted(Comparator.comparingInt(Task::sortOrder)).collect(Collectors.toList());

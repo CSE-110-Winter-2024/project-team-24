@@ -37,7 +37,7 @@ public class DateUpdater implements Observer<Date> {
         }
         this.date = value;
 
-        List<Task> tasks = roomTasksRepository.findAll().getItem();
+        List<Task> tasks = roomTasksRepository.findAll();
         if (tasks == null) return;
 
         for (Task task : tasks) {

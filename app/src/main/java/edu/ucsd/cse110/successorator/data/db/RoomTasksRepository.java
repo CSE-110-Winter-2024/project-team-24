@@ -28,8 +28,11 @@ public class RoomTasksRepository implements ITasksRepository {
         return new LiveDataSubjectAdapter<>(taskLiveData);
     }
 
-    @Override
-    public Subject<List<Task>> findAll() {
+    public List<Task> findAll() {
+        return tasksDao.findAll().stream().map(TaskEntity::toTask).collect(Collectors.toList());
+    }
+
+    public Subject<List<Task>> findAllAsLiveData() {
         var entityLiveData = tasksDao.findAllAsLiveData();
         var taskLiveData = Transformations.map(entityLiveData, entities -> {
             return entities.stream().map(TaskEntity::toTask).collect(Collectors.toList());
