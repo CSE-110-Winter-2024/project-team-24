@@ -106,7 +106,9 @@ public class RoomTasksRepository implements ITasksRepository {
         List<Task> tasks = Objects.requireNonNull(tasksDao.findAll().stream().map(TaskEntity::toTask).collect(Collectors.toList()));
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getCheckOff()) {
-                remove(tasks.get(i).id());
+                if (!tasks.get(i).isRecurring()) {
+                    remove(tasks.get(i).id());
+                }
             }
         }
     }

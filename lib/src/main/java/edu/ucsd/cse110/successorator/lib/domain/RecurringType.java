@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
 
 public abstract class RecurringType implements Observer<Date> {
-    abstract Boolean checkIfToday();
+    public abstract Boolean checkIfToday();
     public static RecurringType valueOf(String recurringTypeString) {
         String[] strSplit = recurringTypeString.split("-");
 

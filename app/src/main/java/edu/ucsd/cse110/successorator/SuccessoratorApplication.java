@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import java.util.Objects;
+import java.util.List;
 
 import edu.ucsd.cse110.successorator.data.db.RoomTasksRepository;
 import edu.ucsd.cse110.successorator.data.db.SuccessoratorDatabase;
@@ -30,11 +30,14 @@ public class SuccessoratorApplication extends Application {
         ).allowMainThreadQueries().build();
         this.tasksRepository = new RoomTasksRepository(database.taskDao());
 
-        for (Task task : Objects.requireNonNull(this.tasksRepository.findAll().getItem())) {
-            if (task.isRecurring()) {
-                this.dateSubject.observe(task.getRecurringType());
+        List<Task> tasks = this.tasksRepository.findAll().getItem();
+        if (tasks != null) {
+            for (Task task : tasks) {
+                if (task.isRecurring()) {
+                    this.dateSubject.observe(task.getRecurringType());
+                }
             }
-        };
+        }
 
         var sharedPreferences = getSharedPreferences("successorator", MODE_PRIVATE);
         var isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
