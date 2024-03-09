@@ -77,4 +77,22 @@ public class DateSubject implements MutableSubject<Date> {
         cal.setTime(currentDate);
         return cal.get(Calendar.DAY_OF_WEEK);
     }
+
+    public int getDayOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.MONTH);
+    }
+
+    public int getWeekOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.WEEK_OF_MONTH);
+    }
 }

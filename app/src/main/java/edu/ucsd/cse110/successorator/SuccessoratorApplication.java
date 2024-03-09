@@ -30,15 +30,6 @@ public class SuccessoratorApplication extends Application {
         ).allowMainThreadQueries().build();
         this.tasksRepository = new RoomTasksRepository(database.taskDao());
 
-        List<Task> tasks = this.tasksRepository.findAll();
-        if (tasks != null) {
-            for (Task task : tasks) {
-                if (task.isRecurring()) {
-                    this.dateSubject.observe(task.getRecurringType());
-                }
-            }
-        }
-
         var sharedPreferences = getSharedPreferences("successorator", MODE_PRIVATE);
         var isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
         if (isFirstRun && database.taskDao().count() == 0) {

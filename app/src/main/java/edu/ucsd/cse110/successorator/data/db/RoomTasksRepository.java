@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -103,13 +104,11 @@ public class RoomTasksRepository implements ITasksRepository {
     }
 
     @Override
-    public void dateAdvanced() {
+    public void dateAdvanced(Date date) {
         List<Task> tasks = Objects.requireNonNull(tasksDao.findAll().stream().map(TaskEntity::toTask).collect(Collectors.toList()));
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getCheckOff()) {
-                if (!tasks.get(i).isRecurring()) {
-                    remove(tasks.get(i).id());
-                }
+            if (tasks.get(i).getCheckOff() && !tasks.get(i).isRecurring()) {
+                remove(tasks.get(i).id());
             }
         }
     }

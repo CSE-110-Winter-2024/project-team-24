@@ -14,9 +14,11 @@ import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.DailyRecurring;
+import edu.ucsd.cse110.successorator.lib.domain.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.RecurringType;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.WeeklyRecurring;
+import edu.ucsd.cse110.successorator.lib.domain.YearlyRecurring;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 import android.util.Log;
@@ -116,16 +118,15 @@ public class CreateTaskDialogFragment extends DialogFragment {
         } else if (view.radioMonthly.isChecked()) {
             Log.i("Monthly Add", dialog.toString());
             frequency = " 4";
+            recurringType = new MonthlyRecurring(dateSubject.getWeekOfMonth(), dateSubject.getDayOfWeek());
         } else if (view.radioYearly.isChecked()) {
             Log.i("Yearly Add", dialog.toString());
+            recurringType = new YearlyRecurring(dateSubject.getMonth(), dateSubject.getDayOfMonth());
             frequency = " 5";
         } else {
             throw new IllegalStateException("No Selection Made");
         }
 
-        if (recurringType != null) {
-            dateSubject.observe(recurringType);
-        }
         var task = new Task(null, input + frequency, 0, false, recurringType);
 
         activityModel.append(task);
