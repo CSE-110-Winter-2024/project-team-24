@@ -33,4 +33,5 @@ public interface ITasksRepository {
     int generateRecurringID();
 
     void addOnetimeTask(Task task);
+    List<Task> filterByView(Task.IView view);
 }
