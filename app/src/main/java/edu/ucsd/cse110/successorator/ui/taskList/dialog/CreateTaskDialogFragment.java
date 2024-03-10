@@ -18,12 +18,12 @@ import java.util.Locale;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
-import edu.ucsd.cse110.successorator.lib.domain.DailyRecurring;
-import edu.ucsd.cse110.successorator.lib.domain.MonthlyRecurring;
-import edu.ucsd.cse110.successorator.lib.domain.RecurringType;
+import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
+import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
+import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
-import edu.ucsd.cse110.successorator.lib.domain.WeeklyRecurring;
-import edu.ucsd.cse110.successorator.lib.domain.YearlyRecurring;
+import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
+import edu.ucsd.cse110.successorator.lib.domain.recurring.YearlyRecurring;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 public class CreateTaskDialogFragment extends DialogFragment {

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
+
 public class TaskTest {
 
     @Test
