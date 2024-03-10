@@ -102,6 +102,9 @@ public class CreateTaskDialogFragment extends DialogFragment {
 
         RecurringType recurringType = null;
 
+        // TODO: Kyle and Gowtham - Adjust!
+        Task.IView screen_view = Task.IView.TODAY;
+
         if (view.radioOneTime.isChecked()) {
             Log.i("OneTime Add", dialog.toString());
             frequency = " 1";
@@ -126,7 +129,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
         }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID);
+        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, screen_view);
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().addOnetimeTask(task);

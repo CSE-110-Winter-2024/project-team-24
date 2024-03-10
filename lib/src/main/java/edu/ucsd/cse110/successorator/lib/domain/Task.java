@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
-import edu.ucsd.cse110.successorator.lib.domain.views.IView;
 
 public class Task implements Serializable {
     private final @NonNull Integer id;
@@ -17,6 +16,12 @@ public class Task implements Serializable {
     private final RecurringType recurringType;
     private final @NonNull Integer recurring_id;
     private final IView view;
+    public enum IView {
+        TODAY,
+        TOMORROW,
+        RECURRING,
+        PENDING
+    }
 
     public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id, IView view) {
         this.id = id;

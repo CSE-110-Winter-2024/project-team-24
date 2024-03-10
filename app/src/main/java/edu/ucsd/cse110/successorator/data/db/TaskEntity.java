@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey;
 
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
-import edu.ucsd.cse110.successorator.lib.domain.views.IView;
 
 @Entity(tableName = "tasks")
 public class TaskEntity {
@@ -31,9 +30,9 @@ public class TaskEntity {
     public Integer recurring_id;
 
     @ColumnInfo(name = "view")
-    public IView view;
+    public Task.IView view;
 
-    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType, Integer recurring_id, IView view) {
+    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType, Integer recurring_id, Task.IView view) {
         this.taskName = taskName;
         this.checkoff = checkoff;
         this.sortOrder = sortOrder;
