@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import edu.ucsd.cse110.successorator.lib.domain.RecurringType;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 
 @Entity(tableName = "tasks")
 public class TaskEntity {
@@ -29,21 +29,25 @@ public class TaskEntity {
     @ColumnInfo(name = "recurring_id")
     public Integer recurring_id;
 
-    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType, Integer recurring_id) {
+    @ColumnInfo(name = "view")
+    public Task.IView view;
+
+    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType, Integer recurring_id, Task.IView view) {
         this.taskName = taskName;
         this.checkoff = checkoff;
         this.sortOrder = sortOrder;
         this.recurringType = recurringType;
         this.recurring_id = recurring_id;
+        this.view = view;
     }
 
     public static TaskEntity fromTask(@NonNull Task task) {
-        var card = new TaskEntity(task.getTaskName(), task.getCheckOff(), task.sortOrder(), task.getRecurringType(), task.getRecurringID());
+        var card = new TaskEntity(task.getTaskName(), task.getCheckOff(), task.sortOrder(), task.getRecurringType(), task.getRecurringID(), task.getView());
         card.id = task.id();
         return card;
     }
 
     public @NonNull Task toTask() {
-        return new Task(id, taskName, sortOrder, checkoff, recurringType, recurring_id);
+        return new Task(id, taskName, sortOrder, checkoff, recurringType, recurring_id, view);
     }
 }

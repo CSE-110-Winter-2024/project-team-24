@@ -2,7 +2,8 @@ package edu.ucsd.cse110.successorator.data.db;
 
 import androidx.room.TypeConverter;
 
-import edu.ucsd.cse110.successorator.lib.domain.RecurringType;
+import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
+
 
 public class Converters {
     @TypeConverter

@@ -73,7 +73,7 @@ public class RoomTasksRepository implements ITasksRepository {
         }
 
         tasksDao.shiftSortOrders(newSortOrder, maxSortOrder, 1);
-        save(new Task(task.id(), task.getTaskName(), newSortOrder, task.getCheckOff(), task.getRecurringType(), task.getRecurringID()));
+        save(new Task(task.id(), task.getTaskName(), newSortOrder, task.getCheckOff(), task.getRecurringType(), task.getRecurringID(), task.getView()));
     }
 
     @Override
@@ -129,6 +129,11 @@ public class RoomTasksRepository implements ITasksRepository {
             return;
         }
         append(task.withNullRecurringType());
+    }
+
+    @Override
+    public List<Task> filterByView(Task.IView view) {
+        return findAll().stream().filter(e -> e.getView().equals(view)).collect(Collectors.toList());
     }
 }
 

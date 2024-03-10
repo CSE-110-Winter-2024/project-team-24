@@ -7,12 +7,14 @@ import androidx.room.Room;
 import edu.ucsd.cse110.successorator.data.db.RoomTasksRepository;
 import edu.ucsd.cse110.successorator.data.db.SuccessoratorDatabase;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.DateUpdater;
 
 public class SuccessoratorApplication extends Application {
     private ITasksRepository tasksRepository;
     private DateSubject dateSubject;
+    private Task.IView taskView;
 
     @Override
     public void onCreate() {
@@ -37,6 +39,7 @@ public class SuccessoratorApplication extends Application {
         this.dateSubject.loadDate();
 
         this.dateSubject.observe(new DateUpdater(tasksRepository, dateSubject.getItem()));
+        this.taskView = Task.IView.TODAY;
     }
 
     public ITasksRepository getTasksRepository() {
@@ -45,5 +48,8 @@ public class SuccessoratorApplication extends Application {
 
     public DateSubject getDateSubject() {
         return dateSubject;
+    }
+    public Task.IView getTaskView() {
+        return taskView;
     }
 }
