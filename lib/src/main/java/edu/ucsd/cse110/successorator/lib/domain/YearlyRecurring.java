@@ -6,8 +6,10 @@ import java.util.Date;
 public class YearlyRecurring extends RecurringType {
     int month;
     int date;
+
     public YearlyRecurring(int month, int date) {
-        this.month = month; this.date = date;
+        this.month = month;
+        this.date = date;
     }
 
     @Override

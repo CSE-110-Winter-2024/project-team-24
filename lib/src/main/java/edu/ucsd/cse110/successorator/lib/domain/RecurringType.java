@@ -3,8 +3,6 @@ package edu.ucsd.cse110.successorator.lib.domain;
 import java.util.Date;
 
 public abstract class RecurringType {
-    public abstract Boolean checkIfToday(Date date);
-
     public static RecurringType valueOf(String recurringTypeString) {
         String[] strSplit = recurringTypeString.split("-");
 
@@ -21,4 +19,6 @@ public abstract class RecurringType {
 
         return null;
     }
+
+    public abstract Boolean checkIfToday(Date date);
 }

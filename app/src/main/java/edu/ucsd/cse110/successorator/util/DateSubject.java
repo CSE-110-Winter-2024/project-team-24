@@ -13,16 +13,9 @@ import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
 
 public class DateSubject implements MutableSubject<Date> {
-    private Date currentDate;
     private final List<Observer<Date>> observers = new ArrayList<>();
+    private Date currentDate;
     private SharedPreferences sharedPreferences;
-
-    @Override
-    public void setItem(Date value) {
-        this.currentDate = value;
-        this.saveDate();
-        notifyObservers();
-    }
 
     public void setSharedPreferences(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
@@ -32,6 +25,13 @@ public class DateSubject implements MutableSubject<Date> {
     @Override
     public Date getItem() {
         return currentDate;
+    }
+
+    @Override
+    public void setItem(Date value) {
+        this.currentDate = value;
+        this.saveDate();
+        notifyObservers();
     }
 
     @Override

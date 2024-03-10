@@ -20,15 +20,6 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 public class TaskViewModel extends ViewModel implements Observer<Date> {
-    public ITasksRepository getTasksRepository() {
-        return tasksRepository;
-    }
-
-    private final ITasksRepository tasksRepository;
-    private final MutableSubject<Task> topTask;
-    private final MutableSubject<List<Task>> orderedTasks;
-    private DateSubject dateSubject;
-
     public static final ViewModelInitializer<TaskViewModel> initializer =
             new ViewModelInitializer<>(
                     TaskViewModel.class,
@@ -37,10 +28,12 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
                         assert app != null;
                         return new TaskViewModel(app.getTasksRepository(), app.getDateSubject());
                     });
+    private final ITasksRepository tasksRepository;
+    private final MutableSubject<Task> topTask;
+    private final MutableSubject<List<Task>> orderedTasks;
 
     public TaskViewModel(ITasksRepository tasksRepository, DateSubject dateSubject) {
         this.tasksRepository = tasksRepository;
-        this.dateSubject = dateSubject;
 
         // Create the observable subjects.
         this.orderedTasks = new SimpleSubject<>();
@@ -65,8 +58,8 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
         });
     }
 
-    public void dateAdvanced(Date date) {
-        tasksRepository.dateAdvanced(date);
+    public ITasksRepository getTasksRepository() {
+        return tasksRepository;
     }
 
     public void toggleTaskStrikethrough(Task task) {

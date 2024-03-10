@@ -27,6 +27,14 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         this.consumer = consumer;
     }
 
+    private static void updateTextView(TextView textView, Task task) {
+        if (task.getCheckOff()) {
+            textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            textView.setPaintFlags(textView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+    }
+
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,14 +59,6 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         });
 
         return binding.getRoot();
-    }
-
-    private static void updateTextView(TextView textView, Task task) {
-        if (task.getCheckOff()) {
-            textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            textView.setPaintFlags(textView.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-        }
     }
 
     @Override

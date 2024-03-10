@@ -29,6 +29,8 @@ public interface ITasksRepository {
     int size();
 
     void dateAdvanced(Date date);
+
     int generateRecurringID();
-    public void addOnetimeTask(Task task);
+
+    void addOnetimeTask(Task task);
 }

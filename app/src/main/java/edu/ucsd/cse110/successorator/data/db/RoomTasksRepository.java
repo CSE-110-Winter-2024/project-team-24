@@ -99,7 +99,7 @@ public class RoomTasksRepository implements ITasksRepository {
                 .filter(Task::isRecurring)
                 .max(Comparator.comparingInt(Task::getRecurringID));
 
-        return recurringTasks.isPresent() ? recurringTasks.get().getRecurringID()+1 : 1;
+        return recurringTasks.isPresent() ? recurringTasks.get().getRecurringID() + 1 : 1;
     }
 
     @Override

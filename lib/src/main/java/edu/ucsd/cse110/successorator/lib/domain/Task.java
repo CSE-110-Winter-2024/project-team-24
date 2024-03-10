@@ -9,7 +9,8 @@ import java.util.Objects;
 public class Task implements Serializable {
     private final @NonNull Integer id;
     private final @NonNull String taskName;
-    private final @NonNull Integer sortOrder;private final @NonNull Boolean checkedOff;
+    private final @NonNull Integer sortOrder;
+    private final @NonNull Boolean checkedOff;
     private final RecurringType recurringType;
     private final @NonNull Integer recurring_id;
 
@@ -26,7 +27,9 @@ public class Task implements Serializable {
         return this.recurring_id;
     }
 
-    public Boolean isRecurring() { return this.recurringType != null; }
+    public Boolean isRecurring() {
+        return this.recurringType != null;
+    }
 
     public RecurringType getRecurringType() {
         return this.recurringType;

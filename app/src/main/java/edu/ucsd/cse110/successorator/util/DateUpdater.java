@@ -9,7 +9,7 @@ import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
 
 public class DateUpdater implements Observer<Date> {
-    private ITasksRepository roomTasksRepository;
+    private final ITasksRepository roomTasksRepository;
     private Date date;
 
     public DateUpdater(ITasksRepository roomTasksRepository, Date date) {

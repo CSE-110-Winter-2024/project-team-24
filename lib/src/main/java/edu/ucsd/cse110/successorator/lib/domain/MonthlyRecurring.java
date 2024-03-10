@@ -6,6 +6,7 @@ import java.util.Date;
 public class MonthlyRecurring extends RecurringType {
     int weekOfMonth;
     int dayOfWeek;
+
     public MonthlyRecurring(int weekOfMonth, int dayOfWeek) {
         this.weekOfMonth = weekOfMonth;
         this.dayOfWeek = dayOfWeek;
