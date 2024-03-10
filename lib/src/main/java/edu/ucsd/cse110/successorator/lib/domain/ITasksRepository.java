@@ -1,5 +1,6 @@
 package edu.ucsd.cse110.successorator.lib.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import edu.ucsd.cse110.successorator.lib.util.Subject;
@@ -7,7 +8,9 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 public interface ITasksRepository {
     Subject<Task> find(int id);
 
-    Subject<List<Task>> findAll();
+    List<Task> findAll();
+
+    Subject<List<Task>> findAllAsLiveData();
 
     void save(Task task);
 
@@ -25,5 +28,9 @@ public interface ITasksRepository {
 
     int size();
 
-    void dateAdvanced();
+    void dateAdvanced(Date date);
+
+    int generateRecurringID();
+
+    void addOnetimeTask(Task task);
 }

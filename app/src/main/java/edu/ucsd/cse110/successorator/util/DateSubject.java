@@ -13,16 +13,9 @@ import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
 
 public class DateSubject implements MutableSubject<Date> {
-    private Date currentDate;
     private final List<Observer<Date>> observers = new ArrayList<>();
+    private Date currentDate;
     private SharedPreferences sharedPreferences;
-
-    @Override
-    public void setDate(Date value) {
-        this.currentDate = value;
-        this.saveDate();
-        notifyObservers();
-    }
 
     public void setSharedPreferences(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
@@ -30,8 +23,15 @@ public class DateSubject implements MutableSubject<Date> {
 
     @Nullable
     @Override
-    public Date getDate() {
+    public Date getItem() {
         return currentDate;
+    }
+
+    @Override
+    public void setItem(Date value) {
+        this.currentDate = value;
+        this.saveDate();
+        notifyObservers();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class DateSubject implements MutableSubject<Date> {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.DATE, 1);
-        setDate(calendar.getTime());
+        setItem(calendar.getTime());
     }
 
     public void saveDate() {
@@ -69,6 +69,30 @@ public class DateSubject implements MutableSubject<Date> {
     }
 
     public void loadDate() {
-        this.setDate(new Date(sharedPreferences.getLong("lastDate", new Date().getTime())));
+        this.setItem(new Date(sharedPreferences.getLong("lastDate", new Date().getTime())));
+    }
+
+    public int getDayOfWeek() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.DAY_OF_WEEK);
+    }
+
+    public int getDayOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.MONTH);
+    }
+
+    public int getWeekOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        return cal.get(Calendar.WEEK_OF_MONTH);
     }
 }

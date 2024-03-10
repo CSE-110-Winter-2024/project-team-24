@@ -36,7 +36,7 @@ public class SuccessoratorApplication extends Application {
         this.dateSubject.setSharedPreferences(sharedPreferences);
         this.dateSubject.loadDate();
 
-        this.dateSubject.observe(new DateUpdater(tasksRepository, dateSubject.getDate()));
+        this.dateSubject.observe(new DateUpdater(tasksRepository, dateSubject.getItem()));
     }
 
     public ITasksRepository getTasksRepository() {

@@ -13,7 +13,7 @@ public class MutableLiveDataSubjectAdapter<T> extends LiveDataSubjectAdapter<T> 
     }
 
     @Override
-    public void setDate(T value) {
+    public void setItem(T value) {
         mutableAdaptee.setValue(value);
     }
 }

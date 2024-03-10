@@ -5,18 +5,18 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 public class SimpleSubject<T> implements MutableSubject<T> {
-    private @Nullable T value = null;
     private final List<Observer<T>> observers = new java.util.ArrayList<>();
+    private @Nullable T value = null;
 
     @Override
     @Nullable
-    public T getDate() {
+    public T getItem() {
         return value;
     }
 
 
     @Override
-    public void setDate(T value) {
+    public void setItem(T value) {
         this.value = value;
         notifyObservers();
     }

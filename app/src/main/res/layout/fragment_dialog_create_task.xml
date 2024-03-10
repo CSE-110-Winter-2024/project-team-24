@@ -1,20 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
     <EditText
         android:id="@+id/add_task_dialog"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Front text..."
+        android:layout_marginTop="8dp"
+        android:hint="@string/task_hint"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/save_button" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup_schedule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/add_task_dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <RadioButton
+            android:id="@+id/radio_one_time"
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:text="@string/one_time_task" />
+
+        <RadioButton
+            android:id="@+id/radio_daily"
+            android:layout_width="232dp"
+            android:layout_height="wrap_content"
+            android:text="@string/daily_task" />
+
+        <RadioButton
+            android:id="@+id/radio_weekly"
+            android:layout_width="238dp"
+            android:layout_height="wrap_content"
+            android:text="Weekly on" />
+
+        <RadioButton
+            android:id="@+id/radio_monthly"
+            android:layout_width="247dp"
+            android:layout_height="wrap_content"
+            android:text="Monthly on" />
+
+        <RadioButton
+            android:id="@+id/radio_yearly"
+            android:layout_width="245dp"
+            android:layout_height="wrap_content"
+            android:text="Yearly on" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="Save"
+        app:layout_constraintBottom_toTopOf="@+id/add_task_dialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
