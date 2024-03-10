@@ -73,7 +73,7 @@ public class RoomTasksRepository implements ITasksRepository {
         }
 
         tasksDao.shiftSortOrders(newSortOrder, maxSortOrder, 1);
-        save(new Task(task.id(), task.getTaskName(), newSortOrder, task.getCheckOff(), task.getRecurringType()));
+        save(new Task(task.id(), task.getTaskName(), newSortOrder, task.getCheckOff(), task.getRecurringType(), task.getRecurringID()));
     }
 
     @Override
@@ -94,6 +94,15 @@ public class RoomTasksRepository implements ITasksRepository {
     }
 
     @Override
+    public int generateRecurringID() {
+        Optional<Task> recurringTasks = findAll().stream()
+                .filter(Task::isRecurring)
+                .max(Comparator.comparingInt(Task::getRecurringID));
+
+        return recurringTasks.isPresent() ? recurringTasks.get().getRecurringID()+1 : 1;
+    }
+
+    @Override
     public int size() {
         return tasksDao.count();
     }
@@ -111,6 +120,15 @@ public class RoomTasksRepository implements ITasksRepository {
                 remove(tasks.get(i).id());
             }
         }
+    }
+
+    @Override
+    public void addOnetimeTask(Task task) {
+        List<Integer> taskRecurringID = findAll().stream().filter(e -> !e.isRecurring()).map(Task::getRecurringID).collect(Collectors.toList());
+        if (taskRecurringID.contains(task.getRecurringID())) {
+            return;
+        }
+        append(task.withNullRecurringType());
     }
 }
 

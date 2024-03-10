@@ -20,6 +20,10 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 public class TaskViewModel extends ViewModel implements Observer<Date> {
+    public ITasksRepository getTasksRepository() {
+        return tasksRepository;
+    }
+
     private final ITasksRepository tasksRepository;
     private final MutableSubject<Task> topTask;
     private final MutableSubject<List<Task>> orderedTasks;
@@ -47,7 +51,7 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
             if (cards == null) return;
 
             var newOrderedCards = cards.stream()
-                    .filter(card -> !card.isRecurring() || card.getRecurringType().checkIfToday(dateSubject.getItem()))
+                    .filter(card -> !card.isRecurring())
                     .sorted(Comparator.comparingInt(Task::sortOrder))
                     .collect(Collectors.toList());
             orderedTasks.setItem(newOrderedCards);

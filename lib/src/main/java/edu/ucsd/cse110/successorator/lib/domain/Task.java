@@ -9,16 +9,21 @@ import java.util.Objects;
 public class Task implements Serializable {
     private final @NonNull Integer id;
     private final @NonNull String taskName;
-    private final @NonNull Integer sortOrder;
-    private final @NonNull Boolean checkedOff;
+    private final @NonNull Integer sortOrder;private final @NonNull Boolean checkedOff;
     private final RecurringType recurringType;
+    private final @NonNull Integer recurring_id;
 
-    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType) {
+    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id) {
         this.id = id;
         this.taskName = taskName;
         this.sortOrder = sortOrder;
         this.checkedOff = checkedOff;
         this.recurringType = recurringType;
+        this.recurring_id = recurring_id;
+    }
+
+    public Integer getRecurringID() {
+        return this.recurring_id;
     }
 
     public Boolean isRecurring() { return this.recurringType != null; }
@@ -44,15 +49,19 @@ public class Task implements Serializable {
     }
 
     public Task withSortOrder(int sortOrder) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id);
     }
 
     public Task withId(int id) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id);
     }
 
     public Task withCheckOff(boolean checkOff) {
-        return new Task(id, taskName, sortOrder, checkOff, recurringType);
+        return new Task(id, taskName, sortOrder, checkOff, recurringType, recurring_id);
+    }
+
+    public Task withNullRecurringType() {
+        return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id);
     }
 
 

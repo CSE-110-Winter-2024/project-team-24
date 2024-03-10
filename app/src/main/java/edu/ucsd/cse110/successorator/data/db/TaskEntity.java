@@ -26,20 +26,24 @@ public class TaskEntity {
     @ColumnInfo(name = "recurring_type")
     public RecurringType recurringType;
 
-    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType) {
+    @ColumnInfo(name = "recurring_id")
+    public Integer recurring_id;
+
+    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType, Integer recurring_id) {
         this.taskName = taskName;
         this.checkoff = checkoff;
         this.sortOrder = sortOrder;
         this.recurringType = recurringType;
+        this.recurring_id = recurring_id;
     }
 
     public static TaskEntity fromTask(@NonNull Task task) {
-        var card = new TaskEntity(task.getTaskName(), task.getCheckOff(), task.sortOrder(), task.getRecurringType());
+        var card = new TaskEntity(task.getTaskName(), task.getCheckOff(), task.sortOrder(), task.getRecurringType(), task.getRecurringID());
         card.id = task.id();
         return card;
     }
 
     public @NonNull Task toTask() {
-        return new Task(id, taskName, sortOrder, checkoff, recurringType);
+        return new Task(id, taskName, sortOrder, checkoff, recurringType, recurring_id);
     }
 }

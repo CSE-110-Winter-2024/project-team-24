@@ -40,7 +40,7 @@ public class DateUpdater implements Observer<Date> {
 
         for (Task task : tasks) {
             if (task.isRecurring() && task.getRecurringType().checkIfToday(date)) {
-                roomTasksRepository.appendToEndOfUnfinishedTasks(task.withCheckOff(false));
+                roomTasksRepository.addOnetimeTask(task.withCheckOff(false));
             }
         }
     }

@@ -127,7 +127,12 @@ public class CreateTaskDialogFragment extends DialogFragment {
             throw new IllegalStateException("No Selection Made");
         }
 
-        var task = new Task(null, input + frequency, 0, false, recurringType);
+        int recurringID = activityModel.getTasksRepository().generateRecurringID();
+        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID);
+
+        if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
+            activityModel.getTasksRepository().addOnetimeTask(task);
+        }
 
         activityModel.append(task);
         dialog.dismiss();
