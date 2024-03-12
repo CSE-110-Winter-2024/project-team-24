@@ -17,18 +17,19 @@ import java.util.Locale;
 
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
-import edu.ucsd.cse110.successorator.databinding.DailyOrTomorrowTaskDialogBinding;
+import edu.ucsd.cse110.successorator.databinding.RecurringTaskDialogBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.YearlyRecurring;
+import edu.ucsd.cse110.successorator.ui.CalendarPickerDialog;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 public class RecurringTaskDialogFragment extends DialogFragment {
 
-    private DailyOrTomorrowTaskDialogBinding view;
+    private RecurringTaskDialogBinding view;
     private TaskViewModel activityModel;
 
     RecurringTaskDialogFragment() {}
@@ -43,50 +44,20 @@ public class RecurringTaskDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        this.view = DailyOrTomorrowTaskDialogBinding.inflate(getLayoutInflater());
+        this.view = RecurringTaskDialogBinding.inflate(getLayoutInflater());
 
-        this.radioSetup();
+        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
+        view.calendarDialogOpener.setOnClickListener(v -> openCalendarPicker());
         return new AlertDialog.Builder(getActivity())
                 .setView(view.getRoot())
                 .create();
     }
 
-    private void radioSetup() {
-        view.radioOneTime.toggle();
-        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
-
-        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        Date today = app.getDateSubject().getItem();
-        assert today != null;
-
-        SimpleDateFormat dayOfWeek = new SimpleDateFormat("EE", Locale.getDefault());
-        SimpleDateFormat dateFormatYearly = new SimpleDateFormat("M/d", Locale.getDefault());
-        SimpleDateFormat dateNumber = new SimpleDateFormat("d", Locale.getDefault());
-
-        int dayNumber = Integer.parseInt(dateNumber.format(today));
-        String dateSuffix;
-        if (dayNumber >= 11 && dayNumber <= 13) {
-            dateSuffix = "th";
-        } else {
-            switch (dayNumber % 10) {
-                case 1:
-                    dateSuffix = "st";
-                    break;
-                case 2:
-                    dateSuffix = "nd";
-                    break;
-                case 3:
-                    dateSuffix = "rd";
-                    break;
-                default:
-                    dateSuffix = "th";
-            }
-        }
-        view.radioWeekly.append(" " + dayOfWeek.format(today));
-        view.radioMonthly.append(" " + dayNumber + dateSuffix + " " + dayOfWeek.format(today));
-        view.radioYearly.append(" " + dateFormatYearly.format(today));
+    private void openCalendarPicker() {
+        CalendarPickerDialog cpd = CalendarPickerDialog.newInstance();
+        cpd.show(getParentFragmentManager(), "CalendarPickerDialog");
+        // opens the calendar picker
     }
-
 
     private void addTask(DialogInterface dialog) {
         String input = view.addTaskDialog.getText().toString();
@@ -99,12 +70,9 @@ public class RecurringTaskDialogFragment extends DialogFragment {
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
         DateSubject dateSubject = app.getDateSubject();
 
-        RecurringType recurringType = null;
+        RecurringType recurringType;
 
-        if (view.radioOneTime.isChecked()) {
-            Log.i("OneTime Add", dialog.toString());
-            frequency = " 1";
-        } else if (view.radioDaily.isChecked()) {
+        if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
             frequency = " 2";
             recurringType = new DailyRecurring();
@@ -134,11 +102,6 @@ public class RecurringTaskDialogFragment extends DialogFragment {
         activityModel.append(task);
         dialog.dismiss();
     }
-
-    // might need in the future
-//    private void onNegativeButtonClick(DialogInterface dialog, int which) {
-//        dialog.cancel();
-//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
