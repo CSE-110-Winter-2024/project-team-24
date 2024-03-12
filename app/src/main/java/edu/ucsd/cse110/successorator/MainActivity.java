@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         // Get DateSubject observable from Application, then add ActionBarUpdater as observer
         DateSubject dateSubject = ((SuccessoratorApplication) getApplicationContext()).getDateSubject();
         dateSubject.observe(actionBarUpdater);
+
+
     }
 
     @Override

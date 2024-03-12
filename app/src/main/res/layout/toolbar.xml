@@ -18,7 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginStart="16dp"
-            android:text="Left" />
+            android:alpha="1"
+            app:icon="@drawable/ic_menu" />
+
+        <!--            android:text="Left" />-->
 
         <TextView
             android:id="@+id/toolbarTitle"
