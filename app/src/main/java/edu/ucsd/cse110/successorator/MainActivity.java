@@ -3,6 +3,7 @@ package edu.ucsd.cse110.successorator;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +40,28 @@ public class MainActivity extends AppCompatActivity {
         DateSubject dateSubject = ((SuccessoratorApplication) getApplicationContext()).getDateSubject();
         dateSubject.observe(actionBarUpdater);
 
+        // Create FocusSwitcherListener
+        findViewById(R.id.focus_switch).setOnClickListener(this::onFocusSwitchClick);
 
+        // Date Picker Listener
+        findViewById(R.id.date_title).setOnClickListener(this::onDateTitleClick);
+
+        // Create AddTaskListener
+        findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
+
+    }
+
+    private void onDateTitleClick(View view) {
+        // Does nothing for now...
+    }
+
+    private void onAddTaskClick(View view) {
+        CreateTaskDialogFragment dialogFragment = CreateTaskDialogFragment.newInstance();
+        dialogFragment.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
+    }
+
+    private void onFocusSwitchClick(View view) {
+        // Does nothing for now....
     }
 
     @Override
@@ -70,4 +92,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
