@@ -1,11 +1,15 @@
 package edu.ucsd.cse110.successorator.ui;
 
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
 
 public class ActionBarUpdater implements Observer<Date> {
@@ -22,10 +26,10 @@ public class ActionBarUpdater implements Observer<Date> {
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE M/d", Locale.getDefault());
             String formattedDate = dateFormat.format(value);
             activity.runOnUiThread(() -> {
-//                TextView dateTitle = activity.findViewById(android.R.id.toolbar);
-//                if (dateTitle != null) {
-//                    dateTitle.setText(formattedDate);
-//                }
+                TextView dateTitle = activity.findViewById(R.id.date_title);
+                if (dateTitle != null) {
+                    dateTitle.setText(formattedDate);
+                }
             });
         }
     }
