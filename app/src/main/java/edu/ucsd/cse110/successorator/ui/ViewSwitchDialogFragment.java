@@ -59,17 +59,8 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 //                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
                 Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
             }
-
-            var itr = this.activityModel.getTasksRepository();
-            var filteredCards = itr.filterByView(Task.IView.TODAY);
-            for (Task i : filteredCards) {
-                System.out.println(i.toString());
-            }
+            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.TODAY);
             this.activityModel.filterByView(filteredCards);
-            // temp
-
-
-
             dismiss();
 
             // Handle "Today" view click
@@ -84,6 +75,14 @@ public class ViewSwitchDialogFragment extends DialogFragment {
                 String prevTxt = (String) dateTitle.getText();
                 dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
             }
+            if (dateTitle != null) {
+                String prevTxt = (String) dateTitle.getText();
+//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
+                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
+            }
+            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.TOMORROW);
+            this.activityModel.filterByView(filteredCards);
+            dismiss();
             dismiss();
 
         });
@@ -97,6 +96,14 @@ public class ViewSwitchDialogFragment extends DialogFragment {
                 String prevTxt = (String) dateTitle.getText();
                 dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
             }
+            if (dateTitle != null) {
+                String prevTxt = (String) dateTitle.getText();
+//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
+                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
+            }
+            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.PENDING);
+            this.activityModel.filterByView(filteredCards);
+            dismiss();
             dismiss();
         });
 
@@ -109,6 +116,14 @@ public class ViewSwitchDialogFragment extends DialogFragment {
                 String prevTxt = (String) dateTitle.getText();
                 dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
             }
+            if (dateTitle != null) {
+                String prevTxt = (String) dateTitle.getText();
+//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
+                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
+            }
+            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.RECURRING);
+            this.activityModel.filterByView(filteredCards);
+            dismiss();
             dismiss();
         });
 

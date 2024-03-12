@@ -103,23 +103,23 @@ public class DailyOrTomorrowTaskDialogFragment extends DialogFragment {
 
         if (view.radioOneTime.isChecked()) {
             Log.i("OneTime Add", dialog.toString());
-            frequency = " 1";
+            frequency = " 1" + recurringType;
         } else if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
-            frequency = " 2";
             recurringType = new DailyRecurring();
+            frequency = " 2" + recurringType;
         } else if (view.radioWeekly.isChecked()) {
             Log.i("Weekly Add", dialog.toString());
-            frequency = " 3";
             recurringType = new WeeklyRecurring(dateSubject.getDayOfWeek());
+            frequency = " 3";
         } else if (view.radioMonthly.isChecked()) {
             Log.i("Monthly Add", dialog.toString());
-            frequency = " 4";
             recurringType = new MonthlyRecurring(dateSubject.getWeekOfMonth(), dateSubject.getDayOfWeek());
+            frequency = " 4";
         } else if (view.radioYearly.isChecked()) {
             Log.i("Yearly Add", dialog.toString());
             recurringType = new YearlyRecurring(dateSubject.getMonth(), dateSubject.getDayOfMonth());
-            frequency = " 5";
+            frequency = " 5" + recurringType;
         } else {
             throw new IllegalStateException("No Selection Made");
         }

@@ -76,6 +76,24 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
 
     public void filterByView(List<Task> taskList) {
         this.orderedTasks.setItem(taskList);
+        // When the list of cards changes (or is first loaded), reset the ordering:
+        tasksRepository.findAllAsLiveData().observe(cards -> {
+            if (cards == null) return;
+
+            var newOrderedCards = cards.stream()
+                    .filter(card -> !card.isRecurring())
+                    .sorted(Comparator.comparingInt(Task::sortOrder))
+                    .collect(Collectors.toList());
+            orderedTasks.setItem(newOrderedCards);
+        });
+
+        // When the ordering changes, update the top card:
+        orderedTasks.observe(cards -> {
+            if (cards == null || cards.size() == 0) return;
+            var card = cards.get(0);
+            this.topTask.setItem(card);
+        });
+
     }
 
     @Override
