@@ -11,11 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.List;
+
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
+import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 
 public class ViewSwitchDialogFragment extends DialogFragment {
 
@@ -40,11 +44,10 @@ public class ViewSwitchDialogFragment extends DialogFragment {
         todayView.setOnClickListener(v -> {
             var itr = this.activityModel.getTasksRepository();
             var filteredCards = itr.filterByView(Task.IView.TODAY);
-            for (Task t : filteredCards) {
-                itr.append(t);
+            for (Task i : filteredCards) {
+                System.out.println(i.toString());
             }
-            // temp
-
+            this.activityModel.filterByView(filteredCards);
             // Handle "Today" view click
         });
 

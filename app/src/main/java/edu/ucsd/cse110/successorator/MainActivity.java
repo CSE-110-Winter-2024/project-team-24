@@ -1,4 +1,7 @@
-package edu.ucsd.cse110.successorator;
+package edu.ucsd.cse110.successorator;    // might need in the future
+//    private void onNegativeButtonClick(DialogInterface dialog, int which) {
+//        dialog.cancel();
+//    }
 
 import android.os.Bundle;
 import android.view.View;
@@ -52,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
         // Create AddTaskListener
         findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
 
-
-
-
     }
 
     private void onDateTitleClick(View view) {
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onFocusSwitchClick(View view) {
-
         Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
     }
 

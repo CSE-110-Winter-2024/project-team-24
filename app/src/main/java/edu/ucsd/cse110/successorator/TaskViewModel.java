@@ -74,6 +74,10 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
         tasksRepository.appendToEndOfUnfinishedTasks(task);
     }
 
+    public void filterByView(List<Task> taskList) {
+        this.orderedTasks.setItem(taskList);
+    }
+
     @Override
     public void onChanged(@Nullable Date value) {
 

@@ -135,11 +135,6 @@ public class DailyOrTomorrowTaskDialogFragment extends DialogFragment {
         dialog.dismiss();
     }
 
-    // might need in the future
-//    private void onNegativeButtonClick(DialogInterface dialog, int which) {
-//        dialog.cancel();
-//    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
