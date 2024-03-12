@@ -40,14 +40,19 @@ public class MainActivity extends AppCompatActivity {
         DateSubject dateSubject = ((SuccessoratorApplication) getApplicationContext()).getDateSubject();
         dateSubject.observe(actionBarUpdater);
 
-        // Create AddTaskListener
-        var addButton = findViewById(R.id.add_task);
-        addButton.setOnClickListener(this::onAddTaskClick);
-
         // Create FocusSwitcherListener
-        var focusSwitch = findViewById(R.id.focus_switch);
-        focusSwitch.setOnClickListener(this::onFocusSwitchClick);
+        findViewById(R.id.focus_switch).setOnClickListener(this::onFocusSwitchClick);
 
+        // Date Picker Listener
+        findViewById(R.id.date_title).setOnClickListener(this::onDateTitleClick);
+
+        // Create AddTaskListener
+        findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
+
+    }
+
+    private void onDateTitleClick(View view) {
+        // Does nothing for now...
     }
 
     private void onAddTaskClick(View view) {
