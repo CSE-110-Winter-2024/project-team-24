@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import edu.ucsd.cse110.successorator.R;
+import edu.ucsd.cse110.successorator.SuccessoratorApplication;
+import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 public class ViewSwitchDialogFragment extends DialogFragment {
 
@@ -26,13 +29,15 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
         // Set up the buttons with click listeners
         Button todayView = view.findViewById(R.id.today_view);
-        Button tomorrowView = view.findViewById(R.id.pending_view);
+        Button tomorrowView = view.findViewById(R.id.tomorrow_view);
         Button pendingView = view.findViewById(R.id.pending_view);
-        Button recurringView = view.findViewById(R.id.pending_view);
+        Button recurringView = view.findViewById(R.id.recurring_view);
 
         todayView.setOnClickListener(v -> {
-
-            // Handle "Today" view click
+//            SuccessoratorApplication itr = (SuccessoratorApplication) getContext();
+//            assert itr != null;
+//            itr.getTasksRepository().filterByView(Task.IView.TODAY);
+//            // Handle "Today" view click
         });
 
         tomorrowView.setOnClickListener(v -> {

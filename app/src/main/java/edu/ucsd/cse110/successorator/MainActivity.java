@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onFocusSwitchClick(View view) {
         ViewSwitchDialogFragment vsd = ViewSwitchDialogFragment.newInstance();
-        vsd.show(getSupportFragmentManager(), "ViewSiwtchDialogFragment");
+        vsd.show(getSupportFragmentManager(), "ViewSwitchDialogFragment");
 //        Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
     }
 
