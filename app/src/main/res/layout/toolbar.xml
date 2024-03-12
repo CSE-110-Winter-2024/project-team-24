@@ -14,13 +14,14 @@
 
         <Button
             android:id="@+id/leftButton"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginStart="16dp"
-            android:alpha="1"
+            app:iconTint="@color/white"
             app:icon="@drawable/ic_menu" />
-
+        <!--            android:alpha="1"-->
         <!--            android:text="Left" />-->
 
         <TextView
@@ -32,11 +33,13 @@
 
         <Button
             android:id="@+id/rightButton"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
-            app:icon="@drawable/ic_add" />
+            app:icon="@drawable/ic_add"
+            app:iconTint="@color/white"/>
 
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>
