@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Date;
+import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         view.fragmentContainer.setOnClickListener(v -> {
             ((SuccessoratorApplication) getApplicationContext()).getDateSubject().setItem(new Date());
         });
+
+        // Hides Android's default ActionBar so we can use our own
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         // Instantiate the actionBarUpdater
         ActionBarUpdater actionBarUpdater = new ActionBarUpdater(this);
