@@ -9,13 +9,17 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
+import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 
 public class ViewSwitchDialogFragment extends DialogFragment {
+
+    private TaskViewModel activityModel;
 
     public static ViewSwitchDialogFragment newInstance() {
         return new ViewSwitchDialogFragment();
@@ -34,16 +38,12 @@ public class ViewSwitchDialogFragment extends DialogFragment {
         Button recurringView = view.findViewById(R.id.recurring_view);
 
         todayView.setOnClickListener(v -> {
-
-            //call the command filter by view
-//            Task.IView viewT = Task.IView.TODAY;
-//            var newOrderedCards = cards.stream().filter(e -> e.getView().equals(view)).4
-
-            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
-            var newOrderedCards = tasksRepository.filterByView(Task.IView.TODAY);
-                    // rest of code
-
-            dismiss();
+            var itr = this.activityModel.getTasksRepository();
+            var filteredCards = itr.filterByView(Task.IView.TODAY);
+            for (Task t : filteredCards) {
+                itr.append(t);
+            }
+            // temp
 
             // Handle "Today" view click
         });
@@ -78,7 +78,10 @@ public class ViewSwitchDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         // Set a title or any other configurations for the dialog
-        dialog.setTitle("View Switch");
+        var modelOwner = requireActivity();
+        var modelFactory = ViewModelProvider.Factory.from(TaskViewModel.initializer);
+        var modelProvider = new ViewModelProvider(modelOwner, modelFactory);
+        this.activityModel = modelProvider.get(TaskViewModel.class);
         return dialog;
     }
 }
