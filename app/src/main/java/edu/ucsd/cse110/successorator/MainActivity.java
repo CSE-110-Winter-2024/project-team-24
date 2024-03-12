@@ -13,6 +13,7 @@ import java.util.Objects;
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
+import edu.ucsd.cse110.successorator.ui.ViewSwitchDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.DailyOrTomorrowTaskDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.PendingTaskDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.RecurringTaskDialogFragment;
@@ -76,8 +77,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onFocusSwitchClick(View view) {
-        Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
-        // Does nothing for now....
+        ViewSwitchDialogFragment vsd = ViewSwitchDialogFragment.newInstance();
+        vsd.show(getSupportFragmentManager(), "ViewSiwtchDialogFragment");
+//        Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -89,26 +91,4 @@ public class MainActivity extends AppCompatActivity {
         dateSubject.setItem(new Date());
         dateSubject.loadDate();
     }
-
-
-    // DEPRECATED CODE AS OF US9A-2
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.action_bar, menu);
-//        return true;
-//    }
-
-    // DEPRECATED CODE AS OF US9A-2
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        var itemId = item.getItemId();
-//
-//        if (itemId == R.id.add_task) {
-//            var dialogFragment = DailyOrTomorrowTaskDialogFragment.newInstance();
-//            dialogFragment.show(getSupportFragmentManager(), "DailyOrTomorrowTaskDialogFragment");
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
 }

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.CalendarPickerDialogBinding;
-import edu.ucsd.cse110.successorator.ui.taskList.dialog.DailyOrTomorrowTaskDialogFragment;
 
 public class CalendarPickerDialog extends DialogFragment {
 

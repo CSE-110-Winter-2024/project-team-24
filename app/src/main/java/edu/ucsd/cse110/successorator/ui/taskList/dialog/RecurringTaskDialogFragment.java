@@ -72,6 +72,7 @@ public class RecurringTaskDialogFragment extends DialogFragment {
 
         RecurringType recurringType;
 
+        // code needs to be refactored here
         if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
             frequency = " 2";
