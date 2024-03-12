@@ -1,11 +1,9 @@
 package edu.ucsd.cse110.successorator;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +11,11 @@ import java.util.Date;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
-import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.DailyOrTomorrowTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.PendingTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.RecurringTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,19 +49,34 @@ public class MainActivity extends AppCompatActivity {
 
         // Create AddTaskListener
         findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
-
     }
 
     private void onDateTitleClick(View view) {
+        Toast.makeText(this, "Middle button clicked!", Toast.LENGTH_SHORT).show();
         // Does nothing for now...
     }
 
     private void onAddTaskClick(View view) {
-        CreateTaskDialogFragment dialogFragment = CreateTaskDialogFragment.newInstance();
-        dialogFragment.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
+        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskView();
+        switch(currentView) {
+            case TODAY:
+            case TOMORROW:
+                DailyOrTomorrowTaskDialogFragment dialogFragment = DailyOrTomorrowTaskDialogFragment.newInstance();
+                dialogFragment.show(getSupportFragmentManager(), "DailyOrTomorrowTaskDialogFragment");
+                break;
+            case RECURRING:
+                RecurringTaskDialogFragment recurringDialogFragment = RecurringTaskDialogFragment.newInstance();
+                recurringDialogFragment.show(getSupportFragmentManager(), "RecurringTaskDialogFragment");
+                break;
+            case PENDING:
+                PendingTaskDialogFragment pendingTaskDialogFragment = PendingTaskDialogFragment.newInstance();
+                pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
+                break;
+        }
     }
 
     private void onFocusSwitchClick(View view) {
+        Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
         // Does nothing for now....
     }
 
@@ -74,23 +90,25 @@ public class MainActivity extends AppCompatActivity {
         dateSubject.loadDate();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar, menu);
-        return true;
-    }
 
+    // DEPRECATED CODE AS OF US9A-2
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.action_bar, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        var itemId = item.getItemId();
-
-        if (itemId == R.id.add_task) {
-            var dialogFragment = CreateTaskDialogFragment.newInstance();
-            dialogFragment.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    // DEPRECATED CODE AS OF US9A-2
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        var itemId = item.getItemId();
+//
+//        if (itemId == R.id.add_task) {
+//            var dialogFragment = DailyOrTomorrowTaskDialogFragment.newInstance();
+//            dialogFragment.show(getSupportFragmentManager(), "DailyOrTomorrowTaskDialogFragment");
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 }
