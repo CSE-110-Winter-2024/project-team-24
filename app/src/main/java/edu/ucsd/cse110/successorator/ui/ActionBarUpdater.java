@@ -28,7 +28,7 @@ public class ActionBarUpdater implements Observer<Date> {
             activity.runOnUiThread(() -> {
                 TextView dateTitle = activity.findViewById(R.id.date_title);
                 if (dateTitle != null) {
-                    dateTitle.setText(formattedDate);
+                    dateTitle.setText(formattedDate + " ▼");
                 }
             });
         }

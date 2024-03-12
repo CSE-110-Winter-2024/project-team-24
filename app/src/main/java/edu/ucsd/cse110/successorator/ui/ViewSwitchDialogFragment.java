@@ -34,22 +34,40 @@ public class ViewSwitchDialogFragment extends DialogFragment {
         Button recurringView = view.findViewById(R.id.recurring_view);
 
         todayView.setOnClickListener(v -> {
-//            SuccessoratorApplication itr = (SuccessoratorApplication) getContext();
-//            assert itr != null;
-//            itr.getTasksRepository().filterByView(Task.IView.TODAY);
-//            // Handle "Today" view click
+
+            //call the command filter by view
+//            Task.IView viewT = Task.IView.TODAY;
+//            var newOrderedCards = cards.stream().filter(e -> e.getView().equals(view)).4
+
+            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
+            var newOrderedCards = tasksRepository.filterByView(Task.IView.TODAY);
+                    // rest of code
+
+            dismiss();
+
+            // Handle "Today" view click
         });
 
         tomorrowView.setOnClickListener(v -> {
             // Handle "Tomorrow" view click
+            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
+            tasksRepository.filterByView(Task.IView.TOMORROW);
+            dismiss();
+
         });
 
         pendingView.setOnClickListener(v -> {
             // Handle "Pending" view click
+            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
+            tasksRepository.filterByView(Task.IView.PENDING);
+            dismiss();
         });
 
         recurringView.setOnClickListener(v -> {
             // Handle "Recurring" view click
+            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
+            tasksRepository.filterByView(Task.IView.RECURRING);
+            dismiss();
         });
 
         return view;

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.DailyOrTomorrowTaskDialogBinding;
@@ -47,6 +49,13 @@ public class PendingTaskDialogFragment extends DialogFragment {
         this.view = PendingTaskDialogBinding.inflate(getLayoutInflater());
 
         view.saveButton.setOnClickListener(v -> addTask(getDialog()));
+
+        TextView dateTitle = view.getRoot().findViewById(R.id.date_title);
+        if (dateTitle != null) {
+            String prevTxt = (String) dateTitle.getText();
+            dateTitle.setText("Pending ▼");
+        }
+
         return new AlertDialog.Builder(getActivity())
                 .setView(view.getRoot())
                 .create();

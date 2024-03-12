@@ -2,6 +2,7 @@ package edu.ucsd.cse110.successorator;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -50,10 +51,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Create AddTaskListener
         findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
+
+
+
+
     }
 
     private void onDateTitleClick(View view) {
-        Toast.makeText(this, "Middle button clicked!", Toast.LENGTH_SHORT).show();
+        ViewSwitchDialogFragment vsd = ViewSwitchDialogFragment.newInstance();
+        vsd.show(getSupportFragmentManager(), "ViewSwitchDialogFragment");
+        TextView dateTitle = view.findViewById(R.id.date_title);
+        if (dateTitle != null) {
+            String prevTxt = (String) dateTitle.getText();
+            dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▲");
+        }
+//        Toast.makeText(this, "Middle button clicked!", Toast.LENGTH_SHORT).show();
         // Does nothing for now...
     }
 
@@ -77,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onFocusSwitchClick(View view) {
-        ViewSwitchDialogFragment vsd = ViewSwitchDialogFragment.newInstance();
-        vsd.show(getSupportFragmentManager(), "ViewSwitchDialogFragment");
-//        Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     protected void onResume() {
