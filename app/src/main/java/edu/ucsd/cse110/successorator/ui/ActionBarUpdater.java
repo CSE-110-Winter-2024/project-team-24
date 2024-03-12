@@ -21,7 +21,12 @@ public class ActionBarUpdater implements Observer<Date> {
             // Format is Day, M/DD
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE M/d", Locale.getDefault());
             String formattedDate = dateFormat.format(value);
-            activity.runOnUiThread(() -> activity.getSupportActionBar().setTitle(formattedDate));
+            activity.runOnUiThread(() -> {
+//                TextView dateTitle = activity.findViewById(android.R.id.toolbar);
+//                if (dateTitle != null) {
+//                    dateTitle.setText(formattedDate);
+//                }
+            });
         }
     }
 }
