@@ -13,10 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <include layout="@layout/toolbar" />
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
@@ -32,5 +29,4 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:layout_constraintVertical_bias="1.0"
         tools:layout="@layout/fragment_task_list" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,25 +17,24 @@ import java.util.Locale;
 
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
-import edu.ucsd.cse110.successorator.databinding.FragmentDialogCreateTaskBinding;
+import edu.ucsd.cse110.successorator.databinding.DailyOrTomorrowTaskDialogBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.YearlyRecurring;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
-public class CreateTaskDialogFragment extends DialogFragment {
+public class RecurringTaskDialogFragment extends DialogFragment {
 
-    private FragmentDialogCreateTaskBinding view;
+    private DailyOrTomorrowTaskDialogBinding view;
     private TaskViewModel activityModel;
 
-    CreateTaskDialogFragment() {
-    }
+    RecurringTaskDialogFragment() {}
 
-    public static CreateTaskDialogFragment newInstance() {
-        var fragment = new CreateTaskDialogFragment();
+    public static RecurringTaskDialogFragment newInstance() {
+        var fragment = new RecurringTaskDialogFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -44,7 +43,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        this.view = FragmentDialogCreateTaskBinding.inflate(getLayoutInflater());
+        this.view = DailyOrTomorrowTaskDialogBinding.inflate(getLayoutInflater());
 
         this.radioSetup();
         return new AlertDialog.Builder(getActivity())
