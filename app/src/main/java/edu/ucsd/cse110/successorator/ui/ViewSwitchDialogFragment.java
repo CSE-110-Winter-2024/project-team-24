@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -42,12 +45,33 @@ public class ViewSwitchDialogFragment extends DialogFragment {
         Button recurringView = view.findViewById(R.id.recurring_view);
 
         todayView.setOnClickListener(v -> {
+
+//            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
+//            Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();
+//            TextView dateTitle = v.findViewById(R.id.date_title);
+            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
+            if(dateTitle == null) {
+                Toast.makeText(getContext(), "null", Toast.LENGTH_SHORT).show();
+            }
+
+            if (dateTitle != null) {
+                String prevTxt = (String) dateTitle.getText();
+//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
+                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
+            }
+
             var itr = this.activityModel.getTasksRepository();
             var filteredCards = itr.filterByView(Task.IView.TODAY);
             for (Task i : filteredCards) {
                 System.out.println(i.toString());
             }
             this.activityModel.filterByView(filteredCards);
+            // temp
+
+
+
+            dismiss();
+
             // Handle "Today" view click
         });
 
@@ -55,6 +79,11 @@ public class ViewSwitchDialogFragment extends DialogFragment {
             // Handle "Tomorrow" view click
             ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
             tasksRepository.filterByView(Task.IView.TOMORROW);
+            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
+            if (dateTitle != null) {
+                String prevTxt = (String) dateTitle.getText();
+                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
+            }
             dismiss();
 
         });
@@ -63,6 +92,11 @@ public class ViewSwitchDialogFragment extends DialogFragment {
             // Handle "Pending" view click
             ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
             tasksRepository.filterByView(Task.IView.PENDING);
+            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
+            if (dateTitle != null) {
+                String prevTxt = (String) dateTitle.getText();
+                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
+            }
             dismiss();
         });
 
@@ -70,6 +104,11 @@ public class ViewSwitchDialogFragment extends DialogFragment {
             // Handle "Recurring" view click
             ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
             tasksRepository.filterByView(Task.IView.RECURRING);
+            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
+            if (dateTitle != null) {
+                String prevTxt = (String) dateTitle.getText();
+                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
+            }
             dismiss();
         });
 
