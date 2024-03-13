@@ -62,13 +62,22 @@ public class CreateTaskDialogFragment extends DialogFragment {
         SimpleDateFormat dayOfWeek = new SimpleDateFormat("EE", Locale.getDefault());
         SimpleDateFormat dateFormatYearly = new SimpleDateFormat("M/d", Locale.getDefault());
         SimpleDateFormat dateNumber = new SimpleDateFormat("d", Locale.getDefault());
+        SimpleDateFormat dayOfWeekInMonth = new SimpleDateFormat("F", Locale.getDefault());
 
         int dayNumber = Integer.parseInt(dateNumber.format(today));
+        int dayOfWeekInMonthNumber = Integer.parseInt(dayOfWeekInMonth.format(today));
         String dateSuffix;
-        if (dayNumber >= 11 && dayNumber <= 13) {
+
+
+//        int dayweek = Integer.parseInt(dayOfWeek.format(today));
+//            int ordinal = (dayNumber - 1) / 7 + 1;
+//            int dayofWeekoccur = (dayOfWeek < dateNumber % 7) ? ordinal + 1 : ordinal;
+
+
+        if (dayOfWeekInMonthNumber >= 11 && dayOfWeekInMonthNumber <= 13) {
             dateSuffix = "th";
         } else {
-            switch (dayNumber % 10) {
+            switch (dayOfWeekInMonthNumber % 10) {
                 case 1:
                     dateSuffix = "st";
                     break;
@@ -83,7 +92,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
             }
         }
         view.radioWeekly.append(" " + dayOfWeek.format(today));
-        view.radioMonthly.append(" " + dayNumber + dateSuffix + " " + dayOfWeek.format(today));
+        view.radioMonthly.append(" " + dayOfWeekInMonthNumber + dateSuffix + " " + dayOfWeek.format(today));
         view.radioYearly.append(" " + dateFormatYearly.format(today));
     }
 
