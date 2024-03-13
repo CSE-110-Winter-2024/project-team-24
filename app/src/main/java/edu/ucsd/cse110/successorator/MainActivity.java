@@ -15,12 +15,9 @@ import java.util.Date;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 import edu.ucsd.cse110.successorator.ui.ViewSwitchDialogFragment;
-import edu.ucsd.cse110.successorator.ui.taskList.dialog.DailyOrTomorrowTaskDialogFragment;
-import edu.ucsd.cse110.successorator.ui.taskList.dialog.PendingTaskDialogFragment;
-import edu.ucsd.cse110.successorator.ui.taskList.dialog.RecurringTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,22 +67,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onAddTaskClick(View view) {
-        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskView();
-        switch(currentView) {
-            case TODAY:
-            case TOMORROW:
-                DailyOrTomorrowTaskDialogFragment dialogFragment = DailyOrTomorrowTaskDialogFragment.newInstance();
-                dialogFragment.show(getSupportFragmentManager(), "DailyOrTomorrowTaskDialogFragment");
-                break;
-            case RECURRING:
-                RecurringTaskDialogFragment recurringDialogFragment = RecurringTaskDialogFragment.newInstance();
-                recurringDialogFragment.show(getSupportFragmentManager(), "RecurringTaskDialogFragment");
-                break;
-            case PENDING:
-                PendingTaskDialogFragment pendingTaskDialogFragment = PendingTaskDialogFragment.newInstance();
-                pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
-                break;
-        }
+//        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskView().getItem();
+//        switch(currentView) {
+//            case TODAY:
+//            case TOMORROW:
+//                DailyOrTomorrowTaskDialogFragment dialogFragment = DailyOrTomorrowTaskDialogFragment.newInstance();
+//                dialogFragment.show(getSupportFragmentManager(), "DailyOrTomorrowTaskDialogFragment");
+//                break;
+//            case RECURRING:
+//                RecurringTaskDialogFragment recurringDialogFragment = RecurringTaskDialogFragment.newInstance();
+//                recurringDialogFragment.show(getSupportFragmentManager(), "RecurringTaskDialogFragment");
+//                break;
+//            case PENDING:
+//                PendingTaskDialogFragment pendingTaskDialogFragment = PendingTaskDialogFragment.newInstance();
+//                pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
+//                break;
+//        }
+        CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
+        ctdf.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
     }
 
     private void onFocusSwitchClick(View view) {

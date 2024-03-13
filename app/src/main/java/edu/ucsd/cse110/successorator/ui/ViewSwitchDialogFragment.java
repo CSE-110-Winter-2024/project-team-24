@@ -23,6 +23,7 @@ import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
+import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class ViewSwitchDialogFragment extends DialogFragment {
 
@@ -59,17 +60,16 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 //                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
                 Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
             }
-            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.TODAY);
-            this.activityModel.filterByView(filteredCards);
+
             dismiss();
 
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            taskViewSubject.setItem(Task.IView.TODAY);
             // Handle "Today" view click
         });
 
         tomorrowView.setOnClickListener(v -> {
             // Handle "Tomorrow" view click
-            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
-            tasksRepository.filterByView(Task.IView.TOMORROW);
             TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
             if (dateTitle != null) {
                 String prevTxt = (String) dateTitle.getText();
@@ -80,17 +80,15 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 //                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
                 Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
             }
-            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.TOMORROW);
-            this.activityModel.filterByView(filteredCards);
-            dismiss();
+
             dismiss();
 
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            taskViewSubject.setItem(Task.IView.TOMORROW);
         });
 
         pendingView.setOnClickListener(v -> {
             // Handle "Pending" view click
-            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
-            tasksRepository.filterByView(Task.IView.PENDING);
             TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
             if (dateTitle != null) {
                 String prevTxt = (String) dateTitle.getText();
@@ -101,16 +99,15 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 //                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
                 Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
             }
-            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.PENDING);
-            this.activityModel.filterByView(filteredCards);
+
             dismiss();
-            dismiss();
+
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            taskViewSubject.setItem(Task.IView.PENDING);
         });
 
         recurringView.setOnClickListener(v -> {
             // Handle "Recurring" view click
-            ITasksRepository tasksRepository = ((SuccessoratorApplication) requireActivity().getApplication()).getTasksRepository();
-            tasksRepository.filterByView(Task.IView.RECURRING);
             TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
             if (dateTitle != null) {
                 String prevTxt = (String) dateTitle.getText();
@@ -121,10 +118,11 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 //                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
                 Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
             }
-            var filteredCards = this.activityModel.getTasksRepository().filterByView(Task.IView.RECURRING);
-            this.activityModel.filterByView(filteredCards);
+
             dismiss();
-            dismiss();
+
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            taskViewSubject.setItem(Task.IView.RECURRING);
         });
 
         return view;

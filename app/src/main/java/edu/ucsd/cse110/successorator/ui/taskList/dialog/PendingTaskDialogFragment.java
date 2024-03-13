@@ -75,7 +75,7 @@ public class PendingTaskDialogFragment extends DialogFragment {
         RecurringType recurringType = null;
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView());
+        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem());
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().addOnetimeTask(task);

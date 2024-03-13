@@ -26,15 +26,15 @@ import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.YearlyRecurring;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
-public class DailyOrTomorrowTaskDialogFragment extends DialogFragment {
+public class CreateTaskDialogFragment extends DialogFragment {
 
     private DailyOrTomorrowTaskDialogBinding view;
     private TaskViewModel activityModel;
 
-    DailyOrTomorrowTaskDialogFragment() {}
+    CreateTaskDialogFragment() {}
 
-    public static DailyOrTomorrowTaskDialogFragment newInstance() {
-        var fragment = new DailyOrTomorrowTaskDialogFragment();
+    public static CreateTaskDialogFragment newInstance() {
+        var fragment = new CreateTaskDialogFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -125,7 +125,7 @@ public class DailyOrTomorrowTaskDialogFragment extends DialogFragment {
         }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView());
+        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem());
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().addOnetimeTask(task);
