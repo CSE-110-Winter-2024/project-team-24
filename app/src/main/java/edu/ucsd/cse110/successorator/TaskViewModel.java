@@ -53,7 +53,7 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
             if (cards == null) return;
 
             var newOrderedCards = cards.stream()
-                    .filter(card -> !card.isRecurring())
+                    .filter(card -> !card.isRecurring() && card.getView() == taskViewSubject.getItem())
                     .sorted(Comparator.comparingInt(Task::sortOrder))
                     .collect(Collectors.toList());
             orderedTasks.setItem(newOrderedCards);
