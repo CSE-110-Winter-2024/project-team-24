@@ -16,9 +16,11 @@ import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
+import edu.ucsd.cse110.successorator.ui.DateViewUpdater;
 import edu.ucsd.cse110.successorator.ui.ViewSwitchDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.DateSubject;
+import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         DateSubject dateSubject = ((SuccessoratorApplication) getApplicationContext()).getDateSubject();
         dateSubject.observe(actionBarUpdater);
 
+        DateViewUpdater dateViewUpdater = new DateViewUpdater(this);
+        TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject();
+        taskViewSubject.observe(dateViewUpdater);
+//        dateSubject.observe(dateViewUpdater);
         // Create FocusSwitcherListener
         findViewById(R.id.focus_switch).setOnClickListener(this::onFocusSwitchClick);
 

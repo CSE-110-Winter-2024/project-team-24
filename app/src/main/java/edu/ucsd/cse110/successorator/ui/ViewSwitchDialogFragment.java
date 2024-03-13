@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
 
+import edu.ucsd.cse110.successorator.MainActivity;
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
@@ -37,29 +38,19 @@ public class ViewSwitchDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.view_switch_dialog, container, false);
+        View view = inflater.inflate(R.layout.view_switch_dialog, container, true);
 
         // Set up the buttons with click listeners
         Button todayView = view.findViewById(R.id.today_view);
         Button tomorrowView = view.findViewById(R.id.tomorrow_view);
         Button pendingView = view.findViewById(R.id.pending_view);
         Button recurringView = view.findViewById(R.id.recurring_view);
+//        TextView dateTitle2 = (TextView) view.getRootView().findViewById(R.id.date_title);
+//        if(dateTitle2 == null) {
+//            Toast.makeText(getContext(), "null2", Toast.LENGTH_SHORT).show();
+//        }
 
         todayView.setOnClickListener(v -> {
-
-//            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
-//            Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();
-//            TextView dateTitle = v.findViewById(R.id.date_title);
-            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
-            if(dateTitle == null) {
-                Toast.makeText(getContext(), "null", Toast.LENGTH_SHORT).show();
-            }
-
-            if (dateTitle != null) {
-                String prevTxt = (String) dateTitle.getText();
-//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
-                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
-            }
 
             dismiss();
 
@@ -70,16 +61,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
         tomorrowView.setOnClickListener(v -> {
             // Handle "Tomorrow" view click
-            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
-            if (dateTitle != null) {
-                String prevTxt = (String) dateTitle.getText();
-                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
-            }
-            if (dateTitle != null) {
-                String prevTxt = (String) dateTitle.getText();
-//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
-                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
-            }
+
 
             dismiss();
 
@@ -89,16 +71,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
         pendingView.setOnClickListener(v -> {
             // Handle "Pending" view click
-            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
-            if (dateTitle != null) {
-                String prevTxt = (String) dateTitle.getText();
-                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
-            }
-            if (dateTitle != null) {
-                String prevTxt = (String) dateTitle.getText();
-//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
-                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
-            }
+
 
             dismiss();
 
@@ -108,16 +81,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
         recurringView.setOnClickListener(v -> {
             // Handle "Recurring" view click
-            TextView dateTitle = view.getRootView().findViewById(R.id.date_title);
-            if (dateTitle != null) {
-                String prevTxt = (String) dateTitle.getText();
-                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
-            }
-            if (dateTitle != null) {
-                String prevTxt = (String) dateTitle.getText();
-//                dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▼");
-                Toast.makeText(getContext(), prevTxt, Toast.LENGTH_SHORT).show();
-            }
+
 
             dismiss();
 
