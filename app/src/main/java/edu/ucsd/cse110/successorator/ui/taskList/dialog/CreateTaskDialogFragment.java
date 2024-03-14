@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,7 +54,6 @@ public class CreateTaskDialogFragment extends DialogFragment {
     }
 
     private void radioSetup() {
-        view.radioOneTime.toggle();
         view.saveButton.setOnClickListener(v -> addTask(getDialog()));
 
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
@@ -129,8 +129,18 @@ public class CreateTaskDialogFragment extends DialogFragment {
             throw new IllegalStateException("No Selection Made");
         }
 
-        // TODO: UPDATE THIS TO USE THE APPROPRIATE CONTEXT
-        Task.Context context = Task.Context.SCHOOL;
+        Task.Context context;
+        if (view.homeContext.isChecked()) {
+            context = Task.Context.HOME;
+        } else if (view.workContext.isChecked()) {
+            context = Task.Context.WORK;
+        } else if (view.schoolContext.isChecked()) {
+            context = Task.Context.SCHOOL;
+        } else if (view.errandsContext.isChecked()) {
+            context = Task.Context.ERRANDS;
+        } else {
+            throw new IllegalStateException("No Selection Made");
+        }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
         var task = new Task(null, input, 0, false, recurringType, recurringID, app.getTaskViewSubject().getItem(), context);
@@ -160,7 +170,5 @@ public class CreateTaskDialogFragment extends DialogFragment {
         var modelProvider = new ViewModelProvider(modelOwner, modelFactory);
         this.activityModel = modelProvider.get(TaskViewModel.class);
     }
-
-
 }
 

@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
@@ -27,7 +29,6 @@ import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Create AddTaskListener
         findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
-
     }
     private long LastDateClick = 0;
 
@@ -123,4 +123,14 @@ public class MainActivity extends AppCompatActivity {
         dateSubject.setItem(new Date());
         dateSubject.loadDate();
     }
+
+
+//    public void onContextRadioButtonSelected(View view) {
+//        findViewById(R.id.home_context).setSelected(false);
+//        findViewById(R.id.work_context).setSelected(false);
+//        findViewById(R.id.school_context).setSelected(false);
+//        findViewById(R.id.errands_context).setSelected(false);
+//
+//        view.setSelected(true);
+//    }
 }

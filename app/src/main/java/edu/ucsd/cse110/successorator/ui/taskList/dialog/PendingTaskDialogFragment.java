@@ -59,8 +59,18 @@ public class PendingTaskDialogFragment extends DialogFragment {
 
         RecurringType recurringType = null;
 
-        // TODO: UPDATE THIS TO USE THE APPROPRIATE CONTEXT
-        Task.Context context = Task.Context.SCHOOL;
+        Task.Context context;
+        if (view.homeContext.isChecked()) {
+            context = Task.Context.HOME;
+        } else if (view.workContext.isChecked()) {
+            context = Task.Context.WORK;
+        } else if (view.schoolContext.isChecked()) {
+            context = Task.Context.SCHOOL;
+        } else if (view.errandsContext.isChecked()) {
+            context = Task.Context.ERRANDS;
+        } else {
+            throw new IllegalStateException("No Selection Made");
+        }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
         var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskViewSubject().getItem(), context);
