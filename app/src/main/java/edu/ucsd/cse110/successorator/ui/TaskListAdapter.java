@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeleteTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
@@ -65,10 +66,12 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         });
 
         binding.taskText.setOnLongClickListener(v -> {
-            Task.IView currentView = ((SuccessoratorApplication) getContext()).getTaskView().getItem();
+            var context = ((SuccessoratorApplication) getContext().getApplicationContext());
+            Task.IView currentView = context.getTaskView().getItem();
             switch (currentView) {
                 case RECURRING:
-
+                    DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance();
+                    dialogFragment.show(dialogFragment.getParentFragmentManager(), "deleteDialog");
                     break;
                 case PENDING:
 
@@ -78,9 +81,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
                     break;
             }
 
-
-//            return true;
-//            Toast.makeText(getContext(), "Long Pressed", Toast.LENGTH_SHORT).show();
+            return true;
         });
 
         return binding.getRoot();
