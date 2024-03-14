@@ -20,6 +20,7 @@ import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 import edu.ucsd.cse110.successorator.ui.DateViewUpdater;
 import edu.ucsd.cse110.successorator.ui.ViewSwitchDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.PendingTaskDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.RecurringTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
@@ -91,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case PENDING:
-                RecurringTaskDialogFragment recurringDialogFragment2 = RecurringTaskDialogFragment.newInstance();
-                recurringDialogFragment2.show(getSupportFragmentManager(), "RecurringTaskDialogFragment");
-                break;
-//                PendingTaskDialogFragment pendingTaskDialogFragment = PendingTaskDialogFragment.newInstance();
-//                pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
+//                RecurringTaskDialogFragment recurringDialogFragment2 = RecurringTaskDialogFragment.newInstance();
+//                recurringDialogFragment2.show(getSupportFragmentManager(), "RecurringTaskDialogFragment");
 //                break;
+                PendingTaskDialogFragment pendingTaskDialogFragment = PendingTaskDialogFragment.newInstance();
+                pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
+                break;
         }
 //        CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
 //        ctdf.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
