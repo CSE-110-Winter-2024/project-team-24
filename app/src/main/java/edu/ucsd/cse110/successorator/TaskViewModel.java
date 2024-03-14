@@ -42,7 +42,7 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
 
         taskViewSubject.observe(view -> {
             var newOrderedCards = tasksRepository.findAll().stream()
-                    .filter(card -> !card.isRecurring() && card.getView() == view)
+                    .filter(card -> card.getView() == view)
                     .sorted(Comparator.comparingInt(Task::sortOrder))
                     .collect(Collectors.toList());
             orderedTasks.setItem(newOrderedCards);
