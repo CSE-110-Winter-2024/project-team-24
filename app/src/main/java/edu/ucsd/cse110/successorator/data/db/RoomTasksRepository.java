@@ -145,10 +145,5 @@ public class RoomTasksRepository implements ITasksRepository {
         }
         appendToEndOfUnfinishedTasks(task.withId(null).withNullRecurringType());
     }
-
-    @Override
-    public List<Task> filterByView(Task.IView view) {
-        return findAll().stream().filter(e -> e.getView().equals(view)).collect(Collectors.toList());
-    }
 }
 

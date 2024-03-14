@@ -47,7 +47,7 @@ public class TaskListFragment extends Fragment {
 
         // Initialize the Adapter (with an empty list for now)
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough, app.getTaskView());
+        this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough, app.getTaskViewSubject());
         activityModel.getOrderedTasks().observe(tasks -> {
             if (tasks == null) return;
             adapter.clear();

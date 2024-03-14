@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onAddTaskClick(View view) {
-        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskView().getItem();
+        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject().getItem();
         switch(currentView) {
             case TODAY:
                 CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
