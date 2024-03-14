@@ -18,3 +18,24 @@ This is the mostly empty template for the Successorator project.
      PR the updated template.
  - [ ] Replace this README with something appropriate.
    - **When you do, replace the title to replace X with your team number.**
+
+## Milestone 2 Velocity Calculations
+
+### Iteration 1
+
+ - Factors taken into consideration:
+   - Availibility of all group members for iteration 1
+   - Performance of team during iteration 2 of Milestone 1
+   - Difficulty of the tasks for iteration 1
+ - Conclusion: A velocity of 0.4 will be used, carried over from iteration 2 of MS1.
+
+### Iteration 2
+ - Factors taken into consideration:
+   - All group members with major time conflicts preventing many in person meetings
+   - Heavy coursework loads
+   - Amount of work left in entire project
+   - Certain tasks led to many unexpected problems, leading the task to take much longer than the initial estimation
+ - Conclusions:
+   - Roll over any tasks that were unfinished in iteration 1 to iteration 2
+   - Maintain the 7 days per week of work, as most member had time during the weekends
+   - 4*6*7 = 168 potential work hours -> 168*0.35 = **58.8 hours**
