@@ -17,14 +17,17 @@ import java.util.function.Consumer;
 
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
 
     private final Consumer<Task> consumer;
+    private final TaskViewSubject view;
 
-    public TaskListAdapter(Context context, List<Task> tasks, Consumer<Task> consumer) {
+    public TaskListAdapter(Context context, List<Task> tasks, Consumer<Task> consumer, TaskViewSubject view) {
         super(context, 0, new ArrayList<>(tasks));
         this.consumer = consumer;
+        this.view = view;
     }
 
     private static void updateTextView(TextView textView, Task task) {
@@ -54,8 +57,9 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         updateTextView(binding.taskText, task);
 
         binding.taskText.setOnClickListener(v -> {
-//            ((SuccessoratorApplication) getContext().getApplicationContext()).getDateSubject().setDate(new Date());
-            consumer.accept(task);
+            if (view.getItem() == Task.IView.TODAY || view.getItem() == Task.IView.TOMORROW) {
+                consumer.accept(task);
+            }
         });
 
         return binding.getRoot();

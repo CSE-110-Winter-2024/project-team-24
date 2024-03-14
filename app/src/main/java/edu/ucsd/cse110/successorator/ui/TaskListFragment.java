@@ -46,7 +46,8 @@ public class TaskListFragment extends Fragment {
         this.activityModel = modelProvider.get(TaskViewModel.class);
 
         // Initialize the Adapter (with an empty list for now)
-        this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough);
+        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+        this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough, app.getTaskView());
         activityModel.getOrderedTasks().observe(tasks -> {
             if (tasks == null) return;
             adapter.clear();
