@@ -4,6 +4,7 @@ package edu.ucsd.cse110.successorator;    // might need in the future
 //    }
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
 
     }
+    private long LastDateClick = 0;
 
     private void onDateTitleClick(View view) {
         ViewSwitchDialogFragment vsd = ViewSwitchDialogFragment.newInstance();
@@ -71,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
             String prevTxt = (String) dateTitle.getText();
             dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▲");
         }
+        if (SystemClock.elapsedRealtime() - LastDateClick < 1000){
+            return;
+        }
+        LastDateClick = SystemClock.elapsedRealtime();
 //        Toast.makeText(this, "Middle button clicked!", Toast.LENGTH_SHORT).show();
         // Does nothing for now...
     }
