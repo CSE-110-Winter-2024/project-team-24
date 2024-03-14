@@ -15,21 +15,21 @@ import java.util.List;
 
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
+import edu.ucsd.cse110.successorator.databinding.FragmentNoTasksBinding;
 import edu.ucsd.cse110.successorator.databinding.FragmentTaskListBinding;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
-
-public class TaskListFragment extends Fragment {
+public class NoTasksFragment extends Fragment {
     private TaskViewModel activityModel;
-    private FragmentTaskListBinding view;
+    private FragmentNoTasksBinding view;
     private TaskListAdapter adapter;
 
-    public TaskListFragment() {
+    public NoTasksFragment() {
         // Required empty public constructor
     }
 
-    public static TaskListFragment newInstance() {
-        TaskListFragment fragment = new TaskListFragment();
+    public static NoTasksFragment newInstance() {
+        NoTasksFragment fragment = new NoTasksFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -46,26 +46,26 @@ public class TaskListFragment extends Fragment {
         this.activityModel = modelProvider.get(TaskViewModel.class);
 
         // Initialize the Adapter (with an empty list for now)
-        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough, app.getTaskView());
-        activityModel.getOrderedTasks().observe(tasks -> {
-            if (tasks == null) return;
-            adapter.clear();
-            adapter.addAll(new ArrayList<>(tasks)); // remember the mutable copy here!
-            adapter.notifyDataSetChanged();
-        });
+//        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+//        this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough, app.getTaskView());
+//        activityModel.getOrderedTasks().observe(tasks -> {
+//            if (tasks == null) return;
+//            adapter.clear();
+//            adapter.addAll(new ArrayList<>(tasks)); // remember the mutable copy here!
+//            adapter.notifyDataSetChanged();
+//        });
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.view = FragmentTaskListBinding.inflate(inflater, container, false);
+        this.view = FragmentNoTasksBinding.inflate(inflater, container, false);
 
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
         DateSubject dateSubject = app.getDateSubject();
 
         // Set the adapter on the ListView
-        view.cardList.setAdapter(adapter);
+//        view.cardList.setAdapter(adapter);
 //        view.advancedDate.setOnClickListener(v -> {
 //            dateSubject.advanceDate();
 //        });
