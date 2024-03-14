@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,9 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         binding.taskText.setOnLongClickListener(v -> {
             switch (view.getItem()) {
                 case RECURRING:
+                    FragmentActivity activity = (FragmentActivity) getContext();
                     DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance();
-                    dialogFragment.show(getParentFragmentManager(), "deleteDialog");
+                    dialogFragment.show(activity.getSupportFragmentManager(), "deleteDialog");
                     break;
                 case PENDING:
 
