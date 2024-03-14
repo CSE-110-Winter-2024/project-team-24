@@ -70,14 +70,14 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             switch (view.getItem()) {
                 case RECURRING:
                     FragmentActivity activity = (FragmentActivity) getContext();
-                    DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance();
+                    DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance(activity.getTaskId());
                     dialogFragment.show(activity.getSupportFragmentManager(), "deleteDialog");
                     break;
                 case PENDING:
 
                     break;
-                case TOMORROW:
-                case TODAY:
+                default:
+                    // no functionality for TODAY and TOMORROW
                     break;
             }
 
