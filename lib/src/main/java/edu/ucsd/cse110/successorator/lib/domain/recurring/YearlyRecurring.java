@@ -20,6 +20,14 @@ public class YearlyRecurring extends RecurringType {
     }
 
     @Override
+    public Boolean checkIfTomorrow(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 1);
+        return cal.get(Calendar.DAY_OF_MONTH) == this.date && cal.get(Calendar.MONTH) == month;
+    }
+
+    @Override
     public String toString() {
         return "YearlyRecurring-" + month + "-" + date;
     }

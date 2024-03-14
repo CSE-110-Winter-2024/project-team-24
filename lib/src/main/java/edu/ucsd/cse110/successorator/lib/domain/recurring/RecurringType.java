@@ -21,4 +21,6 @@ public abstract class RecurringType {
     }
 
     public abstract Boolean checkIfToday(Date date);
+
+    public abstract Boolean checkIfTomorrow(Date date);
 }

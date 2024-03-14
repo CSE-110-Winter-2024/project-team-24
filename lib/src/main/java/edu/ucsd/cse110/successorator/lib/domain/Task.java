@@ -69,7 +69,7 @@ public class Task implements Serializable {
         return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view);
     }
 
-    public Task withId(int id) {
+    public Task withId(Integer id) {
         return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view);
     }
 
