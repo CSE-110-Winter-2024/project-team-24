@@ -48,46 +48,7 @@ public class PendingTaskDialogFragment extends DialogFragment {
     }
 
     private void radioSetup() {
-//        view.radioDaily.toggle();
         view.saveButton.setOnClickListener(v -> addTask(getDialog()));
-
-//        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-//        Date today = app.getDateSubject().getItem();
-//        assert today != null;
-//
-//        SimpleDateFormat dayOfWeek = new SimpleDateFormat("EE", Locale.getDefault());
-//        SimpleDateFormat dateFormatYearly = new SimpleDateFormat("M/d", Locale.getDefault());
-//        SimpleDateFormat dateNumber = new SimpleDateFormat("d", Locale.getDefault());
-//        SimpleDateFormat dayOfWeekInMonth = new SimpleDateFormat("F", Locale.getDefault());
-//
-//        int dayNumber = Integer.parseInt(dateNumber.format(today));
-//        int dayOfWeekInMonthNumber = Integer.parseInt(dayOfWeekInMonth.format(today));
-//        String dateSuffix;
-
-
-
-
-
-//        if (dayOfWeekInMonthNumber >= 11 && dayOfWeekInMonthNumber <= 13) {
-//            dateSuffix = "th";
-//        } else {
-//            switch (dayOfWeekInMonthNumber % 10) {
-//                case 1:
-//                    dateSuffix = "st";
-//                    break;
-//                case 2:
-//                    dateSuffix = "nd";
-//                    break;
-//                case 3:
-//                    dateSuffix = "rd";
-//                    break;
-//                default:
-//                    dateSuffix = "th";
-//            }
-//        }
-//        view.radioWeekly.append(" " + dayOfWeek.format(today));
-//        view.radioMonthly.append(" " + dayOfWeekInMonthNumber + dateSuffix + " " + dayOfWeek.format(today));
-//        view.radioYearly.append(" " + dateFormatYearly.format(today));
     }
 
 

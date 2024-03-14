@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
@@ -62,6 +64,25 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             }
         });
 
+        binding.taskText.setOnLongClickListener(v -> {
+            Task.IView currentView = ((SuccessoratorApplication) getContext()).getTaskView().getItem();
+            switch (currentView) {
+                case RECURRING:
+
+                    break;
+                case PENDING:
+
+                    break;
+                case TOMORROW:
+                case TODAY:
+                    break;
+            }
+
+
+//            return true;
+//            Toast.makeText(getContext(), "Long Pressed", Toast.LENGTH_SHORT).show();
+        });
+
         return binding.getRoot();
     }
 
@@ -69,6 +90,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     public boolean hasStableIds() {
         return true;
     }
+
 
     @Override
     public long getItemId(int position) {

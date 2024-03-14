@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         dateSubject.observe(actionBarUpdater);
 
         DateViewUpdater dateViewUpdater = new DateViewUpdater(this);
-        TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject();
+        TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskView();
         taskViewSubject.observe(dateViewUpdater);
 //        dateSubject.observe(dateViewUpdater);
         // Create FocusSwitcherListener
