@@ -1,6 +1,7 @@
 package edu.ucsd.cse110.successorator.ui.taskList.dialog;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,22 +14,31 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import edu.ucsd.cse110.successorator.R;
+import edu.ucsd.cse110.successorator.databinding.DailyOrTomorrowTaskDialogBinding;
+import edu.ucsd.cse110.successorator.databinding.RecurringDeleteDialogBinding;
 
 public class DeleteTaskDialogFragment extends DialogFragment {
 
+    RecurringDeleteDialogBinding view;
     public DeleteTaskDialogFragment() {
         // Required empty public constructor
     }
 
     public static DeleteTaskDialogFragment newInstance() {
-        return new DeleteTaskDialogFragment();
+        var fragment = new DeleteTaskDialogFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.recurring_delete_dialog, container, false);
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        this.view = RecurringDeleteDialogBinding.inflate(getLayoutInflater());
+
+        return new AlertDialog.Builder(getActivity())
+                .setView(view.getRoot())
+                .create();
     }
 
     @Override
@@ -42,17 +52,11 @@ public class DeleteTaskDialogFragment extends DialogFragment {
         new AlertDialog.Builder(getContext())
                 .setTitle("Delete Task")
                 .setMessage("Are you sure you want to delete this task?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Implement task deletion logic here
-                    }
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    // Implement task deletion logic here
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Dialog will be dismissed without doing anything
-                    }
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                    // Dialog will be dismissed without doing anything
                 })
                 .show();
     }

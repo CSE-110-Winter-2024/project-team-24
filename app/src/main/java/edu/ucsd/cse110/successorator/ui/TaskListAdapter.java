@@ -66,12 +66,10 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         });
 
         binding.taskText.setOnLongClickListener(v -> {
-            var context = ((SuccessoratorApplication) getContext().getApplicationContext());
-            Task.IView currentView = context.getTaskView().getItem();
-            switch (currentView) {
+            switch (view.getItem()) {
                 case RECURRING:
                     DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance();
-                    dialogFragment.show(dialogFragment.getParentFragmentManager(), "deleteDialog");
+                    dialogFragment.show(getParentFragmentManager(), "deleteDialog");
                     break;
                 case PENDING:
 
