@@ -16,14 +16,21 @@ public class Task implements Serializable {
     private final RecurringType recurringType;
     private final @NonNull Integer recurring_id;
     private final IView view;
+    private final Context context;
     public enum IView {
         TODAY,
         TOMORROW,
         RECURRING,
-        PENDING
+        PENDING,
+    }
+    public enum Context {
+        HOME,
+        WORK,
+        SCHOOL,
+        ERRANDS,
     }
 
-    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id, IView view) {
+    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id, IView view, Context context) {
         this.id = id;
         this.taskName = taskName;
         this.sortOrder = sortOrder;
@@ -31,6 +38,7 @@ public class Task implements Serializable {
         this.recurringType = recurringType;
         this.recurring_id = recurring_id;
         this.view = view;
+        this.context = context;
     }
 
     public Integer getRecurringID() {
@@ -65,24 +73,32 @@ public class Task implements Serializable {
         return view;
     }
 
+    public Context getContext() {
+        return context;
+    }
+
     public Task withSortOrder(int sortOrder) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
     }
 
     public Task withId(Integer id) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
     }
 
     public Task withCheckOff(boolean checkOff) {
-        return new Task(id, taskName, sortOrder, checkOff, recurringType, recurring_id, view);
+        return new Task(id, taskName, sortOrder, checkOff, recurringType, recurring_id, view, context);
     }
 
     public Task withNullRecurringType() {
-        return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id, view);
+        return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id, view, context);
     }
 
     public Task withView(IView view) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+    }
+
+    public Task withContext(Context context) {
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
     }
 
 
@@ -106,6 +122,10 @@ public class Task implements Serializable {
                 ", task='" + taskName + '\'' +
                 ", sortOrder=" + sortOrder +
                 ", checkedOff=" + checkedOff +
+                ", recurringType=" + recurringType +
+                ", recurring_id=" + recurring_id +
+                ", view=" + view +
+                ", context=" + context +
                 '}';
     }
 }

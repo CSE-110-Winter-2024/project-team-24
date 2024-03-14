@@ -137,8 +137,11 @@ public class CreateTaskDialogFragment extends DialogFragment {
             throw new IllegalStateException("No Selection Made");
         }
 
+        // TODO: UPDATE THIS TO USE THE APPROPRIATE CONTEXT
+        Task.Context context = Task.Context.SCHOOL;
+
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem());
+        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem(), context);
 
         if (recurringType != null) {
             task = task.withView(Task.IView.RECURRING);

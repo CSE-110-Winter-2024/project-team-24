@@ -70,7 +70,7 @@ public class RoomTasksRepository implements ITasksRepository {
         }
 
         tasksDao.shiftSortOrders(newSortOrder, maxSortOrder, 1);
-        save(new Task(task.id(), task.getTaskName(), newSortOrder, task.getCheckOff(), task.getRecurringType(), task.getRecurringID(), task.getView()));
+        save(task.withSortOrder(newSortOrder));
     }
 
     @Override
