@@ -10,17 +10,19 @@ import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.DateUpdater;
+import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class SuccessoratorApplication extends Application {
     private ITasksRepository tasksRepository;
     private DateSubject dateSubject;
-    private Task.IView taskView;
+    private TaskViewSubject taskView;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         this.dateSubject = new DateSubject();
+        this.taskView = new TaskViewSubject();
 
         var database = Room.databaseBuilder(
                 getApplicationContext(),
@@ -39,7 +41,6 @@ public class SuccessoratorApplication extends Application {
         this.dateSubject.loadDate();
 
         this.dateSubject.observe(new DateUpdater(tasksRepository, dateSubject.getItem()));
-        this.taskView = Task.IView.TODAY;
     }
 
     public ITasksRepository getTasksRepository() {
@@ -49,7 +50,10 @@ public class SuccessoratorApplication extends Application {
     public DateSubject getDateSubject() {
         return dateSubject;
     }
-    public Task.IView getTaskView() {
+    public TaskViewSubject getTaskViewSubject() {
+        return taskView;
+    }
+    public TaskViewSubject getTaskView() {
         return taskView;
     }
 }

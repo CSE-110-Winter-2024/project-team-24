@@ -63,10 +63,7 @@ public class RoomTasksRepository implements ITasksRepository {
         int newSortOrder = maxSortOrder + 1;
 
         List<Task> tasks = Objects.requireNonNull(tasksDao.findAll().stream().map(TaskEntity::toTask).collect(Collectors.toList()));
-        Optional<Task> firstCheckedOff = tasks.stream()
-                .sorted(Comparator.comparing(Task::sortOrder))
-                .filter(Task::getCheckOff)
-                .findFirst();
+        Optional<Task> firstCheckedOff = tasks.stream().sorted(Comparator.comparing(Task::sortOrder)).filter(Task::getCheckOff).findFirst();
 
         if (firstCheckedOff.isPresent()) {
             newSortOrder = firstCheckedOff.get().sortOrder();
@@ -95,9 +92,7 @@ public class RoomTasksRepository implements ITasksRepository {
 
     @Override
     public int generateRecurringID() {
-        Optional<Task> recurringTasks = findAll().stream()
-                .filter(Task::isRecurring)
-                .max(Comparator.comparingInt(Task::getRecurringID));
+        Optional<Task> recurringTasks = findAll().stream().max(Comparator.comparingInt(Task::getRecurringID));
 
         return recurringTasks.isPresent() ? recurringTasks.get().getRecurringID() + 1 : 1;
     }
@@ -114,21 +109,41 @@ public class RoomTasksRepository implements ITasksRepository {
 
     @Override
     public void dateAdvanced(Date date) {
-        List<Task> tasks = Objects.requireNonNull(tasksDao.findAll().stream().map(TaskEntity::toTask).collect(Collectors.toList()));
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getCheckOff() && !tasks.get(i).isRecurring()) {
-                remove(tasks.get(i).id());
+        // Remove all tasks that are checked off and TODAY
+        findAll().stream()
+                .filter(task -> task.getView() == Task.IView.TODAY && task.getCheckOff())
+                .forEach(task -> remove(task.id()));
+
+        // Move all tasks from TOMORROW to TODAY
+        findAll().stream()
+                .filter(task -> task.getView() == Task.IView.TOMORROW)
+                .forEach(task -> {
+                    remove(task.id());
+                    addOnetimeTask(task.withView(Task.IView.TODAY));
+                });
+
+        findAll().forEach(task -> {
+            if (task.isRecurring() && task.getRecurringType().checkIfToday(date)) {
+                addOnetimeTask(task.withCheckOff(false).withView(Task.IView.TODAY));
             }
-        }
+
+            if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(date)) {
+                addOnetimeTask(task.withCheckOff(false).withView(Task.IView.TOMORROW));
+            }
+        });
+
+        findAll().stream()
+                .filter(Task::getCheckOff)
+                .forEach(task -> remove(task.id()));
     }
 
     @Override
     public void addOnetimeTask(Task task) {
-        List<Integer> taskRecurringID = findAll().stream().filter(e -> !e.isRecurring()).map(Task::getRecurringID).collect(Collectors.toList());
+        List<Integer> taskRecurringID = findAll().stream().filter(e -> !e.isRecurring() && e.getView() == task.getView()).map(Task::getRecurringID).collect(Collectors.toList());
         if (taskRecurringID.contains(task.getRecurringID())) {
             return;
         }
-        append(task.withNullRecurringType());
+        appendToEndOfUnfinishedTasks(task.withId(null).withNullRecurringType());
     }
 
     @Override

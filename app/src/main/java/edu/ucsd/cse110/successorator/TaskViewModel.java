@@ -18,6 +18,7 @@ import edu.ucsd.cse110.successorator.lib.util.Observer;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 import edu.ucsd.cse110.successorator.util.DateSubject;
+import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class TaskViewModel extends ViewModel implements Observer<Date> {
     public static final ViewModelInitializer<TaskViewModel> initializer =
@@ -26,25 +27,33 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
                     creationExtras -> {
                         var app = (SuccessoratorApplication) creationExtras.get(APPLICATION_KEY);
                         assert app != null;
-                        return new TaskViewModel(app.getTasksRepository(), app.getDateSubject());
+                        return new TaskViewModel(app.getTasksRepository(), app.getTaskView());
                     });
     private final ITasksRepository tasksRepository;
     private final MutableSubject<Task> topTask;
     private final MutableSubject<List<Task>> orderedTasks;
 
-    public TaskViewModel(ITasksRepository tasksRepository, DateSubject dateSubject) {
+    public TaskViewModel(ITasksRepository tasksRepository, TaskViewSubject taskViewSubject) {
         this.tasksRepository = tasksRepository;
 
         // Create the observable subjects.
         this.orderedTasks = new SimpleSubject<>();
         this.topTask = new SimpleSubject<>();
 
+        taskViewSubject.observe(view -> {
+            var newOrderedCards = tasksRepository.findAll().stream()
+                    .filter(card -> card.getView() == view)
+                    .sorted(Comparator.comparingInt(Task::sortOrder))
+                    .collect(Collectors.toList());
+            orderedTasks.setItem(newOrderedCards);
+        });
+
         // When the list of cards changes (or is first loaded), reset the ordering:
         tasksRepository.findAllAsLiveData().observe(cards -> {
             if (cards == null) return;
 
             var newOrderedCards = cards.stream()
-                    .filter(card -> !card.isRecurring())
+                    .filter(card -> !card.isRecurring() && card.getView() == taskViewSubject.getItem())
                     .sorted(Comparator.comparingInt(Task::sortOrder))
                     .collect(Collectors.toList());
             orderedTasks.setItem(newOrderedCards);
@@ -72,6 +81,28 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
 
     public void append(Task task) {
         tasksRepository.appendToEndOfUnfinishedTasks(task);
+    }
+
+    public void filterByView(List<Task> taskList) {
+        this.orderedTasks.setItem(taskList);
+        // When the list of cards changes (or is first loaded), reset the ordering:
+        tasksRepository.findAllAsLiveData().observe(cards -> {
+            if (cards == null) return;
+
+            var newOrderedCards = cards.stream()
+                    .filter(card -> !card.isRecurring())
+                    .sorted(Comparator.comparingInt(Task::sortOrder))
+                    .collect(Collectors.toList());
+            orderedTasks.setItem(newOrderedCards);
+        });
+
+        // When the ordering changes, update the top card:
+        orderedTasks.observe(cards -> {
+            if (cards == null || cards.size() == 0) return;
+            var card = cards.get(0);
+            this.topTask.setItem(card);
+        });
+
     }
 
     @Override

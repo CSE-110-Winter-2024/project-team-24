@@ -6,4 +6,5 @@
     <string name="task_hint">Type Task Here</string>
     <string name="one_time_task">One Time</string>
     <string name="daily_task">Daily</string>
+    <string name="save">Save</string>
 </resources>

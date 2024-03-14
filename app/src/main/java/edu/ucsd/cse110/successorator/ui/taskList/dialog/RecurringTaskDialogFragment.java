@@ -18,24 +18,24 @@ import java.util.Locale;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.DailyOrTomorrowTaskDialogBinding;
+import edu.ucsd.cse110.successorator.databinding.RecurringTaskDialogBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.YearlyRecurring;
 import edu.ucsd.cse110.successorator.util.DateSubject;
-import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
-public class CreateTaskDialogFragment extends DialogFragment {
+public class RecurringTaskDialogFragment extends DialogFragment {
 
-    private DailyOrTomorrowTaskDialogBinding view;
+    private RecurringTaskDialogBinding view;
     private TaskViewModel activityModel;
 
-    CreateTaskDialogFragment() {}
+    RecurringTaskDialogFragment() {}
 
-    public static CreateTaskDialogFragment newInstance() {
-        var fragment = new CreateTaskDialogFragment();
+    public static RecurringTaskDialogFragment newInstance() {
+        var fragment = new RecurringTaskDialogFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -44,7 +44,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        this.view = DailyOrTomorrowTaskDialogBinding.inflate(getLayoutInflater());
+        this.view = RecurringTaskDialogBinding.inflate(getLayoutInflater());
 
         this.radioSetup();
         return new AlertDialog.Builder(getActivity())
@@ -53,50 +53,46 @@ public class CreateTaskDialogFragment extends DialogFragment {
     }
 
     private void radioSetup() {
-        view.radioOneTime.toggle();
+        view.radioDaily.toggle();
         view.saveButton.setOnClickListener(v -> addTask(getDialog()));
 
-        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        Date today = app.getDateSubject().getItem();
-        assert today != null;
+//        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+//        Date today = app.getDateSubject().getItem();
+//        assert today != null;
+//
+//        SimpleDateFormat dayOfWeek = new SimpleDateFormat("EE", Locale.getDefault());
+//        SimpleDateFormat dateFormatYearly = new SimpleDateFormat("M/d", Locale.getDefault());
+//        SimpleDateFormat dateNumber = new SimpleDateFormat("d", Locale.getDefault());
+//        SimpleDateFormat dayOfWeekInMonth = new SimpleDateFormat("F", Locale.getDefault());
+//
+//        int dayNumber = Integer.parseInt(dateNumber.format(today));
+//        int dayOfWeekInMonthNumber = Integer.parseInt(dayOfWeekInMonth.format(today));
+//        String dateSuffix;
 
-        SimpleDateFormat dayOfWeek = new SimpleDateFormat("EE", Locale.getDefault());
-        SimpleDateFormat dateFormatYearly = new SimpleDateFormat("M/d", Locale.getDefault());
-        SimpleDateFormat dayOfWeekInMonth = new SimpleDateFormat("F", Locale.getDefault());
-        TaskViewSubject taskViewSubject = app.getTaskView();
-        Task.IView Ivalue = taskViewSubject.getItem();
-        Date date = today;
-        if (Ivalue != null) {
-            if (Ivalue == Task.IView.TOMORROW) {
-                date = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-            }
 
-        }
 
-            int dayOfWeekInMonthNumber = Integer.parseInt(dayOfWeekInMonth.format(date));
-            String dateSuffix;
 
-            if (dayOfWeekInMonthNumber >= 11 && dayOfWeekInMonthNumber <= 13) {
-                dateSuffix = "th";
-            } else {
-                switch (dayOfWeekInMonthNumber % 10) {
-                    case 1:
-                        dateSuffix = "st";
-                        break;
-                    case 2:
-                        dateSuffix = "nd";
-                        break;
-                    case 3:
-                        dateSuffix = "rd";
-                        break;
-                    default:
-                        dateSuffix = "th";
-                }
-            }
-            view.radioWeekly.append(" " + dayOfWeek.format(date));
-            view.radioMonthly.append(" " + dayOfWeekInMonthNumber + dateSuffix + " " + dayOfWeek.format(date));
-            view.radioYearly.append(" " + dateFormatYearly.format(date));
 
+//        if (dayOfWeekInMonthNumber >= 11 && dayOfWeekInMonthNumber <= 13) {
+//            dateSuffix = "th";
+//        } else {
+//            switch (dayOfWeekInMonthNumber % 10) {
+//                case 1:
+//                    dateSuffix = "st";
+//                    break;
+//                case 2:
+//                    dateSuffix = "nd";
+//                    break;
+//                case 3:
+//                    dateSuffix = "rd";
+//                    break;
+//                default:
+//                    dateSuffix = "th";
+//            }
+//        }
+//        view.radioWeekly.append(" " + dayOfWeek.format(today));
+//        view.radioMonthly.append(" " + dayOfWeekInMonthNumber + dateSuffix + " " + dayOfWeek.format(today));
+//        view.radioYearly.append(" " + dateFormatYearly.format(today));
     }
 
 
@@ -111,13 +107,9 @@ public class CreateTaskDialogFragment extends DialogFragment {
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
         DateSubject dateSubject = app.getDateSubject();
 
-
         RecurringType recurringType = null;
 
-        if (view.radioOneTime.isChecked()) {
-            Log.i("OneTime Add", dialog.toString());
-            frequency = " 1" + recurringType;
-        } else if (view.radioDaily.isChecked()) {
+        if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
             recurringType = new DailyRecurring();
             frequency = " 2" + recurringType;
@@ -140,16 +132,8 @@ public class CreateTaskDialogFragment extends DialogFragment {
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
         var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem());
 
-        if (recurringType != null) {
-            task = task.withView(Task.IView.RECURRING);
-        }
-
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
-            activityModel.getTasksRepository().addOnetimeTask(task.withView(Task.IView.TODAY));
-        }
-
-        if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(dateSubject.getItem())) {
-            activityModel.getTasksRepository().addOnetimeTask(task.withView(Task.IView.TOMORROW));
+            activityModel.getTasksRepository().addOnetimeTask(task);
         }
 
         activityModel.append(task);

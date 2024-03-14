@@ -12,6 +12,11 @@ public class DailyRecurring extends RecurringType {
     }
 
     @Override
+    public Boolean checkIfTomorrow(Date date) {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "DailyRecurring-";
     }
