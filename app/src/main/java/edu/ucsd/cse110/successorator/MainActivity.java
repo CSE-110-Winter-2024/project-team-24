@@ -71,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
         TextView dateTitle = view.findViewById(R.id.date_title);
         if (dateTitle != null) {
             String prevTxt = (String) dateTitle.getText();
-            dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▲");
+            dateTitle.setText(String.format(
+                    "%s ▲",
+                    prevTxt.substring(0, prevTxt.length() - 2)
+            ));
         }
         if (SystemClock.elapsedRealtime() - LastDateClick < 1000){
             return;
