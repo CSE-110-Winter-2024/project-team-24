@@ -126,14 +126,15 @@ public class RecurringTaskDialogFragment extends DialogFragment {
                 .withRecurringId(recurringID)
                 .withView(app.getTaskViewSubject().getItem())
                 .withContext(context)
+                .withStartDate(calendar.getTime())
                 .build();
 
 
-        if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
+        if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem(), task.getStartDate())) {
             activityModel.getTasksRepository().addOnetimeTask(task.withView(Views.ViewEnum.TODAY));
         }
 
-        if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(dateSubject.getItem())) {
+        if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(dateSubject.getItem(), task.getStartDate())) {
             activityModel.getTasksRepository().addOnetimeTask(task.withView(Views.ViewEnum.TOMORROW));
         }
 

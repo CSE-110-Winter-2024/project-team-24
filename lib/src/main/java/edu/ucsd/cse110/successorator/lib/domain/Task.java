@@ -4,6 +4,7 @@ package edu.ucsd.cse110.successorator.lib.domain;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
@@ -17,8 +18,12 @@ public class Task implements Serializable {
     private final @NonNull Integer recurring_id;
     private final Views.ViewEnum view;
     private final Contexts.Context context;
+    private final Date startDate;
 
-    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id, Views.ViewEnum view, Contexts.Context context) {
+    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder,
+                boolean checkedOff, RecurringType recurringType,
+                Integer recurring_id, Views.ViewEnum view,
+                Contexts.Context context, Date startDate) {
         this.id = id;
         this.taskName = taskName;
         this.sortOrder = sortOrder;
@@ -27,6 +32,7 @@ public class Task implements Serializable {
         this.recurring_id = recurring_id;
         this.view = view;
         this.context = context;
+        this.startDate = startDate;
     }
 
     public Integer getRecurringID() {
@@ -66,24 +72,28 @@ public class Task implements Serializable {
         return context;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
     public Task withSortOrder(int sortOrder) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context, startDate);
     }
 
     public Task withId(Integer id) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context, startDate);
     }
 
     public Task withCheckOff(boolean checkOff) {
-        return new Task(id, taskName, sortOrder, checkOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkOff, recurringType, recurring_id, view, context, startDate);
     }
 
     public Task withNullRecurringType() {
-        return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id, view, context, startDate);
     }
 
     public Task withView(Views.ViewEnum view) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context, startDate);
     }
 
     @Override
