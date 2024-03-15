@@ -1,10 +1,8 @@
 package edu.ucsd.cse110.successorator;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,9 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import java.util.ArrayList;
+import com.google.android.material.button.MaterialButton;
+
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
@@ -35,6 +33,8 @@ import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 public class MainActivity extends AppCompatActivity {
 
     ITasksRepository tasksRepository;
+    private long dateLastClick = 0;
+    private long addLastClick = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private long dateLastClick = 0;
 
     private void onDateTitleClick(View view) {
         ViewSwitchDialogFragment vsd = ViewSwitchDialogFragment.newInstance();
@@ -94,16 +93,15 @@ public class MainActivity extends AppCompatActivity {
                     prevTxt.substring(0, prevTxt.length() - 2)
             ));
         }
-        if (SystemClock.elapsedRealtime() - dateLastClick < 1000){
+        if (SystemClock.elapsedRealtime() - dateLastClick < 1000) {
             return;
         }
         dateLastClick = SystemClock.elapsedRealtime();
     }
 
-    private long addLastClick = 0;
     private void onAddTaskClick(View view) {
         Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject().getItem();
-        switch(currentView) {
+        switch (currentView) {
             case TODAY:
                 CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
                 ctdf.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
@@ -122,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
                 break;
         }
-        if (SystemClock.elapsedRealtime() - addLastClick < 1000){
+        if (SystemClock.elapsedRealtime() - addLastClick < 1000) {
             return;
         }
         addLastClick = SystemClock.elapsedRealtime();
@@ -133,15 +131,16 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
         FocusDialogFragment fsd = FocusDialogFragment.newInstance();
         fsd.show(getSupportFragmentManager(), "FocusDialogFragment");
-        Button focusSwitch = view.findViewById(R.id.focus_switch);
+        MaterialButton focusSwitch = view.findViewById(R.id.focus_switch);
         if (focusSwitch != null) {
-            if (isSelected) {
-                focusSwitch.setColorFilter(getResources().getColor(R.color.your_desired_color), PorterDuff.Mode.SRC_IN);
-            } else {
-                focusSwitch.iconTint = ContextCompat.getColorStateList(this, R.color.white)
-            }
-        }
+            focusSwitch.setIconTint(ContextCompat.getColorStateList(this, R.color.blue));
+//            if (isSelected) {
 
+//                focusSwitch.setColorFilter(getResources().getColor(R.color.your_desired_color), PorterDuff.Mode.SRC_IN);
+//            } else {
+//                focusSwitch.iconTint = ContextCompat.getColorStateList(this, R.color.white)
+//            }
+        }
     }
 
 
