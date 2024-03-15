@@ -75,7 +75,7 @@ public class RoomTasksRepository implements ITasksRepository {
         }
 
         tasksDao.shiftSortOrders(newSortOrder, maxSortOrder, 1);
-        save(new Task(task.id(), task.getTaskName(), newSortOrder, task.getCheckOff(), task.getRecurringType(), task.getRecurringID(), task.getView()));
+        save(task.withSortOrder(newSortOrder));
     }
 
     @Override
@@ -152,8 +152,15 @@ public class RoomTasksRepository implements ITasksRepository {
     }
 
     @Override
-    public List<Task> filterByView(Task.IView view) {
-        return findAll().stream().filter(e -> e.getView().equals(view)).collect(Collectors.toList());
+    public List<Task> filterByValues(List<Task> taskList, Task.IView view, Task.Context context) {
+        return taskList.stream()
+                .filter(card -> card.getView() == view)
+                .filter(card -> context == null || context == card.getContext())
+                .collect(Collectors.groupingBy(Task::getContext))
+                .values()
+                .stream()
+                .flatMap(group -> group.stream().sorted(Comparator.comparingInt(Task::sortOrder)))
+                .collect(Collectors.toList());
     }
 }
 

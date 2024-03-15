@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,11 +14,7 @@ import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.PendingTaskDialogBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
-import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
-import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
-import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
-import edu.ucsd.cse110.successorator.lib.domain.recurring.YearlyRecurring;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
 public class PendingTaskDialogFragment extends DialogFragment {
@@ -27,7 +22,8 @@ public class PendingTaskDialogFragment extends DialogFragment {
     private PendingTaskDialogBinding view;
     private TaskViewModel activityModel;
 
-    PendingTaskDialogFragment() {}
+    PendingTaskDialogFragment() {
+    }
 
     public static PendingTaskDialogFragment newInstance() {
         var fragment = new PendingTaskDialogFragment();
@@ -41,11 +37,14 @@ public class PendingTaskDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         this.view = PendingTaskDialogBinding.inflate(getLayoutInflater());
 
-        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
-        return new AlertDialog.Builder(getActivity())
-                .setView(view.getRoot())
-                .create();
+        this.radioSetup();
+        return new AlertDialog.Builder(getActivity()).setView(view.getRoot()).create();
     }
+
+    private void radioSetup() {
+        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
+    }
+
 
     private void addTask(DialogInterface dialog) {
         String input = view.addTaskDialog.getText().toString();
@@ -58,8 +57,23 @@ public class PendingTaskDialogFragment extends DialogFragment {
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
         DateSubject dateSubject = app.getDateSubject();
 
+        RecurringType recurringType = null;
+
+        Task.Context context;
+        if (view.homeContext.isChecked()) {
+            context = Task.Context.HOME;
+        } else if (view.workContext.isChecked()) {
+            context = Task.Context.WORK;
+        } else if (view.schoolContext.isChecked()) {
+            context = Task.Context.SCHOOL;
+        } else if (view.errandsContext.isChecked()) {
+            context = Task.Context.ERRANDS;
+        } else {
+            throw new IllegalStateException("No Selection Made");
+        }
+
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(0, input, 0, false, null, recurringID, app.getTaskView().getItem());
+        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskViewSubject().getItem(), context);
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().prepend(task);

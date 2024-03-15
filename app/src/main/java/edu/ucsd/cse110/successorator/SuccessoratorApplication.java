@@ -7,15 +7,16 @@ import androidx.room.Room;
 import edu.ucsd.cse110.successorator.data.db.RoomTasksRepository;
 import edu.ucsd.cse110.successorator.data.db.SuccessoratorDatabase;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.DateUpdater;
+import edu.ucsd.cse110.successorator.util.FocusModeSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class SuccessoratorApplication extends Application {
     private ITasksRepository tasksRepository;
     private DateSubject dateSubject;
     private TaskViewSubject taskView;
+    private FocusModeSubject focusModeSubject;
 
     @Override
     public void onCreate() {
@@ -23,6 +24,7 @@ public class SuccessoratorApplication extends Application {
 
         this.dateSubject = new DateSubject();
         this.taskView = new TaskViewSubject();
+        this.focusModeSubject = new FocusModeSubject();
 
         var database = Room.databaseBuilder(
                 getApplicationContext(),
@@ -50,7 +52,13 @@ public class SuccessoratorApplication extends Application {
     public DateSubject getDateSubject() {
         return dateSubject;
     }
+
     public TaskViewSubject getTaskView() {
         return taskView;
+    }
+  
+    public FocusModeSubject getFocusModeSubject() {
+        return focusModeSubject;
+
     }
 }

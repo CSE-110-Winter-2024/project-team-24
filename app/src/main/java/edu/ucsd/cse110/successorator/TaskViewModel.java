@@ -17,7 +17,7 @@ import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
 import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
-import edu.ucsd.cse110.successorator.util.DateSubject;
+import edu.ucsd.cse110.successorator.util.FocusModeSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class TaskViewModel extends ViewModel implements Observer<Date> {
@@ -27,35 +27,34 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
                     creationExtras -> {
                         var app = (SuccessoratorApplication) creationExtras.get(APPLICATION_KEY);
                         assert app != null;
-                        return new TaskViewModel(app.getTasksRepository(), app.getTaskView());
+                        return new TaskViewModel(app.getTasksRepository(), app.getTaskViewSubject(), app.getFocusModeSubject());
                     });
     private final ITasksRepository tasksRepository;
     private final MutableSubject<Task> topTask;
     private final MutableSubject<List<Task>> orderedTasks;
 
-    public TaskViewModel(ITasksRepository tasksRepository, TaskViewSubject taskViewSubject) {
+    public TaskViewModel(ITasksRepository tasksRepository, TaskViewSubject taskViewSubject, FocusModeSubject focusModeSubject) {
         this.tasksRepository = tasksRepository;
 
         // Create the observable subjects.
         this.orderedTasks = new SimpleSubject<>();
         this.topTask = new SimpleSubject<>();
 
+        focusModeSubject.observe(context -> {
+            var newOrderedCards = tasksRepository.filterByValues(tasksRepository.findAll(), taskViewSubject.getItem(), context);
+            orderedTasks.setItem(newOrderedCards);
+        });
+
         taskViewSubject.observe(view -> {
-            var newOrderedCards = tasksRepository.findAll().stream()
-                    .filter(card -> card.getView() == view)
-                    .sorted(Comparator.comparingInt(Task::sortOrder))
-                    .collect(Collectors.toList());
+            var newOrderedCards = tasksRepository.filterByValues(tasksRepository.findAll(), view, focusModeSubject.getItem());
             orderedTasks.setItem(newOrderedCards);
         });
 
         // When the list of cards changes (or is first loaded), reset the ordering:
-        tasksRepository.findAllAsLiveData().observe(cards -> {
-            if (cards == null) return;
+        tasksRepository.findAllAsLiveData().observe(tasks -> {
+            if (tasks == null) return;
 
-            var newOrderedCards = cards.stream()
-                    .filter(card -> !card.isRecurring() && card.getView() == taskViewSubject.getItem())
-                    .sorted(Comparator.comparingInt(Task::sortOrder))
-                    .collect(Collectors.toList());
+            var newOrderedCards = tasksRepository.filterByValues(tasks, taskViewSubject.getItem(), focusModeSubject.getItem());
             orderedTasks.setItem(newOrderedCards);
         });
 

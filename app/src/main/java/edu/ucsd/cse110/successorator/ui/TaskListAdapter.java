@@ -3,6 +3,7 @@ package edu.ucsd.cse110.successorator.ui;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,25 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         }
 
         binding.taskText.setText(task.getTaskName());
+
+        switch (task.getContext()) {
+            case HOME:
+                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.home_background));
+                binding.taskContext.setText("H");
+                break;
+            case WORK:
+                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(),  R.drawable.work_background));
+                binding.taskContext.setText("W");
+                break;
+            case SCHOOL:
+                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(),  R.drawable.school_background));
+                binding.taskContext.setText("S");
+                break;
+            case ERRANDS:
+                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(),  R.drawable.errands_background));
+                binding.taskContext.setText("E");
+                break;
+        }
         updateTextView(binding.taskText, task);
 
         binding.taskText.setOnClickListener(v -> {

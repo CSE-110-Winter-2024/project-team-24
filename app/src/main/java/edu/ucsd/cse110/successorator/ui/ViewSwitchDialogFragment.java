@@ -6,24 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.util.List;
-
-import edu.ucsd.cse110.successorator.MainActivity;
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
-import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
-import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
-import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class ViewSwitchDialogFragment extends DialogFragment {
@@ -54,7 +46,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
             dismiss();
 
-            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
             taskViewSubject.setItem(Task.IView.TODAY);
             // Handle "Today" view click
         });
@@ -65,7 +57,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
             dismiss();
 
-            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
             taskViewSubject.setItem(Task.IView.TOMORROW);
         });
 
@@ -75,7 +67,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
             dismiss();
 
-            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
             taskViewSubject.setItem(Task.IView.PENDING);
         });
 
@@ -85,7 +77,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
 
             dismiss();
 
-            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskView();
+            TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
             taskViewSubject.setItem(Task.IView.RECURRING);
         });
 

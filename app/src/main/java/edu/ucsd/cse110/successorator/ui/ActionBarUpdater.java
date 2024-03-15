@@ -1,6 +1,5 @@
 package edu.ucsd.cse110.successorator.ui;
 
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +33,7 @@ public class ActionBarUpdater implements Observer<Date> {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE M/d", Locale.getDefault());
                 String formattedDate = dateFormat.format(value);
                 String tomorrowDate = dateFormat.format(value.getTime() + 24 * 60 * 60 * 1000);
-                TaskViewSubject taskViewSubject = ((SuccessoratorApplication) activity.getApplication()).getTaskView();
+                TaskViewSubject taskViewSubject = ((SuccessoratorApplication) activity.getApplication()).getTaskViewSubject();
                 Task.IView Ivalue = taskViewSubject.getItem();
                 TextView dateTitle = activity.findViewById(R.id.date_title);
                 if (dateTitle != null) {
