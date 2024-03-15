@@ -7,6 +7,7 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 
 public interface ITasksRepository {
     Subject<Task> findAsLiveData(int id);
+
     Task find(int id);
 
     List<Task> findAll();
@@ -36,5 +37,5 @@ public interface ITasksRepository {
     void addOnetimeTask(Task task);
 
 
-    List<Task> filterByValues(List<Task> taskList, Task.IView view, Task.Context context);
+    List<Task> filterByValues(List<Task> taskList, Views.ViewEnum view, Contexts.Context context);
 }

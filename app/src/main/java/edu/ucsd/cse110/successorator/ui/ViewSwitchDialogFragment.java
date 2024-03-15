@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class ViewSwitchDialogFragment extends DialogFragment {
@@ -47,7 +47,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
             dismiss();
 
             TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
-            taskViewSubject.setItem(Task.IView.TODAY);
+            taskViewSubject.setItem(Views.ViewEnum.TODAY);
             // Handle "Today" view click
         });
 
@@ -58,7 +58,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
             dismiss();
 
             TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
-            taskViewSubject.setItem(Task.IView.TOMORROW);
+            taskViewSubject.setItem(Views.ViewEnum.TOMORROW);
         });
 
         pendingView.setOnClickListener(v -> {
@@ -68,7 +68,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
             dismiss();
 
             TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
-            taskViewSubject.setItem(Task.IView.PENDING);
+            taskViewSubject.setItem(Views.ViewEnum.PENDING);
         });
 
         recurringView.setOnClickListener(v -> {
@@ -78,7 +78,7 @@ public class ViewSwitchDialogFragment extends DialogFragment {
             dismiss();
 
             TaskViewSubject taskViewSubject = ((SuccessoratorApplication) requireActivity().getApplication()).getTaskViewSubject();
-            taskViewSubject.setItem(Task.IView.RECURRING);
+            taskViewSubject.setItem(Views.ViewEnum.RECURRING);
         });
 
         return view;

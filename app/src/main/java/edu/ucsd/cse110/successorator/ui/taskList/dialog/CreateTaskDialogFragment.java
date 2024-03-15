@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +18,12 @@ import java.util.Locale;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.DailyOrTomorrowTaskDialogBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Contexts;
+import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.YearlyRecurring;
 import edu.ucsd.cse110.successorator.util.DateSubject;
@@ -33,7 +34,8 @@ public class CreateTaskDialogFragment extends DialogFragment {
     private DailyOrTomorrowTaskDialogBinding view;
     private TaskViewModel activityModel;
 
-    CreateTaskDialogFragment() {}
+    CreateTaskDialogFragment() {
+    }
 
     public static CreateTaskDialogFragment newInstance() {
         var fragment = new CreateTaskDialogFragment();
@@ -64,38 +66,38 @@ public class CreateTaskDialogFragment extends DialogFragment {
         SimpleDateFormat dateFormatYearly = new SimpleDateFormat("M/d", Locale.getDefault());
         SimpleDateFormat dayOfWeekInMonth = new SimpleDateFormat("F", Locale.getDefault());
         TaskViewSubject taskViewSubject = app.getTaskViewSubject();
-        Task.IView Ivalue = taskViewSubject.getItem();
+        Views.ViewEnum Ivalue = taskViewSubject.getItem();
         Date date = today;
         if (Ivalue != null) {
-            if (Ivalue == Task.IView.TOMORROW) {
+            if (Ivalue == Views.ViewEnum.TOMORROW) {
                 date = new Date(today.getTime() + 24 * 60 * 60 * 1000);
             }
 
         }
 
-            int dayOfWeekInMonthNumber = Integer.parseInt(dayOfWeekInMonth.format(date));
-            String dateSuffix;
+        int dayOfWeekInMonthNumber = Integer.parseInt(dayOfWeekInMonth.format(date));
+        String dateSuffix;
 
-            if (dayOfWeekInMonthNumber >= 11 && dayOfWeekInMonthNumber <= 13) {
-                dateSuffix = "th";
-            } else {
-                switch (dayOfWeekInMonthNumber % 10) {
-                    case 1:
-                        dateSuffix = "st";
-                        break;
-                    case 2:
-                        dateSuffix = "nd";
-                        break;
-                    case 3:
-                        dateSuffix = "rd";
-                        break;
-                    default:
-                        dateSuffix = "th";
-                }
+        if (dayOfWeekInMonthNumber >= 11 && dayOfWeekInMonthNumber <= 13) {
+            dateSuffix = "th";
+        } else {
+            switch (dayOfWeekInMonthNumber % 10) {
+                case 1:
+                    dateSuffix = "st";
+                    break;
+                case 2:
+                    dateSuffix = "nd";
+                    break;
+                case 3:
+                    dateSuffix = "rd";
+                    break;
+                default:
+                    dateSuffix = "th";
             }
-            view.radioWeekly.append(" " + dayOfWeek.format(date));
-            view.radioMonthly.append(" " + dayOfWeekInMonthNumber + dateSuffix + " " + dayOfWeek.format(date));
-            view.radioYearly.append(" " + dateFormatYearly.format(date));
+        }
+        view.radioWeekly.append(" " + dayOfWeek.format(date));
+        view.radioMonthly.append(" " + dayOfWeekInMonthNumber + dateSuffix + " " + dayOfWeek.format(date));
+        view.radioYearly.append(" " + dateFormatYearly.format(date));
     }
 
 
@@ -129,33 +131,42 @@ public class CreateTaskDialogFragment extends DialogFragment {
             throw new IllegalStateException("No Selection Made");
         }
 
-        Task.Context context;
+        Contexts.Context context;
         if (view.homeContext.isChecked()) {
-            context = Task.Context.HOME;
+            context = Contexts.Context.HOME;
         } else if (view.workContext.isChecked()) {
-            context = Task.Context.WORK;
+            context = Contexts.Context.WORK;
         } else if (view.schoolContext.isChecked()) {
-            context = Task.Context.SCHOOL;
+            context = Contexts.Context.SCHOOL;
         } else if (view.errandsContext.isChecked()) {
-            context = Task.Context.ERRANDS;
+            context = Contexts.Context.ERRANDS;
         } else {
             throw new IllegalStateException("No Selection Made");
         }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
 
-        var task = new Task(null, input, 0, false, recurringType, recurringID, app.getTaskViewSubject().getItem(), context);
+        var task = new TaskBuilder()
+                .withId(null)
+                .withTaskName(input)
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringType(recurringType)
+                .withRecurringId(recurringID)
+                .withView(app.getTaskViewSubject().getItem())
+                .withContext(context)
+                .build();
 
         if (recurringType != null) {
-            task = task.withView(Task.IView.RECURRING);
+            task = task.withView(Views.ViewEnum.RECURRING);
         }
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
-            activityModel.getTasksRepository().addOnetimeTask(task.withView(Task.IView.TODAY));
+            activityModel.getTasksRepository().addOnetimeTask(task.withView(Views.ViewEnum.TODAY));
         }
 
         if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(dateSubject.getItem())) {
-            activityModel.getTasksRepository().addOnetimeTask(task.withView(Task.IView.TOMORROW));
+            activityModel.getTasksRepository().addOnetimeTask(task.withView(Views.ViewEnum.TOMORROW));
         }
 
         activityModel.append(task);

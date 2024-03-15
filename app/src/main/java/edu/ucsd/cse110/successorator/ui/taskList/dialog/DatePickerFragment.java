@@ -8,13 +8,13 @@ import android.widget.DatePicker;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.function.Consumer;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     Consumer<Calendar> consumer;
+
     public DatePickerFragment(Consumer<Calendar> consumer) {
         this.consumer = consumer;
     }

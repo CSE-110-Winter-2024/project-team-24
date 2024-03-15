@@ -13,7 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.PendingTaskDialogBinding;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Contexts;
+import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
@@ -59,21 +60,30 @@ public class PendingTaskDialogFragment extends DialogFragment {
 
         RecurringType recurringType = null;
 
-        Task.Context context;
+        Contexts.Context context;
         if (view.homeContext.isChecked()) {
-            context = Task.Context.HOME;
+            context = Contexts.Context.HOME;
         } else if (view.workContext.isChecked()) {
-            context = Task.Context.WORK;
+            context = Contexts.Context.WORK;
         } else if (view.schoolContext.isChecked()) {
-            context = Task.Context.SCHOOL;
+            context = Contexts.Context.SCHOOL;
         } else if (view.errandsContext.isChecked()) {
-            context = Task.Context.ERRANDS;
+            context = Contexts.Context.ERRANDS;
         } else {
             throw new IllegalStateException("No Selection Made");
         }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskViewSubject().getItem(), context);
+        var task = new TaskBuilder()
+                .withId(null)
+                .withTaskName(input + frequency)
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringType(recurringType)
+                .withRecurringId(recurringID)
+                .withView(app.getTaskViewSubject().getItem())
+                .withContext(context)
+                .build();
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().prepend(task);
