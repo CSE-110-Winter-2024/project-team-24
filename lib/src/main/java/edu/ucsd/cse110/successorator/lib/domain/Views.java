@@ -7,13 +7,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Views implements Serializable {
-    public enum ViewEnum {
-        TODAY,
-        TOMORROW,
-        RECURRING,
-        PENDING,
-    }
-
     public static String getViewTitle(Date date, ViewEnum view) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE M/d", Locale.getDefault());
         String formattedDate = dateFormat.format(date);
@@ -34,5 +27,12 @@ public class Views implements Serializable {
             case TODAY:
                 return "Today, " + formattedDate + " ▼";
         }
+    }
+
+    public enum ViewEnum {
+        TODAY,
+        TOMORROW,
+        RECURRING,
+        PENDING,
     }
 }

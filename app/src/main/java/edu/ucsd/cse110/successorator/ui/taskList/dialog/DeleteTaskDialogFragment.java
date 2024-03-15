@@ -2,31 +2,20 @@ package edu.ucsd.cse110.successorator.ui.taskList.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.Objects;
-
-import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
-import edu.ucsd.cse110.successorator.databinding.DailyOrTomorrowTaskDialogBinding;
 import edu.ucsd.cse110.successorator.databinding.RecurringDeleteDialogBinding;
 
 public class DeleteTaskDialogFragment extends DialogFragment {
 
-    RecurringDeleteDialogBinding view;
-
     private final Integer taskId;
+    RecurringDeleteDialogBinding view;
 
     public DeleteTaskDialogFragment(int taskId) {
         // Required empty public constructor

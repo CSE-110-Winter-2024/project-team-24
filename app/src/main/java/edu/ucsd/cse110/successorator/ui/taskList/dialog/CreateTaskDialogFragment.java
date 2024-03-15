@@ -34,7 +34,8 @@ public class CreateTaskDialogFragment extends DialogFragment {
     private DailyOrTomorrowTaskDialogBinding view;
     private TaskViewModel activityModel;
 
-    CreateTaskDialogFragment() {}
+    CreateTaskDialogFragment() {
+    }
 
     public static CreateTaskDialogFragment newInstance() {
         var fragment = new CreateTaskDialogFragment();

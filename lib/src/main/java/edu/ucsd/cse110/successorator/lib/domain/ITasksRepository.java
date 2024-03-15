@@ -7,6 +7,7 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 
 public interface ITasksRepository {
     Subject<Task> findAsLiveData(int id);
+
     Task find(int id);
 
     List<Task> findAll();

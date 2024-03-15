@@ -18,7 +18,6 @@ import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.RecurringTaskDialogBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Contexts;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
 import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
@@ -34,7 +33,8 @@ public class RecurringTaskDialogFragment extends DialogFragment {
     private TaskViewModel activityModel;
     private Calendar calendar;
 
-    RecurringTaskDialogFragment() {}
+    RecurringTaskDialogFragment() {
+    }
 
     public static RecurringTaskDialogFragment newInstance() {
         var fragment = new RecurringTaskDialogFragment();
