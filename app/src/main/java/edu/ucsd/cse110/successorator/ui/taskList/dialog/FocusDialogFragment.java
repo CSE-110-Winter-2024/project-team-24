@@ -7,27 +7,32 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
+
+import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
+import edu.ucsd.cse110.successorator.databinding.FocusModeDialogBinding;
 import edu.ucsd.cse110.successorator.databinding.PendingTaskDialogBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Contexts;
-import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
+import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
-public class PendingTaskDialogFragment extends DialogFragment {
+public class FocusDialogFragment extends DialogFragment {
 
-    private PendingTaskDialogBinding view;
+    private FocusModeDialogBinding view;
     private TaskViewModel activityModel;
 
-    PendingTaskDialogFragment() {
+    FocusDialogFragment() {
     }
 
-    public static PendingTaskDialogFragment newInstance() {
-        var fragment = new PendingTaskDialogFragment();
+    public static FocusDialogFragment newInstance() {
+        var fragment = new FocusDialogFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -36,61 +41,59 @@ public class PendingTaskDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        this.view = PendingTaskDialogBinding.inflate(getLayoutInflater());
+        this.view = FocusModeDialogBinding.inflate(getLayoutInflater());
 
         this.radioSetup();
         return new AlertDialog.Builder(getActivity()).setView(view.getRoot()).create();
     }
 
     private void radioSetup() {
-        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
+        view.saveButton.setOnClickListener(v -> switchFocus(getDialog()));
+        view.exitFocus.setOnClickListener(v -> exitFocus(getDialog()));
     }
 
 
-    private void addTask(DialogInterface dialog) {
-        String input = view.addTaskDialog.getText().toString();
-        if (input.length() == 0) {
-            dialog.dismiss();
-            return;
-        }
-        String frequency = "";
+    private void switchFocus(DialogInterface dialog) {
+
 
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        DateSubject dateSubject = app.getDateSubject();
+//        DateSubject dateSubject = app.getDateSubject();
 
-        RecurringType recurringType = null;
 
         Contexts.Context context;
+        var color = R.color.white;
         if (view.homeContext.isChecked()) {
             context = Contexts.Context.HOME;
+            color = R.color.yellow;
         } else if (view.workContext.isChecked()) {
             context = Contexts.Context.WORK;
+            color = R.color.blue;
         } else if (view.schoolContext.isChecked()) {
             context = Contexts.Context.SCHOOL;
+            color = R.color.purple;
         } else if (view.errandsContext.isChecked()) {
             context = Contexts.Context.ERRANDS;
+            color = R.color.green;
         } else {
             throw new IllegalStateException("No Selection Made");
         }
 
-        int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new TaskBuilder()
-                .withId(null)
-                .withTaskName(input + frequency)
-                .withSortOrder(0)
-                .withCheckedOff(false)
-                .withRecurringType(recurringType)
-                .withRecurringId(recurringID)
-                .withView(app.getTaskViewSubject().getItem())
-                .withContext(context)
-                .withStartDate(dateSubject.getItem())
-                .build();
-
-        if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem(), task.getStartDate())) {
-            activityModel.getTasksRepository().prepend(task);
+        app.getFocusModeSubject().setItem(context);
+        MaterialButton focusSwitch = requireActivity().findViewById(R.id.focus_switch);
+        if (focusSwitch != null) {
+            focusSwitch.setIconTint(ContextCompat.getColorStateList(getContext(), color));
         }
 
-        activityModel.append(task);
+        dialog.dismiss();
+    }
+
+    public void exitFocus(DialogInterface dialog){
+        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+        app.getFocusModeSubject().setItem(null);
+        MaterialButton focusSwitch = requireActivity().findViewById(R.id.focus_switch);
+        if (focusSwitch != null) {
+            focusSwitch.setIconTint(ContextCompat.getColorStateList(getContext(), R.color.white));
+        }
         dialog.dismiss();
     }
 

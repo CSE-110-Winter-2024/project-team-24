@@ -6,7 +6,7 @@
 
 ### Iteration 1
 
- - Initial velocity estimation: 0.5
+ - **Initial velocity estimation: 0.5**
 
 ### Iteration 2
 
@@ -30,7 +30,7 @@
    - Performance of team during iteration 2 of Milestone 1
    - Difficulty of the tasks for iteration 1
  - Conclusions:
-   - A velocity of 0.4 will be used, carried over from iteration 2 of MS1
+   - **Maintain velocity of 0.4**, carried over from iteration 2 of MS1
  - Iteration 1 work hours: 6*5*4 = 120 potential work hours -> 0.4*120 = **48 total work hours**
 
 ### Iteration 2
@@ -42,4 +42,6 @@
  - Conclusions:
    - Roll over any tasks that were unfinished in iteration 1 to iteration 2
    - Maintain the 7 days per week of work, as most member had time during the weekends
- - Iteration 2 work hours: 4*6*7 = 168 potential work hours -> 168*0.35 = **58.8 total work hours**
+   - Increase hours per day from 4 to 5 hours
+   - **Decrease velocity to 0.3**
+ - Iteration 2 work hours: 6*7*5 = 210 potential work hours -> 210*0.3 = **63 total work hours**

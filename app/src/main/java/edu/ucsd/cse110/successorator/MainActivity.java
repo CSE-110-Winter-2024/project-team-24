@@ -1,7 +1,4 @@
-package edu.ucsd.cse110.successorator;    // might need in the future
-//    private void onNegativeButtonClick(DialogInterface dialog, int which) {
-//        dialog.cancel();
-//    }
+package edu.ucsd.cse110.successorator;
 
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -11,6 +8,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Date;
 import java.util.Objects;
@@ -24,6 +24,7 @@ import edu.ucsd.cse110.successorator.ui.NoTasksFragment;
 import edu.ucsd.cse110.successorator.ui.TaskListFragment;
 import edu.ucsd.cse110.successorator.ui.ViewSwitchDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.FocusDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.PendingTaskDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.RecurringTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.DateSubject;
@@ -32,7 +33,10 @@ import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 public class MainActivity extends AppCompatActivity {
 
     ITasksRepository tasksRepository;
-    private long LastDateClick = 0;
+
+    private long dateLastClick = 0;
+    private long addLastClick = 0;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,22 +92,24 @@ public class MainActivity extends AppCompatActivity {
             String prevTxt = (String) dateTitle.getText();
             dateTitle.setText(prevTxt.substring(0, prevTxt.length() - 2) + " ▲");
         }
-        if (SystemClock.elapsedRealtime() - LastDateClick < 1000) {
+
+        if (SystemClock.elapsedRealtime() - dateLastClick < 1000) {
+
             return;
         }
-        LastDateClick = SystemClock.elapsedRealtime();
+        dateLastClick = SystemClock.elapsedRealtime();
     }
 
     private void onAddTaskClick(View view) {
+
         Views.ViewEnum currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject().getItem();
+
+
         switch (currentView) {
             case TODAY:
+            case TOMORROW:
                 CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
                 ctdf.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
-                break;
-            case TOMORROW:
-                CreateTaskDialogFragment ctdf2 = CreateTaskDialogFragment.newInstance();
-                ctdf2.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
                 break;
             case RECURRING:
                 RecurringTaskDialogFragment recurringDialogFragment = RecurringTaskDialogFragment.newInstance();
@@ -115,10 +121,17 @@ public class MainActivity extends AppCompatActivity {
                 pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
                 break;
         }
+        if (SystemClock.elapsedRealtime() - addLastClick < 1000) {
+            return;
+        }
+        addLastClick = SystemClock.elapsedRealtime();
+
     }
 
     private void onFocusSwitchClick(View view) {
-        Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
+
+        FocusDialogFragment fsd = FocusDialogFragment.newInstance();
+        fsd.show(getSupportFragmentManager(), "FocusDialogFragment");
     }
 
 

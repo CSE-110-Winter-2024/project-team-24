@@ -1,5 +1,7 @@
 package edu.ucsd.cse110.successorator.lib.domain;
 
+import java.util.Date;
+
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 
 public class TaskBuilder {
@@ -22,6 +24,9 @@ public class TaskBuilder {
         this.view = Views.ViewEnum.TODAY;
         this.context = Contexts.Context.ERRANDS;
     }
+
+    private Date startDate;
+
 
     public TaskBuilder withId(Integer id) {
         this.id = id;
@@ -63,7 +68,12 @@ public class TaskBuilder {
         return this;
     }
 
+    public TaskBuilder withStartDate(Date startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
     public Task build() {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context, startDate);
     }
 }
