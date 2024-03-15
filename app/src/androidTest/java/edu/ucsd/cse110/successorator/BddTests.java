@@ -20,7 +20,7 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 import edu.ucsd.cse110.successorator.util.FocusModeSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
-public class bddTests {
+public class BddTests {
     ITasksRepository tasksRepository;
     TaskViewModel taskViewModel;
     TaskViewSubject taskViewSubject;
@@ -127,7 +127,7 @@ public class bddTests {
         };
     }
     @Test
-    public void us8a_recurringWeeklyFromToday() {
+    public void us8_recurringWeeklyFromToday() {
         var newTask = new TaskBuilder()
                 .withTaskName("Weekly Task")
                 .withRecurringType(RecurringType.valueOf("Weekly-Recurring"))
@@ -142,7 +142,7 @@ public class bddTests {
     }
 
     @Test
-    public void us9b_deleteRecurringGoal() {
+    public void us9_deleteRecurringGoal() {
         var task1 = new TaskBuilder()
                 .withTaskName("Task 1")
                 .withId(1)
@@ -169,6 +169,47 @@ public class bddTests {
         assert taskList.size() == 1;
         assert taskList.get(0).id() == 1;
         assert taskList.get(0).getRecurringType() == null;
+    }
+
+    @Test
+    public void us10a_enterGoalsForTomorrow() {
+        var tomorrowTask = new TaskBuilder()
+                .withTaskName("Task for Tomorrow")
+                .withView(Views.ViewEnum.TOMORROW)
+                .withCheckedOff(false)
+                .build();
+        tasksRepository.append(tomorrowTask);
+        var taskList = tasksRepository.findAll();
+        var tomorrowTasks = taskList.stream()
+                .filter(task -> task.getView() == Views.ViewEnum.TOMORROW)
+                .collect(Collectors.toList());
+
+        assert tomorrowTasks.size() == 1;
+        assert "Task for Tomorrow".equals(tomorrowTasks.get(0).getTaskName());
+    }
+
+    @Test
+    public void us10b_treatTomorrowGoalsLikeTodayGoals() {
+        var tomorrowTask = new TaskBuilder()
+                .withTaskName("Complete project")
+                .withView(Views.ViewEnum.TOMORROW)
+                .withCheckedOff(false)
+                .withId(0)
+                .build();
+        tasksRepository.append(tomorrowTask);
+
+        // Simulate checking off the task
+        var newTomorrowTask = tomorrowTask.withCheckOff(true);
+        tasksRepository.remove(0);
+        tasksRepository.append(newTomorrowTask);
+
+        assert tasksRepository.find(tomorrowTask.id()).getCheckOff();
+
+        // Simulate removing the task
+        tasksRepository.remove(tomorrowTask.id());
+
+        // Verify task is removed
+        assert tasksRepository.findAll().size() == 0;
     }
 
 
