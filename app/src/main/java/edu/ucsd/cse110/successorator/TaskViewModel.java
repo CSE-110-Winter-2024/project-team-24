@@ -29,7 +29,7 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
                         assert app != null;
                         return new TaskViewModel(app.getTasksRepository(), app.getTaskViewSubject(), app.getFocusModeSubject());
                     });
-    private final ITasksRepository tasksRepository;
+    private ITasksRepository tasksRepository;
     private final MutableSubject<Task> topTask;
     private final MutableSubject<List<Task>> orderedTasks;
 

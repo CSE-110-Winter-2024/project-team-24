@@ -22,6 +22,8 @@ public interface ITasksRepository {
 
     void append(Task task);
 
+    void appendAll(List<Task> tasks);
+
     void appendToEndOfUnfinishedTasks(Task task);
 
     void toggleTaskStrikethrough(Task task);
