@@ -53,9 +53,9 @@ public class MainActivityTest {
     public void addDailyTask() {
         onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.radio_daily)).perform(click());
-        onView(withId(R.id.add_task_dialog)).perform(typeText("Daily Goal"), ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("Daily Goal 1"), ViewActions.closeSoftKeyboard());
         onView(withText("Save")).perform(click());
-        onView(withText("Daily Goal")).check(matches(isDisplayed()));
+        onView(withText("Daily Goal 1")).check(matches(isDisplayed()));
     }
 
     @Test
@@ -94,5 +94,15 @@ public class MainActivityTest {
         onView(withId(R.id.add_task_dialog)).check(doesNotExist());
     }
 
+    @Test
+    public void testDailyRecurringTask() {
+        onView(withId(R.id.add_task)).perform(click());
+        onView(withId(R.id.radio_daily)).perform(click());
+        onView(withId(R.id.add_task_dialog)).perform(typeText("Daily Goal"), ViewActions.closeSoftKeyboard());
+        onView(withText("Save")).perform(click());
+        onView(withText("Daily Goal")).perform(click());
+        onView(withId(R.id.advanced_date)).perform(click());
+        onView(withText("Daily Goal")).check(matches(isDisplayed()));
+    }
 
 }

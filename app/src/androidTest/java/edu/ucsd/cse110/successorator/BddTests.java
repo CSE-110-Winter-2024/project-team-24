@@ -171,6 +171,11 @@ public class BddTests {
         assert taskList.get(0).getRecurringType() == null;
     }
 
+    @Test
+    public void us13_focusModeIndicator(){
+
+    }
+
 
 
 }
