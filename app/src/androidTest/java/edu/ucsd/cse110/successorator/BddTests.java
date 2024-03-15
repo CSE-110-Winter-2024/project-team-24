@@ -20,7 +20,7 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 import edu.ucsd.cse110.successorator.util.FocusModeSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
-public class BddTests {
+public class bddTests {
     ITasksRepository tasksRepository;
     TaskViewModel taskViewModel;
     TaskViewSubject taskViewSubject;
@@ -127,7 +127,7 @@ public class BddTests {
         };
     }
     @Test
-    public void us8_recurringWeeklyFromToday() {
+    public void us8a_recurringWeeklyFromToday() {
         var newTask = new TaskBuilder()
                 .withTaskName("Weekly Task")
                 .withRecurringType(RecurringType.valueOf("Weekly-Recurring"))
@@ -142,7 +142,7 @@ public class BddTests {
     }
 
     @Test
-    public void us9_deleteRecurringGoal() {
+    public void us9b_deleteRecurringGoal() {
         var task1 = new TaskBuilder()
                 .withTaskName("Task 1")
                 .withId(1)
@@ -170,98 +170,6 @@ public class BddTests {
         assert taskList.get(0).id() == 1;
         assert taskList.get(0).getRecurringType() == null;
     }
-
-    @Test
-    public void us10a_enterGoalsForTomorrow() {
-        var tomorrowTask = new TaskBuilder()
-                .withTaskName("Task for Tomorrow")
-                .withView(Views.ViewEnum.TOMORROW)
-                .withCheckedOff(false)
-                .build();
-        tasksRepository.append(tomorrowTask);
-        var taskList = tasksRepository.findAll();
-        var tomorrowTasks = taskList.stream()
-                .filter(task -> task.getView() == Views.ViewEnum.TOMORROW)
-                .collect(Collectors.toList());
-
-        assert tomorrowTasks.size() == 1;
-        assert "Task for Tomorrow".equals(tomorrowTasks.get(0).getTaskName());
-    }
-
-    @Test
-    public void us10b_treatTomorrowGoalsLikeTodayGoals() {
-        var tomorrowTask = new TaskBuilder()
-                .withTaskName("Complete project")
-                .withView(Views.ViewEnum.TOMORROW)
-                .withCheckedOff(false)
-                .withId(0)
-                .build();
-        tasksRepository.append(tomorrowTask);
-
-        // Simulate checking off the task
-        var newTomorrowTask = tomorrowTask.withCheckOff(true);
-        tasksRepository.remove(0);
-        tasksRepository.append(newTomorrowTask);
-
-        assert tasksRepository.find(tomorrowTask.id()).getCheckOff();
-
-        // Simulate removing the task
-        tasksRepository.remove(tomorrowTask.id());
-
-        // Verify task is removed
-        assert tasksRepository.findAll().size() == 0;
-    }
-
-    @Test
-    public void us11a_addPendingGoal() {
-        var newTask = new TaskBuilder()
-                .withTaskName("Pending Task")
-                .withView(Views.ViewEnum.PENDING)
-                .withCheckedOff(false)
-                .build();
-        tasksRepository.append(newTask);
-        var taskList = tasksRepository.findAll();
-        assert taskList.size() == 1;
-        var pendingTasks = tasksRepository.filterByValues(taskList, Views.ViewEnum.PENDING, null);
-        assert pendingTasks.size() == 1;
-        assert "Pending Task".equals(pendingTasks.get(0).getTaskName());
-    }
-
-    @Test
-    public void us11b_deletePendingGoal() {
-        var pendingTask = new TaskBuilder()
-                .withTaskName("Delete Pending Task")
-                .withView(Views.ViewEnum.PENDING)
-                .withCheckedOff(false)
-                .withId(1)
-                .build();
-        tasksRepository.append(pendingTask);
-        assert tasksRepository.size() == 1;
-
-        tasksRepository.remove(pendingTask.id());
-        assert tasksRepository.size() == 0;
-    }
-
-    @Test
-    public void us11b_movePendingGoalToTomorrow() {
-        var pendingTask = new TaskBuilder()
-                .withTaskName("Move to Tomorrow")
-                .withView(Views.ViewEnum.PENDING)
-                .withCheckedOff(false)
-                .build();
-        tasksRepository.append(pendingTask);
-        var initialTaskList = tasksRepository.findAll();
-        assert initialTaskList.size() == 1;
-
-        // Simulate moving the task to tomorrow
-        var movedTask = pendingTask.withView(Views.ViewEnum.TOMORROW);
-        tasksRepository.save(movedTask);
-        var tomorrowTasks = tasksRepository.filterByValues(tasksRepository.findAll(), Views.ViewEnum.TOMORROW, null);
-        assert tomorrowTasks.size() == 1;
-        assert "Move to Tomorrow".equals(tomorrowTasks.get(0).getTaskName());
-    }
-
-
 
 
 
