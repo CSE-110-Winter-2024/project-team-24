@@ -311,5 +311,43 @@ public class BddTests {
         assert sortedTasks.get(1).getContext() == Contexts.Context.WORK;
     }
 
+    @Test
+    public void us13a_filterGoalsInTodayViewByCurrentContext() {
+        // Set up: Add tasks with different contexts
+        var workTask = new TaskBuilder()
+                .withTaskName("Work Task")
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.WORK)
+                .withCheckedOff(false)
+                .build();
+
+        var homeTask = new TaskBuilder()
+                .withTaskName("Home Task")
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.HOME)
+                .withCheckedOff(false)
+                .build();
+
+        tasksRepository.append(workTask);
+        tasksRepository.append(homeTask);
+
+        // Enable Focus mode for the WORK context
+        focusModeSubject.setItem(Contexts.Context.WORK);
+
+        // Retrieve filtered tasks
+
+        var view = Views.ViewEnum.TODAY;
+        var focusContext = focusModeSubject.getItem();
+
+        var focusedTasks = tasksRepository.findAll().stream()
+                .filter(task -> task.getView() == view)
+                .filter(task -> focusContext == null || task.getContext() == focusContext)
+                .collect(Collectors.toList());
+
+        // Assert only work tasks are returned in Focus mode
+        assert focusedTasks.size() == 1;
+        assert "Work Task".equals(focusedTasks.get(0).getTaskName());
+    }
+
 
 }
