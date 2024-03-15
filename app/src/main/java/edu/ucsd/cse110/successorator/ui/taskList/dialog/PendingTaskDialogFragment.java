@@ -53,7 +53,6 @@ public class PendingTaskDialogFragment extends DialogFragment {
             dialog.dismiss();
             return;
         }
-        String frequency = "";
 
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
         DateSubject dateSubject = app.getDateSubject();
@@ -61,7 +60,7 @@ public class PendingTaskDialogFragment extends DialogFragment {
         RecurringType recurringType = null;
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem());
+        var task = new Task(null, input, 0, false, recurringType, recurringID, app.getTaskView().getItem());
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().addOnetimeTask(task);

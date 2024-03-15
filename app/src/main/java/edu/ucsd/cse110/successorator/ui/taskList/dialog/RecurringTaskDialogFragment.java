@@ -102,7 +102,6 @@ public class RecurringTaskDialogFragment extends DialogFragment {
             dialog.dismiss();
             return;
         }
-        String frequency = "";
 
         SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
         DateSubject dateSubject = app.getDateSubject();
@@ -112,25 +111,21 @@ public class RecurringTaskDialogFragment extends DialogFragment {
         if (view.radioDaily.isChecked()) {
             Log.i("Daily Add", dialog.toString());
             recurringType = new DailyRecurring();
-            frequency = " 2" + recurringType;
         } else if (view.radioWeekly.isChecked()) {
             Log.i("Weekly Add", dialog.toString());
             recurringType = new WeeklyRecurring(dateSubject.getDayOfWeek());
-            frequency = " 3";
         } else if (view.radioMonthly.isChecked()) {
             Log.i("Monthly Add", dialog.toString());
             recurringType = new MonthlyRecurring(dateSubject.getWeekOfMonth(), dateSubject.getDayOfWeek());
-            frequency = " 4";
         } else if (view.radioYearly.isChecked()) {
             Log.i("Yearly Add", dialog.toString());
             recurringType = new YearlyRecurring(dateSubject.getMonth(), dateSubject.getDayOfMonth());
-            frequency = " 5" + recurringType;
         } else {
             throw new IllegalStateException("No Selection Made");
         }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem());
+        var task = new Task(null, input, 0, false, recurringType, recurringID, app.getTaskView().getItem());
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().addOnetimeTask(task);
