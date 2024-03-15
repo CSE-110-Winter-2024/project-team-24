@@ -43,14 +43,4 @@ public class ActionBarUpdaterTest {
         onView(withId(R.id.advanced_date)).perform(click());
         onView(withText(formattedDate)).check(doesNotExist());
     }
-
-    @Test
-    public void testDateTitleUpdatesForSpecificDate() {
-        // Assuming you have a way to set a specific date for testing
-        String expectedTitle = "Mar 10, 2022"; // Use the expected formatted string
-        // You might need to interact with the UI to change the date or mock the date change in your test setup
-
-        onView(withId(R.id.date_title))
-                .check(matches(withText(expectedTitle)));
-    }
 }
