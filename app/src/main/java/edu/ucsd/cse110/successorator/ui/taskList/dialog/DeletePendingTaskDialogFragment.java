@@ -55,7 +55,7 @@ public class DeletePendingTaskDialogFragment extends DialogFragment {
 
                     app.getTasksRepository().remove(taskId);
                     app.getTasksRepository().append(newTask);
-                    Toast.makeText(getContext(), "Task " + taskId + " moved to today!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Task " + taskId + " moved to tomorrow!", Toast.LENGTH_LONG).show();
 
                     dismiss();
                 });
