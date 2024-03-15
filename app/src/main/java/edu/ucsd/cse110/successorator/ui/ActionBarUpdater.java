@@ -10,7 +10,7 @@ import java.util.Locale;
 
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
@@ -26,7 +26,6 @@ public class ActionBarUpdater implements Observer<Date> {
         if (value != null) {
 
 
-
 //             Format is Day, M/DD
 
             activity.runOnUiThread(() -> {
@@ -34,19 +33,16 @@ public class ActionBarUpdater implements Observer<Date> {
                 String formattedDate = dateFormat.format(value);
                 String tomorrowDate = dateFormat.format(value.getTime() + 24 * 60 * 60 * 1000);
                 TaskViewSubject taskViewSubject = ((SuccessoratorApplication) activity.getApplication()).getTaskViewSubject();
-                Task.IView Ivalue = taskViewSubject.getItem();
+                Views.ViewEnum Ivalue = taskViewSubject.getItem();
                 TextView dateTitle = activity.findViewById(R.id.date_title);
                 if (dateTitle != null) {
-                    if(Ivalue == Task.IView.TODAY) {
+                    if (Ivalue == Views.ViewEnum.TODAY) {
                         dateTitle.setText("Today, " + formattedDate + " ▼");
-                    }
-                    else if(Ivalue == Task.IView.TOMORROW) {
+                    } else if (Ivalue == Views.ViewEnum.TOMORROW) {
                         dateTitle.setText("Tomorrow, " + tomorrowDate + " ▼");
-                    }
-                    else if(Ivalue == Task.IView.PENDING) {
+                    } else if (Ivalue == Views.ViewEnum.PENDING) {
                         dateTitle.setText("Pending ▼");
-                    }
-                    else if(Ivalue == Task.IView.RECURRING) {
+                    } else if (Ivalue == Views.ViewEnum.RECURRING) {
                         dateTitle.setText("Recurring ▼");
                     }
                 }

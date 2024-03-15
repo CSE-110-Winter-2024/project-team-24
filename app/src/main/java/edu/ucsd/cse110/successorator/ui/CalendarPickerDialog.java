@@ -19,7 +19,8 @@ public class CalendarPickerDialog extends DialogFragment {
     private @NonNull CalendarPickerDialogBinding view;
     private TaskViewModel activityModel;
 
-    public CalendarPickerDialog() {}
+    public CalendarPickerDialog() {
+    }
 
     public static CalendarPickerDialog newInstance() {
         var fragment = new CalendarPickerDialog();

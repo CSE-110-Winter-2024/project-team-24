@@ -52,9 +52,11 @@ public class SuccessoratorApplication extends Application {
     public DateSubject getDateSubject() {
         return dateSubject;
     }
+
     public TaskViewSubject getTaskViewSubject() {
         return taskView;
     }
+
     public FocusModeSubject getFocusModeSubject() {
         return focusModeSubject;
     }

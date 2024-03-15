@@ -15,22 +15,10 @@ public class Task implements Serializable {
     private final @NonNull Boolean checkedOff;
     private final RecurringType recurringType;
     private final @NonNull Integer recurring_id;
-    private final IView view;
-    private final Context context;
-    public enum IView {
-        TODAY,
-        TOMORROW,
-        RECURRING,
-        PENDING,
-    }
-    public enum Context {
-        HOME,
-        WORK,
-        SCHOOL,
-        ERRANDS,
-    }
+    private final Views.ViewEnum view;
+    private final Contexts.Context context;
 
-    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id, IView view, Context context) {
+    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id, Views.ViewEnum view, Contexts.Context context) {
         this.id = id;
         this.taskName = taskName;
         this.sortOrder = sortOrder;
@@ -69,11 +57,11 @@ public class Task implements Serializable {
         return checkedOff;
     }
 
-    public IView getView() {
+    public Views.ViewEnum getView() {
         return view;
     }
 
-    public Context getContext() {
+    public Contexts.Context getContext() {
         return context;
     }
 
@@ -93,11 +81,11 @@ public class Task implements Serializable {
         return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id, view, context);
     }
 
-    public Task withView(IView view) {
+    public Task withView(Views.ViewEnum view) {
         return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
     }
 
-    public Task withContext(Context context) {
+    public Task withContext(Contexts.Context context) {
         return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
     }
 

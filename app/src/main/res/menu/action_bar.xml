@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/deprecated_add_task"
-        android:title="@string/add_task"
         android:icon="@drawable/ic_add"
         android:orderInCategory="2"
+        android:title="@string/add_task"
         app:iconTint="@color/white"
         app:showAsAction="always" />
 </menu>

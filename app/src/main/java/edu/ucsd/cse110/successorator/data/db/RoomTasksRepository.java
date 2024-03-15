@@ -10,8 +10,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import edu.ucsd.cse110.successorator.lib.domain.Contexts;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.lib.util.Subject;
 import edu.ucsd.cse110.successorator.util.LiveDataSubjectAdapter;
 
@@ -111,24 +113,24 @@ public class RoomTasksRepository implements ITasksRepository {
     public void dateAdvanced(Date date) {
         // Remove all tasks that are checked off and TODAY
         findAll().stream()
-                .filter(task -> task.getView() == Task.IView.TODAY && task.getCheckOff())
+                .filter(task -> task.getView() == Views.ViewEnum.TODAY && task.getCheckOff())
                 .forEach(task -> remove(task.id()));
 
         // Move all tasks from TOMORROW to TODAY
         findAll().stream()
-                .filter(task -> task.getView() == Task.IView.TOMORROW)
+                .filter(task -> task.getView() == Views.ViewEnum.TOMORROW)
                 .forEach(task -> {
                     remove(task.id());
-                    addOnetimeTask(task.withView(Task.IView.TODAY));
+                    addOnetimeTask(task.withView(Views.ViewEnum.TODAY));
                 });
 
         findAll().forEach(task -> {
             if (task.isRecurring() && task.getRecurringType().checkIfToday(date)) {
-                addOnetimeTask(task.withCheckOff(false).withView(Task.IView.TODAY));
+                addOnetimeTask(task.withCheckOff(false).withView(Views.ViewEnum.TODAY));
             }
 
             if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(date)) {
-                addOnetimeTask(task.withCheckOff(false).withView(Task.IView.TOMORROW));
+                addOnetimeTask(task.withCheckOff(false).withView(Views.ViewEnum.TOMORROW));
             }
         });
 
@@ -147,7 +149,7 @@ public class RoomTasksRepository implements ITasksRepository {
     }
 
     @Override
-    public List<Task> filterByValues(List<Task> taskList, Task.IView view, Task.Context context) {
+    public List<Task> filterByValues(List<Task> taskList, Views.ViewEnum view, Contexts.Context context) {
         return taskList.stream()
                 .filter(card -> card.getView() == view)
                 .filter(card -> context == null || context == card.getContext())
