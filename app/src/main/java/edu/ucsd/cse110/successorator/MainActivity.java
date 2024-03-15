@@ -129,17 +129,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void onFocusSwitchClick(View view) {
         Toast.makeText(this, "Focus Switch button clicked!", Toast.LENGTH_SHORT).show();
+
+
         FocusDialogFragment fsd = FocusDialogFragment.newInstance();
         fsd.show(getSupportFragmentManager(), "FocusDialogFragment");
-        MaterialButton focusSwitch = view.findViewById(R.id.focus_switch);
-        if (focusSwitch != null) {
-            focusSwitch.setIconTint(ContextCompat.getColorStateList(this, R.color.blue));
-//            if (isSelected) {
 
-//                focusSwitch.setColorFilter(getResources().getColor(R.color.your_desired_color), PorterDuff.Mode.SRC_IN);
-//            } else {
-//                focusSwitch.iconTint = ContextCompat.getColorStateList(this, R.color.white)
-//            }
+
+        //TODO move this code after view is selected
+        MaterialButton focusSwitch = view.findViewById(R.id.focus_switch);
+        SuccessoratorApplication app = (SuccessoratorApplication) getApplicationContext();
+        Task.Context context = app.getFocusModeSubject().getItem();
+        if (focusSwitch != null) {
+//            focusSwitch.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+            if(context == Task.Context.HOME){
+                focusSwitch.setIconTint(ContextCompat.getColorStateList(this, R.color.yellow));
+            }
+            else if(context == Task.Context.WORK){
+                focusSwitch.setIconTint(ContextCompat.getColorStateList(this, R.color.blue));
+            }
+            else if(context == Task.Context.SCHOOL){
+                focusSwitch.setIconTint(ContextCompat.getColorStateList(this, R.color.purple));
+            }
+            else if(context == Task.Context.ERRANDS){
+                focusSwitch.setIconTint(ContextCompat.getColorStateList(this, R.color.green));
+            }
+            else{
+                focusSwitch.setIconTint(ContextCompat.getColorStateList(this, R.color.white));
+            }
         }
     }
 
