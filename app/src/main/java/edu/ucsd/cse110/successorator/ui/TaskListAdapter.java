@@ -3,7 +3,6 @@ package edu.ucsd.cse110.successorator.ui;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ import java.util.function.Consumer;
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeletePendingTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeleteTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
@@ -84,6 +86,26 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             }
         });
 
+        binding.taskText.setOnLongClickListener(v -> {
+            switch (view.getItem()) {
+                case RECURRING:
+                    FragmentActivity activity = (FragmentActivity) getContext();
+                    DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance(task.id());
+                    dialogFragment.show(activity.getSupportFragmentManager(), "DeleteTaskDialogFragment");
+                    break;
+                case PENDING:
+                    // TODO: Implement pending task dialog (Idea: Date Picker)
+                    FragmentActivity activity1 = (FragmentActivity) getContext();
+                    DeletePendingTaskDialogFragment dialogFragment1 = DeletePendingTaskDialogFragment.newInstance(task.id());
+                    dialogFragment1.show(activity1.getSupportFragmentManager(), "DeletePendingTaskDialogFragment");
+                    break;
+                default:
+                    break;
+            }
+
+            return true;
+        });
+
         return binding.getRoot();
     }
 
@@ -91,6 +113,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     public boolean hasStableIds() {
         return true;
     }
+
 
     @Override
     public long getItemId(int position) {
