@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 
 @Entity(tableName = "tasks")
@@ -52,7 +53,16 @@ public class TaskEntity {
     }
 
     public @NonNull Task toTask() {
-        return new Task(id, taskName, sortOrder, checkoff, recurringType, recurring_id, view, context);
+        return new TaskBuilder()
+                .withId(id)
+                .withTaskName(taskName)
+                .withSortOrder(sortOrder)
+                .withCheckedOff(checkoff)
+                .withRecurringType(recurringType)
+                .withRecurringId(recurring_id)
+                .withView(view)
+                .withContext(context)
+                .build();
     }
 
     public TaskEntity withSortOrder(int sortOrder) {
