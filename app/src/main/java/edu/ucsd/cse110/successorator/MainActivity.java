@@ -18,9 +18,12 @@ import java.util.List;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
+import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 import edu.ucsd.cse110.successorator.ui.DateViewUpdater;
+import edu.ucsd.cse110.successorator.ui.NoTasksFragment;
+import edu.ucsd.cse110.successorator.ui.TaskListFragment;
 import edu.ucsd.cse110.successorator.ui.ViewSwitchDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.CreateTaskDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.PendingTaskDialogFragment;
@@ -29,6 +32,9 @@ import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class MainActivity extends AppCompatActivity {
+
+    ITasksRepository tasksRepository;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate the actionBarUpdater
         ActionBarUpdater actionBarUpdater = new ActionBarUpdater(this);
 
+        tasksRepository = ((SuccessoratorApplication) getApplicationContext()).getTasksRepository();
+        tasksRepository.findAllAsLiveData().observe(tasks -> {
+            if (tasks == null) return;
+            swapFragments();
+        });
+
         // Get DateSubject observable from Application, then add ActionBarUpdater as observer
         DateSubject dateSubject = ((SuccessoratorApplication) getApplicationContext()).getDateSubject();
         dateSubject.observe(actionBarUpdater);
@@ -53,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         DateViewUpdater dateViewUpdater = new DateViewUpdater(this);
         TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject();
         taskViewSubject.observe(dateViewUpdater);
-//        dateSubject.observe(dateViewUpdater);
         // Create FocusSwitcherListener
         findViewById(R.id.focus_switch).setOnClickListener(this::onFocusSwitchClick);
 
@@ -62,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Create AddTaskListener
         findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
+
+
+        findViewById(R.id.advanced_date).setOnClickListener(v -> {
+            dateSubject.advanceDate();
+        });
+
     }
     private long LastDateClick = 0;
 
@@ -77,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         LastDateClick = SystemClock.elapsedRealtime();
-//        Toast.makeText(this, "Middle button clicked!", Toast.LENGTH_SHORT).show();
-        // Does nothing for now...
     }
 
     private void onAddTaskClick(View view) {
@@ -98,15 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case PENDING:
-//                RecurringTaskDialogFragment recurringDialogFragment2 = RecurringTaskDialogFragment.newInstance();
-//                recurringDialogFragment2.show(getSupportFragmentManager(), "RecurringTaskDialogFragment");
-//                break;
                 PendingTaskDialogFragment pendingTaskDialogFragment = PendingTaskDialogFragment.newInstance();
                 pendingTaskDialogFragment.show(getSupportFragmentManager(), "PendingTaskDialogFragment");
                 break;
         }
-//        CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
-//        ctdf.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
     }
 
     private void onFocusSwitchClick(View view) {
@@ -125,12 +135,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void onContextRadioButtonSelected(View view) {
-//        findViewById(R.id.home_context).setSelected(false);
-//        findViewById(R.id.work_context).setSelected(false);
-//        findViewById(R.id.school_context).setSelected(false);
-//        findViewById(R.id.errands_context).setSelected(false);
-//
-//        view.setSelected(true);
-//    }
+    private void swapFragments() {
+        if (this.tasksRepository.findAll().size() == 0) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, NoTasksFragment.newInstance())
+                    .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, TaskListFragment.newInstance())
+                    .commit();
+        }
+    }
+
 }
