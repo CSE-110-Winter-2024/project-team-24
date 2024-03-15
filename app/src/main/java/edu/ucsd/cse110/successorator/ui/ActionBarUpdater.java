@@ -24,27 +24,11 @@ public class ActionBarUpdater implements Observer<Date> {
     @Override
     public void onChanged(Date value) {
         if (value != null) {
-
-
-//             Format is Day, M/DD
-
             activity.runOnUiThread(() -> {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE M/d", Locale.getDefault());
-                String formattedDate = dateFormat.format(value);
-                String tomorrowDate = dateFormat.format(value.getTime() + 24 * 60 * 60 * 1000);
                 TaskViewSubject taskViewSubject = ((SuccessoratorApplication) activity.getApplication()).getTaskViewSubject();
-                Views.ViewEnum Ivalue = taskViewSubject.getItem();
                 TextView dateTitle = activity.findViewById(R.id.date_title);
                 if (dateTitle != null) {
-                    if (Ivalue == Views.ViewEnum.TODAY) {
-                        dateTitle.setText("Today, " + formattedDate + " ▼");
-                    } else if (Ivalue == Views.ViewEnum.TOMORROW) {
-                        dateTitle.setText("Tomorrow, " + tomorrowDate + " ▼");
-                    } else if (Ivalue == Views.ViewEnum.PENDING) {
-                        dateTitle.setText("Pending ▼");
-                    } else if (Ivalue == Views.ViewEnum.RECURRING) {
-                        dateTitle.setText("Recurring ▼");
-                    }
+                    dateTitle.setText(Views.getViewTitle(value, taskViewSubject.getItem()));
                 }
             });
 

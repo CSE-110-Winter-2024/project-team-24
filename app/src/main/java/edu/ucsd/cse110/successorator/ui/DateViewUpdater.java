@@ -22,36 +22,14 @@ public class DateViewUpdater implements Observer<Views.ViewEnum> {
     }
 
     @Override
-    public void onChanged(Views.ViewEnum value) {
-        if (value != null) {
+    public void onChanged(Views.ViewEnum viewValue) {
+        if (viewValue != null) {
 
             activity.runOnUiThread(() -> {
                 DateSubject dateSubject = ((SuccessoratorApplication) activity.getApplication()).getDateSubject();
-                Date dateVal = dateSubject.getItem();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE M/d", Locale.getDefault());
-                String formattedDate = dateFormat.format(dateVal);
-                String tomorrowDate = dateFormat.format(dateVal.getTime() + 24 * 60 * 60 * 1000);
-                if (value == Views.ViewEnum.TODAY) {
-                    TextView dateTitle = activity.findViewById(R.id.date_title);
-                    if (dateTitle != null) {
-                        dateTitle.setText("Today, " + formattedDate + " ▼");
-                    }
-                } else if (value == Views.ViewEnum.TOMORROW) {
-                    TextView dateTitle = activity.findViewById(R.id.date_title);
-                    if (dateTitle != null) {
-                        dateTitle.setText("Tomorrow, " + tomorrowDate + " ▼");
-                    }
-                } else if (value == Views.ViewEnum.PENDING) {
-                    TextView dateTitle = activity.findViewById(R.id.date_title);
-                    if (dateTitle != null) {
-                        dateTitle.setText("Pending ▼");
-                    }
-                } else if (value == Views.ViewEnum.RECURRING) {
-                    TextView dateTitle = activity.findViewById(R.id.date_title);
-                    if (dateTitle != null) {
-                        dateTitle.setText("Recurring ▼");
-                    }
-                }
+
+                TextView dateTitle = activity.findViewById(R.id.date_title);
+                dateTitle.setText(Views.getViewTitle(dateSubject.getItem(), viewValue));
             });
         }
     }
