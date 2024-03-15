@@ -145,5 +145,17 @@ public class RoomTasksRepository implements ITasksRepository {
         }
         appendToEndOfUnfinishedTasks(task.withId(null).withNullRecurringType());
     }
+
+    @Override
+    public List<Task> filterByValues(List<Task> taskList, Task.IView view, Task.Context context) {
+        return taskList.stream()
+                .filter(card -> card.getView() == view)
+                .filter(card -> context == null || context == card.getContext())
+                .collect(Collectors.groupingBy(Task::getContext))
+                .values()
+                .stream()
+                .flatMap(group -> group.stream().sorted(Comparator.comparingInt(Task::sortOrder)))
+                .collect(Collectors.toList());
+    }
 }
 
