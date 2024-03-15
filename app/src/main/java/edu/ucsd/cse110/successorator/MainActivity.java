@@ -107,12 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch (currentView) {
             case TODAY:
+            case TOMORROW:
                 CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
                 ctdf.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
-                break;
-            case TOMORROW:
-                CreateTaskDialogFragment ctdf2 = CreateTaskDialogFragment.newInstance();
-                ctdf2.show(getSupportFragmentManager(), "CreateTaskDialogFragment");
                 break;
             case RECURRING:
                 RecurringTaskDialogFragment recurringDialogFragment = RecurringTaskDialogFragment.newInstance();
