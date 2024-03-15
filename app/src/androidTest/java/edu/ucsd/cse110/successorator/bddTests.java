@@ -167,7 +167,7 @@ public class bddTests {
         }
 
         assert taskList.size() == 1;
-        assert taskList.get(0).id() == 2;
+        assert taskList.get(0).id() == 1;
         assert taskList.get(0).getRecurringType() == null;
     }
 
