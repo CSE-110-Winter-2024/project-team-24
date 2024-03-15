@@ -20,7 +20,7 @@ import edu.ucsd.cse110.successorator.lib.util.Subject;
 import edu.ucsd.cse110.successorator.util.FocusModeSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
-public class bddTests {
+public class BddTests {
     ITasksRepository tasksRepository;
     TaskViewModel taskViewModel;
     TaskViewSubject taskViewSubject;
