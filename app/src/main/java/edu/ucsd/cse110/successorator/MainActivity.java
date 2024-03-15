@@ -143,12 +143,12 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, NoTasksFragment.newInstance())
-                    .commit();
+                    .commitAllowingStateLoss();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, TaskListFragment.newInstance())
-                    .commit();
+                    .commitAllowingStateLoss();
         }
     }
 
