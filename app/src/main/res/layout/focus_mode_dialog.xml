@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Choose a Task Context for Focus Mode"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="Save"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+        <RadioButton
+            android:id="@+id/home_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20sp"
+            android:width="50sp"
+            android:height="50sp"
+            android:background="@drawable/home_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="H"
+            android:textSize="34sp" />
+
+        <RadioButton
+            android:id="@+id/work_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20sp"
+            android:width="50sp"
+            android:height="50sp"
+            android:background="@drawable/work_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="W"
+            android:textSize="34sp" />
+
+        <RadioButton
+            android:id="@+id/school_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20sp"
+            android:width="50sp"
+            android:height="50sp"
+            android:background="@drawable/school_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="S"
+            android:textSize="34sp" />
+
+        <RadioButton
+            android:id="@+id/errands_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20sp"
+            android:width="50sp"
+            android:height="50sp"
+            android:background="@drawable/errands_background"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="E"
+            android:textSize="34sp" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
