@@ -40,32 +40,12 @@ public class NoTasksFragment extends Fragment {
         var modelFactory = ViewModelProvider.Factory.from(TaskViewModel.initializer);
         var modelProvider = new ViewModelProvider(modelOwner, modelFactory);
         this.activityModel = modelProvider.get(TaskViewModel.class);
-
-        // Initialize the Adapter (with an empty list for now)
-//        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-//        this.adapter = new TaskListAdapter(requireContext(), List.of(), activityModel::toggleTaskStrikethrough, app.getTaskView());
-//        activityModel.getOrderedTasks().observe(tasks -> {
-//            if (tasks == null) return;
-//            adapter.clear();
-//            adapter.addAll(new ArrayList<>(tasks)); // remember the mutable copy here!
-//            adapter.notifyDataSetChanged();
-//        });
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = FragmentNoTasksBinding.inflate(inflater, container, false);
-
-        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
-        DateSubject dateSubject = app.getDateSubject();
-
-        // Set the adapter on the ListView
-//        view.cardList.setAdapter(adapter);
-//        view.advancedDate.setOnClickListener(v -> {
-//            dateSubject.advanceDate();
-//        });
-
         return view.getRoot();
     }
 }
