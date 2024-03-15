@@ -12,6 +12,17 @@ public class TaskBuilder {
     private Views.ViewEnum view;
     private Contexts.Context context;
 
+    public TaskBuilder() {
+        this.id = null;
+        this.taskName = "No Text Specified";
+        this.sortOrder = 0;
+        this.checkedOff = false;
+        this.recurringType = null;
+        this.recurring_id = null;
+        this.view = Views.ViewEnum.TODAY;
+        this.context = Contexts.Context.ERRANDS;
+    }
+
     public TaskBuilder withId(Integer id) {
         this.id = id;
         return this;

@@ -65,6 +65,13 @@ public class RoomTasksRepository implements ITasksRepository {
     }
 
     @Override
+    public void appendAll(List<Task> tasks) {
+        for (Task task : tasks) {
+            append(task);
+        }
+    }
+
+    @Override
     public void appendToEndOfUnfinishedTasks(Task task) {
         int maxSortOrder = tasksDao.getMaxSortOrder();
         int newSortOrder = maxSortOrder + 1;
