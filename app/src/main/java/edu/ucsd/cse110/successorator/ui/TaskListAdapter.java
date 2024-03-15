@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ import java.util.function.Consumer;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeletePendingTaskDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeleteTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.PendingTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
@@ -70,14 +73,16 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             switch (view.getItem()) {
                 case RECURRING:
                     FragmentActivity activity = (FragmentActivity) getContext();
-                    DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance(activity.getTaskId());
-                    dialogFragment.show(activity.getSupportFragmentManager(), "deleteDialog");
+                    DeleteTaskDialogFragment dialogFragment = DeleteTaskDialogFragment.newInstance(task.id());
+                    dialogFragment.show(activity.getSupportFragmentManager(), "DeleteTaskDialogFragment");
                     break;
                 case PENDING:
-
+                    // TODO: Implement pending task dialog (Idea: Date Picker)
+                    FragmentActivity activity1 = (FragmentActivity) getContext();
+                    DeletePendingTaskDialogFragment dialogFragment1 = DeletePendingTaskDialogFragment.newInstance(task.id());
+                    dialogFragment1.show(activity1.getSupportFragmentManager(), "DeletePendingTaskDialogFragment");
                     break;
                 default:
-                    // no functionality for TODAY and TOMORROW
                     break;
             }
 

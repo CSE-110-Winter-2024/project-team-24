@@ -138,7 +138,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
         }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskView().getItem());
+        var task = new Task(null, input, 0, false, recurringType, recurringID, app.getTaskView().getItem());
 
         if (recurringType != null) {
             task = task.withView(Task.IView.RECURRING);
