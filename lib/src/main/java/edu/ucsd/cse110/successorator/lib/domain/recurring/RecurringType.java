@@ -20,7 +20,7 @@ public abstract class RecurringType {
         return null;
     }
 
-    public abstract Boolean checkIfToday(Date date);
+    public abstract Boolean checkIfToday(Date currDate, Date startDate);
 
-    public abstract Boolean checkIfTomorrow(Date date);
+    public abstract Boolean checkIfTomorrow(Date currDate, Date startDate);
 }

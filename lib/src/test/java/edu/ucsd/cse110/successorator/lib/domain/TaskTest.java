@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import java.util.Date;
+
 import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
 
 public class TaskTest {
@@ -18,6 +20,7 @@ public class TaskTest {
                 .withRecurringId(20)
                 .withView(Views.ViewEnum.TODAY)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build();
         int actual = 10;
         assertEquals(actual, task.sortOrder());
@@ -33,6 +36,7 @@ public class TaskTest {
                 .withRecurringId(1)
                 .withView(Views.ViewEnum.PENDING)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build()
                 .withId(42);
 
@@ -44,6 +48,7 @@ public class TaskTest {
                 .withRecurringId(42)
                 .withView(Views.ViewEnum.PENDING)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build();
 
         assertEquals(expected, actual);
@@ -59,6 +64,7 @@ public class TaskTest {
                 .withRecurringId(1)
                 .withView(Views.ViewEnum.TOMORROW)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build()
                 .withSortOrder(42); // Updated sortOrder to match expected
 
@@ -70,6 +76,7 @@ public class TaskTest {
                 .withRecurringId(1)
                 .withView(Views.ViewEnum.TOMORROW)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build();
 
         assertEquals(expected, actual);
@@ -85,6 +92,7 @@ public class TaskTest {
                 .withRecurringId(1)
                 .withView(Views.ViewEnum.TODAY)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build()
                 .withCheckOff(true); // Updated checkedOff state
 
@@ -96,6 +104,7 @@ public class TaskTest {
                 .withRecurringId(1)
                 .withView(Views.ViewEnum.TODAY)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build();
 
         assertEquals(expected, actual);
@@ -112,6 +121,7 @@ public class TaskTest {
                 .withRecurringId(1)
                 .withView(Views.ViewEnum.TODAY)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build()
                 .withNullRecurringType();
 
@@ -123,6 +133,7 @@ public class TaskTest {
                 .withRecurringId(1)
                 .withView(Views.ViewEnum.TODAY)
                 .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
                 .build();
 
         assertEquals(expected, actual);

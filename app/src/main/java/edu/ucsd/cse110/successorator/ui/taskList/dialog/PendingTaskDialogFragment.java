@@ -83,9 +83,10 @@ public class PendingTaskDialogFragment extends DialogFragment {
                 .withRecurringId(recurringID)
                 .withView(app.getTaskViewSubject().getItem())
                 .withContext(context)
+                .withStartDate(dateSubject.getItem())
                 .build();
 
-        if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
+        if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem(), task.getStartDate())) {
             activityModel.getTasksRepository().prepend(task);
         }
 

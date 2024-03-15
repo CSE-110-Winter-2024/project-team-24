@@ -130,11 +130,11 @@ public class RoomTasksRepository implements ITasksRepository {
                 });
 
         findAll().forEach(task -> {
-            if (task.isRecurring() && task.getRecurringType().checkIfToday(date)) {
+            if (task.isRecurring() && task.getRecurringType().checkIfToday(date, task.getStartDate())) {
                 addOnetimeTask(task.withCheckOff(false).withView(Views.ViewEnum.TODAY));
             }
 
-            if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(date)) {
+            if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(date, task.getStartDate())) {
                 addOnetimeTask(task.withCheckOff(false).withView(Views.ViewEnum.TOMORROW));
             }
         });
