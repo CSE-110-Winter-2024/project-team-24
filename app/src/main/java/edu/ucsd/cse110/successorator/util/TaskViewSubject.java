@@ -1,5 +1,6 @@
 package edu.ucsd.cse110.successorator.util;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class TaskViewSubject implements MutableSubject<Task.IView> {
         this.view = Task.IView.TODAY;
     }
 
-    @Nullable
+    @NonNull
     @Override
     public Task.IView getItem() {
         return view;

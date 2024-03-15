@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         dateSubject.observe(actionBarUpdater);
 
         DateViewUpdater dateViewUpdater = new DateViewUpdater(this);
-        TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject();
+        TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskView();
         taskViewSubject.observe(dateViewUpdater);
         // Create FocusSwitcherListener
         findViewById(R.id.focus_switch).setOnClickListener(this::onFocusSwitchClick);
@@ -88,7 +88,10 @@ public class MainActivity extends AppCompatActivity {
         TextView dateTitle = view.findViewById(R.id.date_title);
         if (dateTitle != null) {
             String prevTxt = (String) dateTitle.getText();
-            dateTitle.setText(prevTxt.substring(0, prevTxt.length()-2) + " ▲");
+            dateTitle.setText(String.format(
+                    "%s ▲",
+                    prevTxt.substring(0, prevTxt.length() - 2)
+            ));
         }
         if (SystemClock.elapsedRealtime() - LastDateClick < 1000){
             return;
