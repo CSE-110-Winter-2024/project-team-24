@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
@@ -30,6 +32,7 @@ import edu.ucsd.cse110.successorator.util.DateSubject;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class MainActivity extends AppCompatActivity {
+
     ITasksRepository tasksRepository;
 
     @Override
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         // Create AddTaskListener
         findViewById(R.id.add_task).setOnClickListener(this::onAddTaskClick);
 
+
         findViewById(R.id.advanced_date).setOnClickListener(v -> {
             dateSubject.advanceDate();
         });
@@ -93,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onAddTaskClick(View view) {
-        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskView().getItem();
+        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject().getItem();
         switch(currentView) {
             case TODAY:
                 CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
@@ -130,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         dateSubject.loadDate();
     }
 
+
     private void swapFragments() {
         if (this.tasksRepository.findAll().size() == 0) {
             getSupportFragmentManager()
@@ -143,4 +148,5 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         }
     }
+
 }

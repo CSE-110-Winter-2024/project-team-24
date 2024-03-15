@@ -43,15 +43,14 @@ public interface TaskDao {
 
     @Transaction
     default int append(TaskEntity taskEntity) {
-        var maxSortOrder = getMaxSortOrder();
-        var newTask = new TaskEntity(taskEntity.taskName, taskEntity.checkoff, maxSortOrder + 1, taskEntity.recurringType, taskEntity.recurring_id, taskEntity.view);
+        var newTask = taskEntity.withSortOrder(getMaxSortOrder() + 1);
         return Math.toIntExact(insert(newTask));
     }
 
     @Transaction
     default int prepend(TaskEntity taskEntity) {
         shiftSortOrders(getMinSortOrder(), getMaxSortOrder(), 1);
-        var newTask = new TaskEntity(taskEntity.taskName, taskEntity.checkoff, getMinSortOrder() - 1, taskEntity.recurringType, taskEntity.recurring_id, taskEntity.view);
+        var newTask = taskEntity.withSortOrder(getMinSortOrder() - 1);
         return Math.toIntExact(insert(newTask));
     }
 
