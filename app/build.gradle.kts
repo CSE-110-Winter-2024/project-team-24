@@ -20,8 +20,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
@@ -37,8 +37,13 @@ android {
 }
 
 dependencies {
-    project(":lib")
+    androidTestImplementation("junit:junit:4.12")
+    val room_version = "2.6.1"
 
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("org.jetbrains:annotations:15.0")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation(project(":lib"))
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     testImplementation("junit:junit:4.13.2")
