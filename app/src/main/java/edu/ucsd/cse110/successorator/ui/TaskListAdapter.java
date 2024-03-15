@@ -20,6 +20,9 @@ import java.util.function.Consumer;
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeletePendingTaskDialogFragment;
+import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeleteTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {

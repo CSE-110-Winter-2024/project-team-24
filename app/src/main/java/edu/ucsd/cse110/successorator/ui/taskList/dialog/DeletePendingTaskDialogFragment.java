@@ -14,6 +14,7 @@ import java.util.Objects;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.databinding.RecurringDeleteDialogBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 
 public class DeletePendingTaskDialogFragment extends DialogFragment {
 
@@ -53,7 +54,7 @@ public class DeletePendingTaskDialogFragment extends DialogFragment {
                     Task currTask = app.getTasksRepository().find(taskId);
 
                     assert currTask != null;
-                    Task newTask = currTask.withView(Task.IView.TOMORROW);
+                    Task newTask = currTask.withView(Views.ViewEnum.TOMORROW);
 
                     app.getTasksRepository().remove(taskId);
                     app.getTasksRepository().append(newTask);

@@ -9,8 +9,8 @@ public class TaskBuilder {
     private Boolean checkedOff;
     private RecurringType recurringType;
     private Integer recurring_id;
-    private Task.IView view;
-    private Task.Context context;
+    private Views.ViewEnum view;
+    private Contexts.Context context;
 
     public TaskBuilder withId(Integer id) {
         this.id = id;
@@ -42,12 +42,12 @@ public class TaskBuilder {
         return this;
     }
 
-    public TaskBuilder withView(Task.IView view) {
+    public TaskBuilder withView(Views.ViewEnum view) {
         this.view = view;
         return this;
     }
 
-    public TaskBuilder withContext(Task.Context context) {
+    public TaskBuilder withContext(Contexts.Context context) {
         this.context = context;
         return this;
     }

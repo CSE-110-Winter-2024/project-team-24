@@ -16,8 +16,8 @@ public class TaskTest {
                 .withSortOrder(10)
                 .withCheckedOff(false)
                 .withRecurringId(20)
-                .withView(Task.IView.TODAY)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
                 .build();
         int actual = 10;
         assertEquals(actual, task.sortOrder());
@@ -31,8 +31,8 @@ public class TaskTest {
                 .withSortOrder(0)
                 .withCheckedOff(false)
                 .withRecurringId(1)
-                .withView(Task.IView.PENDING)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.PENDING)
+                .withContext(Contexts.Context.SCHOOL)
                 .build()
                 .withId(42);
 
@@ -42,8 +42,8 @@ public class TaskTest {
                 .withSortOrder(0)
                 .withCheckedOff(false)
                 .withRecurringId(42)
-                .withView(Task.IView.PENDING)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.PENDING)
+                .withContext(Contexts.Context.SCHOOL)
                 .build();
 
         assertEquals(expected, actual);
@@ -57,8 +57,8 @@ public class TaskTest {
                 .withSortOrder(0) // Initial sortOrder
                 .withCheckedOff(false)
                 .withRecurringId(1)
-                .withView(Task.IView.TOMORROW)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.TOMORROW)
+                .withContext(Contexts.Context.SCHOOL)
                 .build()
                 .withSortOrder(42); // Updated sortOrder to match expected
 
@@ -68,8 +68,8 @@ public class TaskTest {
                 .withSortOrder(42)
                 .withCheckedOff(false)
                 .withRecurringId(1)
-                .withView(Task.IView.TOMORROW)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.TOMORROW)
+                .withContext(Contexts.Context.SCHOOL)
                 .build();
 
         assertEquals(expected, actual);
@@ -83,8 +83,8 @@ public class TaskTest {
                 .withSortOrder(0)
                 .withCheckedOff(false) // Initial checkedOff state
                 .withRecurringId(1)
-                .withView(Task.IView.TODAY)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
                 .build()
                 .withCheckOff(true); // Updated checkedOff state
 
@@ -94,8 +94,8 @@ public class TaskTest {
                 .withSortOrder(0)
                 .withCheckedOff(true) // Expected state
                 .withRecurringId(1)
-                .withView(Task.IView.TODAY)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
                 .build();
 
         assertEquals(expected, actual);
@@ -110,8 +110,8 @@ public class TaskTest {
                 .withCheckedOff(false)
                 .withRecurringType(new WeeklyRecurring(1))
                 .withRecurringId(1)
-                .withView(Task.IView.TODAY)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
                 .build()
                 .withNullRecurringType();
 
@@ -121,8 +121,8 @@ public class TaskTest {
                 .withSortOrder(0)
                 .withCheckedOff(false)
                 .withRecurringId(1)
-                .withView(Task.IView.TODAY)
-                .withContext(Task.Context.SCHOOL)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
                 .build();
 
         assertEquals(expected, actual);
