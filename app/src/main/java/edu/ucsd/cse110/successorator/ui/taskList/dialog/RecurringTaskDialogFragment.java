@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.RecurringTaskDialogBinding;
@@ -26,6 +29,7 @@ public class RecurringTaskDialogFragment extends DialogFragment {
 
     private RecurringTaskDialogBinding view;
     private TaskViewModel activityModel;
+    private Calendar calendar;
 
     RecurringTaskDialogFragment() {}
 
@@ -39,17 +43,31 @@ public class RecurringTaskDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        this.view = RecurringTaskDialogBinding.inflate(getLayoutInflater());
+        view = RecurringTaskDialogBinding.inflate(getLayoutInflater());
 
-        this.radioSetup();
+        setCalendar(Calendar.getInstance());
+        // Format the date
+
+        view.radioDaily.toggle();
+        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
+        view.calendarDialogOpener.setOnClickListener(v -> {
+            DatePickerFragment datePickerFragment = new DatePickerFragment(this::setCalendar);
+            datePickerFragment.show(getParentFragmentManager(), "datePicker");
+        });
+
         return new AlertDialog.Builder(getActivity())
                 .setView(view.getRoot())
                 .create();
     }
 
-    private void radioSetup() {
-        view.radioDaily.toggle();
-        view.saveButton.setOnClickListener(v -> addTask(getDialog()));
+    private void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM, dd, yyyy");
+        String formattedDate = sdf.format(calendar.getTime());
+
+        view.calendarDialogOpener.setText(formattedDate);
+
     }
 
 
@@ -70,13 +88,13 @@ public class RecurringTaskDialogFragment extends DialogFragment {
             recurringType = new DailyRecurring();
         } else if (view.radioWeekly.isChecked()) {
             Log.i("Weekly Add", dialog.toString());
-            recurringType = new WeeklyRecurring(dateSubject.getDayOfWeek());
+            recurringType = new WeeklyRecurring(calendar.get(Calendar.DAY_OF_WEEK));
         } else if (view.radioMonthly.isChecked()) {
             Log.i("Monthly Add", dialog.toString());
-            recurringType = new MonthlyRecurring(dateSubject.getWeekOfMonth(), dateSubject.getDayOfWeek());
+            recurringType = new MonthlyRecurring(calendar.get(Calendar.WEEK_OF_MONTH), calendar.get(Calendar.DAY_OF_WEEK));
         } else if (view.radioYearly.isChecked()) {
             Log.i("Yearly Add", dialog.toString());
-            recurringType = new YearlyRecurring(dateSubject.getMonth(), dateSubject.getDayOfMonth());
+            recurringType = new YearlyRecurring(calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         } else {
             throw new IllegalStateException("No Selection Made");
         }
