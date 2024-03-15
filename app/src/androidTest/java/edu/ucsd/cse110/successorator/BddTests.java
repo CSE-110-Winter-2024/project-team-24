@@ -212,6 +212,57 @@ public class BddTests {
         assert tasksRepository.findAll().size() == 0;
     }
 
+    @Test
+    public void us11a_addPendingGoal() {
+        var newTask = new TaskBuilder()
+                .withTaskName("Pending Task")
+                .withView(Views.ViewEnum.PENDING)
+                .withCheckedOff(false)
+                .build();
+        tasksRepository.append(newTask);
+        var taskList = tasksRepository.findAll();
+        assert taskList.size() == 1;
+        var pendingTasks = tasksRepository.filterByValues(taskList, Views.ViewEnum.PENDING, null);
+        assert pendingTasks.size() == 1;
+        assert "Pending Task".equals(pendingTasks.get(0).getTaskName());
+    }
+
+    @Test
+    public void us11b_deletePendingGoal() {
+        var pendingTask = new TaskBuilder()
+                .withTaskName("Delete Pending Task")
+                .withView(Views.ViewEnum.PENDING)
+                .withCheckedOff(false)
+                .withId(1)
+                .build();
+        tasksRepository.append(pendingTask);
+        assert tasksRepository.size() == 1;
+
+        tasksRepository.remove(pendingTask.id());
+        assert tasksRepository.size() == 0;
+    }
+
+    @Test
+    public void us11b_movePendingGoalToTomorrow() {
+        var pendingTask = new TaskBuilder()
+                .withTaskName("Move to Tomorrow")
+                .withView(Views.ViewEnum.PENDING)
+                .withCheckedOff(false)
+                .build();
+        tasksRepository.append(pendingTask);
+        var initialTaskList = tasksRepository.findAll();
+        assert initialTaskList.size() == 1;
+
+        // Simulate moving the task to tomorrow
+        var movedTask = pendingTask.withView(Views.ViewEnum.TOMORROW);
+        tasksRepository.save(movedTask);
+        var tomorrowTasks = tasksRepository.filterByValues(tasksRepository.findAll(), Views.ViewEnum.TOMORROW, null);
+        assert tomorrowTasks.size() == 1;
+        assert "Move to Tomorrow".equals(tomorrowTasks.get(0).getTaskName());
+    }
+
+
+
 
 
 }
