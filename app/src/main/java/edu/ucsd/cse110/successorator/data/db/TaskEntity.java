@@ -5,7 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import edu.ucsd.cse110.successorator.lib.domain.Contexts;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 
@@ -31,12 +33,12 @@ public class TaskEntity {
     public Integer recurring_id;
 
     @ColumnInfo(name = "view")
-    public Task.IView view;
+    public Views.ViewEnum view;
 
     @ColumnInfo(name = "context")
-    public Task.Context context;
+    public Contexts.Context context;
 
-    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType, Integer recurring_id, Task.IView view, Task.Context context) {
+    TaskEntity(@NonNull String taskName, @NonNull boolean checkoff, Integer sortOrder, RecurringType recurringType, Integer recurring_id, Views.ViewEnum view, Contexts.Context context) {
         this.taskName = taskName;
         this.checkoff = checkoff;
         this.sortOrder = sortOrder;

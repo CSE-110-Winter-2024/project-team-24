@@ -36,5 +36,5 @@ public interface ITasksRepository {
     void addOnetimeTask(Task task);
 
 
-    List<Task> filterByValues(List<Task> taskList, Task.IView view, Task.Context context);
+    List<Task> filterByValues(List<Task> taskList, Views.ViewEnum view, Contexts.Context context);
 }

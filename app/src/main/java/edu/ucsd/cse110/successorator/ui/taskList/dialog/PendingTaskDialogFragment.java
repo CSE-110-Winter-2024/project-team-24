@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.PendingTaskDialogBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Contexts;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
@@ -60,15 +61,15 @@ public class PendingTaskDialogFragment extends DialogFragment {
 
         RecurringType recurringType = null;
 
-        Task.Context context;
+        Contexts.Context context;
         if (view.homeContext.isChecked()) {
-            context = Task.Context.HOME;
+            context = Contexts.Context.HOME;
         } else if (view.workContext.isChecked()) {
-            context = Task.Context.WORK;
+            context = Contexts.Context.WORK;
         } else if (view.schoolContext.isChecked()) {
-            context = Task.Context.SCHOOL;
+            context = Contexts.Context.SCHOOL;
         } else if (view.errandsContext.isChecked()) {
-            context = Task.Context.ERRANDS;
+            context = Contexts.Context.ERRANDS;
         } else {
             throw new IllegalStateException("No Selection Made");
         }

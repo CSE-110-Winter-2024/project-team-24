@@ -17,8 +17,10 @@ import java.util.Calendar;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.RecurringTaskDialogBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Contexts;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
@@ -100,15 +102,15 @@ public class RecurringTaskDialogFragment extends DialogFragment {
             throw new IllegalStateException("No Selection Made");
         }
 
-        Task.Context context;
+        Contexts.Context context;
         if (view.homeContext.isChecked()) {
-            context = Task.Context.HOME;
+            context = Contexts.Context.HOME;
         } else if (view.workContext.isChecked()) {
-            context = Task.Context.WORK;
+            context = Contexts.Context.WORK;
         } else if (view.schoolContext.isChecked()) {
-            context = Task.Context.SCHOOL;
+            context = Contexts.Context.SCHOOL;
         } else if (view.errandsContext.isChecked()) {
-            context = Task.Context.ERRANDS;
+            context = Contexts.Context.ERRANDS;
         } else {
             throw new IllegalStateException("No Selection Made");
         }
@@ -128,11 +130,11 @@ public class RecurringTaskDialogFragment extends DialogFragment {
 
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
-            activityModel.getTasksRepository().addOnetimeTask(task.withView(Task.IView.TODAY));
+            activityModel.getTasksRepository().addOnetimeTask(task.withView(Views.ViewEnum.TODAY));
         }
 
         if (task.isRecurring() && task.getRecurringType().checkIfTomorrow(dateSubject.getItem())) {
-            activityModel.getTasksRepository().addOnetimeTask(task.withView(Task.IView.TOMORROW));
+            activityModel.getTasksRepository().addOnetimeTask(task.withView(Views.ViewEnum.TOMORROW));
         }
 
         activityModel.append(task);

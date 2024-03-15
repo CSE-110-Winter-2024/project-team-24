@@ -54,6 +54,7 @@ public class SuccessoratorApplication extends Application {
         return dateSubject;
     }
 
+
     public TaskViewSubject getTaskView() {
         return taskView;
     }
@@ -61,7 +62,8 @@ public class SuccessoratorApplication extends Application {
     public TaskViewSubject getTaskViewSubject() {
         return taskView;
     }
-  
+
+
     public FocusModeSubject getFocusModeSubject() {
         return focusModeSubject;
 
