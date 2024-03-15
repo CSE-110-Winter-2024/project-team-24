@@ -35,7 +35,7 @@ public class MainActivityTest {
         onView(withId(R.id.add_task)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Test Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Save")).perform(click());
-        onView(withText("Test Goal 1")).check(matches(isDisplayed()));
+        onView(withText("Test Goal")).check(matches(isDisplayed()));
     }
 
 
@@ -45,7 +45,7 @@ public class MainActivityTest {
         onView(withId(R.id.radio_one_time)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("One Time Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Save")).perform(click());
-        onView(withText("One Time Goal 1")).check(matches(isDisplayed()));
+        onView(withText("One Time Goal")).check(matches(isDisplayed()));
 
     }
 
@@ -55,7 +55,7 @@ public class MainActivityTest {
         onView(withId(R.id.radio_daily)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Daily Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Save")).perform(click());
-        onView(withText("Daily Goal 2")).check(matches(isDisplayed()));
+        onView(withText("Daily Goal")).check(matches(isDisplayed()));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class MainActivityTest {
         onView(withId(R.id.radio_weekly)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Weekly Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Save")).perform(click());
-        onView(withText("Weekly Goal 3")).check(matches(isDisplayed()));
+        onView(withText("Weekly Goal")).check(matches(isDisplayed()));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class MainActivityTest {
         onView(withId(R.id.radio_monthly)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Monthly Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Save")).perform(click());
-        onView(withText("Monthly Goal 4")).check(matches(isDisplayed()));
+        onView(withText("Monthly Goal")).check(matches(isDisplayed()));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class MainActivityTest {
         onView(withId(R.id.radio_yearly)).perform(click());
         onView(withId(R.id.add_task_dialog)).perform(typeText("Yearly Goal"), ViewActions.closeSoftKeyboard());
         onView(withText("Save")).perform(click());
-        onView(withText("Yearly Goal 5")).check(matches(isDisplayed()));
+        onView(withText("Yearly Goal")).check(matches(isDisplayed()));
     }
 
 
