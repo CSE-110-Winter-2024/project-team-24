@@ -18,6 +18,7 @@ import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FocusModeDialogBinding;
 import edu.ucsd.cse110.successorator.databinding.PendingTaskDialogBinding;
+import edu.ucsd.cse110.successorator.lib.domain.Contexts;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 import edu.ucsd.cse110.successorator.util.DateSubject;
@@ -59,19 +60,19 @@ public class FocusDialogFragment extends DialogFragment {
 //        DateSubject dateSubject = app.getDateSubject();
 
 
-        Task.Context context;
+        Contexts.Context context;
         var color = R.color.white;
         if (view.homeContext.isChecked()) {
-            context = Task.Context.HOME;
+            context = Contexts.Context.HOME;
             color = R.color.yellow;
         } else if (view.workContext.isChecked()) {
-            context = Task.Context.WORK;
+            context = Contexts.Context.WORK;
             color = R.color.blue;
         } else if (view.schoolContext.isChecked()) {
-            context = Task.Context.SCHOOL;
+            context = Contexts.Context.SCHOOL;
             color = R.color.purple;
         } else if (view.errandsContext.isChecked()) {
-            context = Task.Context.ERRANDS;
+            context = Contexts.Context.ERRANDS;
             color = R.color.green;
         } else {
             throw new IllegalStateException("No Selection Made");

@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onAddTaskClick(View view) {
 
-        Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject().getItem();
+        Views.ViewEnum currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject().getItem();
 
 
         switch (currentView) {
