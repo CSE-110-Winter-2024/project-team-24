@@ -41,32 +41,20 @@ public class TaskViewModel extends ViewModel implements Observer<Date> {
         this.topTask = new SimpleSubject<>();
 
         focusModeSubject.observe(context -> {
-            var newOrderedCards = tasksRepository.findAll().stream()
-                    .filter(card -> card.getView() == taskViewSubject.getItem())
-                    .filter(card -> context == null || context == card.getContext())
-                    .sorted(Comparator.comparingInt(Task::sortOrder))
-                    .collect(Collectors.toList());
+            var newOrderedCards = tasksRepository.filterByValues(tasksRepository.findAll(), taskViewSubject.getItem(), context);
             orderedTasks.setItem(newOrderedCards);
         });
 
         taskViewSubject.observe(view -> {
-            var newOrderedCards = tasksRepository.findAll().stream()
-                    .filter(card -> card.getView() == view)
-                    .filter(card -> !focusModeSubject.isActivate() || focusModeSubject.getItem() == card.getContext())
-                    .sorted(Comparator.comparingInt(Task::sortOrder))
-                    .collect(Collectors.toList());
+            var newOrderedCards = tasksRepository.filterByValues(tasksRepository.findAll(), view, focusModeSubject.getItem());
             orderedTasks.setItem(newOrderedCards);
         });
 
         // When the list of cards changes (or is first loaded), reset the ordering:
-        tasksRepository.findAllAsLiveData().observe(cards -> {
-            if (cards == null) return;
+        tasksRepository.findAllAsLiveData().observe(tasks -> {
+            if (tasks == null) return;
 
-            var newOrderedCards = cards.stream()
-                    .filter(card -> card.getView() == taskViewSubject.getItem())
-                    .filter(card -> !focusModeSubject.isActivate() || focusModeSubject.getItem() == card.getContext())
-                    .sorted(Comparator.comparingInt(Task::sortOrder))
-                    .collect(Collectors.toList());
+            var newOrderedCards = tasksRepository.filterByValues(tasks, taskViewSubject.getItem(), focusModeSubject.getItem());
             orderedTasks.setItem(newOrderedCards);
         });
 
