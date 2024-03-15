@@ -48,6 +48,7 @@ public class FocusDialogFragment extends DialogFragment {
 
     private void radioSetup() {
         view.saveButton.setOnClickListener(v -> switchFocus(getDialog()));
+        view.exitFocus.setOnClickListener(v -> exitFocus(getDialog()));
     }
 
 
@@ -82,6 +83,16 @@ public class FocusDialogFragment extends DialogFragment {
             focusSwitch.setIconTint(ContextCompat.getColorStateList(getContext(), color));
         }
 
+        dialog.dismiss();
+    }
+
+    public void exitFocus(DialogInterface dialog){
+        SuccessoratorApplication app = (SuccessoratorApplication) requireActivity().getApplication();
+        app.getFocusModeSubject().setItem(null);
+        MaterialButton focusSwitch = requireActivity().findViewById(R.id.focus_switch);
+        if (focusSwitch != null) {
+            focusSwitch.setIconTint(ContextCompat.getColorStateList(getContext(), R.color.white));
+        }
         dialog.dismiss();
     }
 
