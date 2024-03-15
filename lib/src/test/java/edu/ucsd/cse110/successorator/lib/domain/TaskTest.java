@@ -4,50 +4,138 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import java.util.Date;
+
 import edu.ucsd.cse110.successorator.lib.domain.recurring.WeeklyRecurring;
 
 public class TaskTest {
 
     @Test
     public void sortOrder() {
-        var card = new Task(20, "Testing Sort Order", 10, false, null, 20, Task.IView.TODAY, Task.Context.SCHOOL);
-
+        Task task = new TaskBuilder()
+                .withId(20)
+                .withTaskName("Testing Sort Order")
+                .withSortOrder(10)
+                .withCheckedOff(false)
+                .withRecurringId(20)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build();
         int actual = 10;
-        assertEquals(card.sortOrder(), actual);
+        assertEquals(actual, task.sortOrder());
     }
 
     @Test
     public void testWithId() {
-        var card = new Task(1, "Drink juice", 0, false, null, 1, Task.IView.PENDING, Task.Context.SCHOOL);
-        var expected = new Task(42, "Drink juice", 0, false, null, 42, Task.IView.PENDING, Task.Context.SCHOOL);
-        var actual = card.withId(42);
+        Task actual = new TaskBuilder()
+                .withId(1)
+                .withTaskName("Drink juice")
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringId(1)
+                .withView(Views.ViewEnum.PENDING)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build()
+                .withId(42);
+
+        Task expected = new TaskBuilder()
+                .withId(42) // Matching the updated ID
+                .withTaskName("Drink juice")
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringId(42)
+                .withView(Views.ViewEnum.PENDING)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void withSortOrder() {
-        var card = new Task(1, "Testing Sorting Order", 0, false, null, 1, Task.IView.TOMORROW, Task.Context.SCHOOL);
-        var expected = new Task(1, "Testing Sorting Order", 42, false, null, 1, Task.IView.TOMORROW, Task.Context.SCHOOL);
-        var actual = card.withSortOrder(42);
+        Task actual = new TaskBuilder()
+                .withId(1)
+                .withTaskName("Testing Sorting Order")
+                .withSortOrder(0) // Initial sortOrder
+                .withCheckedOff(false)
+                .withRecurringId(1)
+                .withView(Views.ViewEnum.TOMORROW)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build()
+                .withSortOrder(42); // Updated sortOrder to match expected
+
+        Task expected = new TaskBuilder()
+                .withId(1)
+                .withTaskName("Testing Sorting Order")
+                .withSortOrder(42)
+                .withCheckedOff(false)
+                .withRecurringId(1)
+                .withView(Views.ViewEnum.TOMORROW)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build();
+
         assertEquals(expected, actual);
     }
 
     @Test
     public void testWithCheckOff() {
-        var card = new Task(1, "Testing checkoff", 0, false, null, 1, Task.IView.TODAY, Task.Context.SCHOOL);
-        var expected = new Task(1, "Testing checkoff", 0, true, null, 1, Task.IView.TODAY, Task.Context.SCHOOL);
+        Task actual = new TaskBuilder()
+                .withId(1)
+                .withTaskName("Testing checkoff")
+                .withSortOrder(0)
+                .withCheckedOff(false) // Initial checkedOff state
+                .withRecurringId(1)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build()
+                .withCheckOff(true); // Updated checkedOff state
 
-        var actual = card.withCheckOff(true);
-        assertEquals(actual, expected);
+        Task expected = new TaskBuilder()
+                .withId(1)
+                .withTaskName("Testing checkoff")
+                .withSortOrder(0)
+                .withCheckedOff(true) // Expected state
+                .withRecurringId(1)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build();
+
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testWithRecurringType() {
-        var card = new Task(1, "Testing recurring type", 0, false, new WeeklyRecurring(1), 1, Task.IView.TODAY, Task.Context.SCHOOL);
-        var expected = new Task(1, "Testing recurring type", 0, false, null, 1, Task.IView.TODAY, Task.Context.SCHOOL);
+        Task actual = new TaskBuilder()
+                .withId(1)
+                .withTaskName("Testing recurring type")
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringType(new WeeklyRecurring(1))
+                .withRecurringId(1)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build()
+                .withNullRecurringType();
 
-        var actual = card.withNullRecurringType();
-        assertEquals(actual, expected);
+        Task expected = new TaskBuilder()
+                .withId(1)
+                .withTaskName("Testing recurring type")
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringId(1)
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.SCHOOL)
+                .withStartDate(new Date())
+                .build();
+
+        assertEquals(expected, actual);
     }
 }

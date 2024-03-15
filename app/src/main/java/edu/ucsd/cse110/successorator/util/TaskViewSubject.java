@@ -1,50 +1,47 @@
 package edu.ucsd.cse110.successorator.util;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.lib.util.MutableSubject;
 import edu.ucsd.cse110.successorator.lib.util.Observer;
-import edu.ucsd.cse110.successorator.lib.util.SimpleSubject;
 
-public class TaskViewSubject implements MutableSubject<Task.IView> {
-    private final List<Observer<Task.IView>> observers = new ArrayList<>();
-    Task.IView view;
+public class TaskViewSubject implements MutableSubject<Views.ViewEnum> {
+    private final List<Observer<Views.ViewEnum>> observers = new ArrayList<>();
+    Views.ViewEnum view;
 
     public TaskViewSubject() {
-        this.view = Task.IView.TODAY;
+        this.view = Views.ViewEnum.TODAY;
     }
 
     @NonNull
     @Override
-    public Task.IView getItem() {
+    public Views.ViewEnum getItem() {
         return view;
     }
 
     @Override
-    public void setItem(Task.IView value) {
+    public void setItem(Views.ViewEnum value) {
         this.view = value;
         this.notifyObservers();
     }
 
     @Override
-    public void removeObserver(Observer<Task.IView> observer) {
+    public void removeObserver(Observer<Views.ViewEnum> observer) {
         observers.remove(observer);
     }
 
     private void notifyObservers() {
-        for (Observer<Task.IView> observer : observers) {
+        for (Observer<Views.ViewEnum> observer : observers) {
             observer.onChanged(view);
         }
     }
 
     @Override
-    public void observe(Observer<Task.IView> observer) {
+    public void observe(Observer<Views.ViewEnum> observer) {
         observers.add(observer);
         observer.onChanged(view);
     }

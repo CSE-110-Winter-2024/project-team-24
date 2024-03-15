@@ -4,6 +4,7 @@ package edu.ucsd.cse110.successorator.lib.domain;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
@@ -15,22 +16,14 @@ public class Task implements Serializable {
     private final @NonNull Boolean checkedOff;
     private final RecurringType recurringType;
     private final @NonNull Integer recurring_id;
-    private final IView view;
-    private final Context context;
-    public enum IView {
-        TODAY,
-        TOMORROW,
-        RECURRING,
-        PENDING,
-    }
-    public enum Context {
-        HOME,
-        WORK,
-        SCHOOL,
-        ERRANDS,
-    }
+    private final Views.ViewEnum view;
+    private final Contexts.Context context;
+    private final Date startDate;
 
-    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder, boolean checkedOff, RecurringType recurringType, Integer recurring_id, IView view, Context context) {
+    public Task(@NonNull Integer id, @NonNull String taskName, int sortOrder,
+                boolean checkedOff, RecurringType recurringType,
+                Integer recurring_id, Views.ViewEnum view,
+                Contexts.Context context, Date startDate) {
         this.id = id;
         this.taskName = taskName;
         this.sortOrder = sortOrder;
@@ -39,6 +32,7 @@ public class Task implements Serializable {
         this.recurring_id = recurring_id;
         this.view = view;
         this.context = context;
+        this.startDate = startDate;
     }
 
     public Integer getRecurringID() {
@@ -61,6 +55,7 @@ public class Task implements Serializable {
         return sortOrder;
     }
 
+    @NonNull
     public String getTaskName() {
         return taskName;
     }
@@ -69,38 +64,37 @@ public class Task implements Serializable {
         return checkedOff;
     }
 
-    public IView getView() {
+    public Views.ViewEnum getView() {
         return view;
     }
 
-    public Context getContext() {
+    public Contexts.Context getContext() {
         return context;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
     public Task withSortOrder(int sortOrder) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context, startDate);
     }
 
     public Task withId(Integer id) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context, startDate);
     }
 
     public Task withCheckOff(boolean checkOff) {
-        return new Task(id, taskName, sortOrder, checkOff, recurringType, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkOff, recurringType, recurring_id, view, context, startDate);
     }
 
     public Task withNullRecurringType() {
-        return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id, view, context);
+        return new Task(id, taskName, sortOrder, checkedOff, null, recurring_id, view, context, startDate);
     }
 
-    public Task withView(IView view) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
+    public Task withView(Views.ViewEnum view) {
+        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context, startDate);
     }
-
-    public Task withContext(Context context) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
-    }
-
 
     @Override
     public boolean equals(Object o) {

@@ -48,6 +48,7 @@ public class MainActivityTest {
         onView(withText("One Time Goal 1")).check(matches(isDisplayed()));
 
     }
+
     @Test
     public void addDailyTask() {
         onView(withId(R.id.add_task)).perform(click());
@@ -65,6 +66,7 @@ public class MainActivityTest {
         onView(withText("Save")).perform(click());
         onView(withText("Weekly Goal 3")).check(matches(isDisplayed()));
     }
+
     @Test
     public void addMonthlyTask() {
         onView(withId(R.id.add_task)).perform(click());
@@ -73,6 +75,7 @@ public class MainActivityTest {
         onView(withText("Save")).perform(click());
         onView(withText("Monthly Goal 4")).check(matches(isDisplayed()));
     }
+
     @Test
     public void addYearlyTask() {
         onView(withId(R.id.add_task)).perform(click());

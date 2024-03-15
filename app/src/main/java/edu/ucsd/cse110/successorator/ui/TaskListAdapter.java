@@ -20,6 +20,7 @@ import java.util.function.Consumer;
 import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.databinding.ListItemTaskBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeletePendingTaskDialogFragment;
 import edu.ucsd.cse110.successorator.ui.taskList.dialog.DeleteTaskDialogFragment;
 import edu.ucsd.cse110.successorator.util.TaskViewSubject;
@@ -66,22 +67,22 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
                 binding.taskContext.setText("H");
                 break;
             case WORK:
-                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(),  R.drawable.work_background));
+                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.work_background));
                 binding.taskContext.setText("W");
                 break;
             case SCHOOL:
-                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(),  R.drawable.school_background));
+                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.school_background));
                 binding.taskContext.setText("S");
                 break;
             case ERRANDS:
-                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(),  R.drawable.errands_background));
+                binding.taskContext.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.errands_background));
                 binding.taskContext.setText("E");
                 break;
         }
         updateTextView(binding.taskText, task);
 
         binding.taskText.setOnClickListener(v -> {
-            if (view.getItem() == Task.IView.TODAY || view.getItem() == Task.IView.TOMORROW) {
+            if (view.getItem() == Views.ViewEnum.TODAY || view.getItem() == Views.ViewEnum.TOMORROW) {
                 consumer.accept(task);
             }
         });

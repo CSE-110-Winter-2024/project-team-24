@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.databinding.ActivityMainBinding;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
-import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.Views;
 import edu.ucsd.cse110.successorator.ui.ActionBarUpdater;
 import edu.ucsd.cse110.successorator.ui.DateViewUpdater;
 import edu.ucsd.cse110.successorator.ui.NoTasksFragment;
@@ -33,8 +33,10 @@ import edu.ucsd.cse110.successorator.util.TaskViewSubject;
 public class MainActivity extends AppCompatActivity {
 
     ITasksRepository tasksRepository;
+
     private long dateLastClick = 0;
     private long addLastClick = 0;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         dateSubject.observe(actionBarUpdater);
 
         DateViewUpdater dateViewUpdater = new DateViewUpdater(this);
-        TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskView();
+        TaskViewSubject taskViewSubject = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject();
         taskViewSubject.observe(dateViewUpdater);
         // Create FocusSwitcherListener
         findViewById(R.id.focus_switch).setOnClickListener(this::onFocusSwitchClick);
@@ -88,19 +90,21 @@ public class MainActivity extends AppCompatActivity {
         TextView dateTitle = view.findViewById(R.id.date_title);
         if (dateTitle != null) {
             String prevTxt = (String) dateTitle.getText();
-            dateTitle.setText(String.format(
-                    "%s ▲",
-                    prevTxt.substring(0, prevTxt.length() - 2)
-            ));
+            dateTitle.setText(prevTxt.substring(0, prevTxt.length() - 2) + " ▲");
         }
+
         if (SystemClock.elapsedRealtime() - dateLastClick < 1000) {
+
             return;
         }
         dateLastClick = SystemClock.elapsedRealtime();
     }
 
     private void onAddTaskClick(View view) {
+
         Task.IView currentView = ((SuccessoratorApplication) getApplicationContext()).getTaskViewSubject().getItem();
+
+
         switch (currentView) {
             case TODAY:
                 CreateTaskDialogFragment ctdf = CreateTaskDialogFragment.newInstance();
