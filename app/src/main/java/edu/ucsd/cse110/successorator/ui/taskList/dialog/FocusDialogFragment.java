@@ -7,9 +7,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
+
+import edu.ucsd.cse110.successorator.R;
 import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.FocusModeDialogBinding;
@@ -55,20 +59,28 @@ public class FocusDialogFragment extends DialogFragment {
 
 
         Task.Context context;
+        var color = R.color.white;
         if (view.homeContext.isChecked()) {
             context = Task.Context.HOME;
+            color = R.color.yellow;
         } else if (view.workContext.isChecked()) {
             context = Task.Context.WORK;
+            color = R.color.blue;
         } else if (view.schoolContext.isChecked()) {
             context = Task.Context.SCHOOL;
+            color = R.color.purple;
         } else if (view.errandsContext.isChecked()) {
             context = Task.Context.ERRANDS;
+            color = R.color.green;
         } else {
             throw new IllegalStateException("No Selection Made");
         }
 
         app.getFocusModeSubject().setItem(context);
-
+        MaterialButton focusSwitch = requireActivity().findViewById(R.id.focus_switch);
+        if (focusSwitch != null) {
+            focusSwitch.setIconTint(ContextCompat.getColorStateList(getContext(), color));
+        }
 
         dialog.dismiss();
     }
