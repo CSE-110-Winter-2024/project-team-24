@@ -108,19 +108,19 @@ public class TaskTest {
                 .withTaskName("Testing recurring type")
                 .withSortOrder(0)
                 .withCheckedOff(false)
-                .withRecurringType(new WeeklyRecurring(1)) // Initially set
+                .withRecurringType(new WeeklyRecurring(1))
                 .withRecurringId(1)
                 .withView(Task.IView.TODAY)
                 .withContext(Task.Context.SCHOOL)
                 .build()
-                .withNullRecurringType(); // Remove recurringType to match expected
+                .withNullRecurringType();
 
         Task expected = new TaskBuilder()
                 .withId(1)
                 .withTaskName("Testing recurring type")
                 .withSortOrder(0)
                 .withCheckedOff(false)
-                .withRecurringId(1) // No recurringType set, to match the actual's state
+                .withRecurringId(1)
                 .withView(Task.IView.TODAY)
                 .withContext(Task.Context.SCHOOL)
                 .build();

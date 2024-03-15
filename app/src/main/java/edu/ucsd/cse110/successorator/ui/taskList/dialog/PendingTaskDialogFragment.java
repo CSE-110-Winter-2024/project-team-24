@@ -14,6 +14,7 @@ import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.PendingTaskDialogBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
 import edu.ucsd.cse110.successorator.util.DateSubject;
 
@@ -73,7 +74,16 @@ public class PendingTaskDialogFragment extends DialogFragment {
         }
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
-        var task = new Task(null, input + frequency, 0, false, recurringType, recurringID, app.getTaskViewSubject().getItem(), context);
+        var task = new TaskBuilder()
+                .withId(null)
+                .withTaskName(input + frequency)
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringType(recurringType)
+                .withRecurringId(recurringID)
+                .withView(app.getTaskViewSubject().getItem())
+                .withContext(context)
+                .build();
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
             activityModel.getTasksRepository().prepend(task);

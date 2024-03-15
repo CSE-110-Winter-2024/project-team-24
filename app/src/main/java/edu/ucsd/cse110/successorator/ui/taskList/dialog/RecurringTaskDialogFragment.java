@@ -18,6 +18,7 @@ import edu.ucsd.cse110.successorator.SuccessoratorApplication;
 import edu.ucsd.cse110.successorator.TaskViewModel;
 import edu.ucsd.cse110.successorator.databinding.RecurringTaskDialogBinding;
 import edu.ucsd.cse110.successorator.lib.domain.Task;
+import edu.ucsd.cse110.successorator.lib.domain.TaskBuilder;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.DailyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.MonthlyRecurring;
 import edu.ucsd.cse110.successorator.lib.domain.recurring.RecurringType;
@@ -114,7 +115,16 @@ public class RecurringTaskDialogFragment extends DialogFragment {
 
         int recurringID = activityModel.getTasksRepository().generateRecurringID();
 
-        var task = new Task(null, input, 0, false, recurringType, recurringID, app.getTaskViewSubject().getItem(), context);
+        var task = new TaskBuilder()
+                .withId(null)
+                .withTaskName(input)
+                .withSortOrder(0)
+                .withCheckedOff(false)
+                .withRecurringType(recurringType)
+                .withRecurringId(recurringID)
+                .withView(app.getTaskViewSubject().getItem())
+                .withContext(context)
+                .build();
 
 
         if (task.isRecurring() && task.getRecurringType().checkIfToday(dateSubject.getItem())) {
