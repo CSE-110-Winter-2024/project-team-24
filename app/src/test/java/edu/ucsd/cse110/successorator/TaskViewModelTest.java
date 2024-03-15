@@ -1,6 +1,6 @@
 package edu.ucsd.cse110.successorator;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import edu.ucsd.cse110.successorator.lib.domain.Contexts;
 import edu.ucsd.cse110.successorator.lib.domain.ITasksRepository;
@@ -33,102 +32,184 @@ public class TaskViewModelTest {
         focusModeSubject = new FocusModeSubject();
         tasksRepository = new ITasksRepository() {
 
-            List<Task> mockedDataBase = new ArrayList<>();
+            List<Task> mockDatabase = new ArrayList<>(List.of(
+                    new TaskBuilder().withTaskName("Task 1").withSortOrder(0).build(),
+                    new TaskBuilder().withTaskName("Task 2").withSortOrder(1).build(),
+                    new TaskBuilder().withTaskName("Task 3").withSortOrder(2).build()
+            ));
 
+            /**
+             * @param id
+             * @return
+             */
             @Override
             public Subject<Task> findAsLiveData(int id) {
-                return null;
-            }
+                List<Task> tasks_output = mockDatabase;
+                Subject<Task> output = new SimpleSubject<>();
 
-            @Override
-            public Task find(int id) {
-                return mockedDataBase.get(id);
-            }
+                for (Task task : tasks_output) {
+                    if (task.id() == id) {
+                        ((SimpleSubject<Task>)output).setItem(task);
+                        return output;
+                    }
+                }
 
-            @Override
-            public List<Task> findAll() {
-                return mockedDataBase;
-            }
-
-            @Override
-            public Subject<List<Task>> findAllAsLiveData() {
-                SimpleSubject<List<Task>> output = new SimpleSubject<>();
-                output.setItem(mockedDataBase);
                 return output;
             }
 
+            /**
+             * @param id
+             * @return
+             */
+            @Override
+            public Task find(int id) {
+                for (Task task : mockDatabase) {
+                    if (task.id() == id) {
+                        return task;
+                    }
+                }
+                return null;
+            }
+
+            /**
+             * @return
+             */
+            @Override
+            public List<Task> findAll() {
+                return mockDatabase;
+            }
+
+            /**
+             * @return
+             */
+            @Override
+            public Subject<List<Task>> findAllAsLiveData() {
+                List<Task> tasks_output = mockDatabase;
+                Subject<List<Task>> output = new SimpleSubject<>();
+
+                ((SimpleSubject<List<Task>>)output).setItem(tasks_output);
+                return output;
+            }
+
+            /**
+             * @param task
+             */
             @Override
             public void save(Task task) {
-                mockedDataBase.add(task);
+                return;
             }
 
+            /**
+             * @param tasks
+             */
             @Override
             public void save(List<Task> tasks) {
-                mockedDataBase.addAll(tasks);
+                return;
             }
 
+            /**
+             * @param id
+             */
             @Override
             public void remove(int id) {
-                mockedDataBase.remove(id);
+                for (Task task : mockDatabase) {
+                    if (task.id() == id) {
+                        mockDatabase.remove(task);
+                        return;
+                    }
+                }
             }
 
+            /**
+             * @param task
+             */
             @Override
             public void append(Task task) {
-                mockedDataBase.add(task);
+                mockDatabase.add(task);
             }
 
+            /**
+             * @param tasks
+             */
             @Override
             public void appendAll(List<Task> tasks) {
-                mockedDataBase.addAll(tasks);
+                mockDatabase.addAll(tasks);
             }
 
+            /**
+             * @param task
+             */
             @Override
             public void appendToEndOfUnfinishedTasks(Task task) {
                 return;
             }
 
+            /**
+             * @param task
+             */
             @Override
             public void toggleTaskStrikethrough(Task task) {
                 return;
             }
 
+            /**
+             * @param task
+             */
             @Override
             public void prepend(Task task) {
-                mockedDataBase.add(0, task);
+                mockDatabase.add(0, task);
             }
 
+            /**
+             * @return
+             */
             @Override
             public int size() {
-                return mockedDataBase.size();
+                return mockDatabase.size();
             }
 
+            /**
+             * @param date
+             */
             @Override
             public void dateAdvanced(Date date) {
                 return;
             }
 
+            /**
+             * @return
+             */
             @Override
             public int generateRecurringID() {
-                return -1;
+                return 0;
             }
 
+            /**
+             * @param task
+             */
             @Override
             public void addOnetimeTask(Task task) {
-                append(task);
+                return;
             }
 
+            /**
+             * @param taskList
+             * @param view
+             * @param context
+             * @return
+             */
             @Override
             public List<Task> filterByValues(List<Task> taskList, Views.ViewEnum view, Contexts.Context context) {
                 return null;
             }
         };
 
-        taskViewModel = new TaskViewModel(tasksRepository, taskViewSubject, focusModeSubject);
-        tasksRepository.appendAll(List.of(
-                new TaskBuilder().withTaskName("Task 1").withSortOrder(0).build(),
-                new TaskBuilder().withTaskName("Task 2").withSortOrder(1).build(),
-                new TaskBuilder().withTaskName("Task 3").withSortOrder(2).build()
-        ));
+        this.taskViewModel = new TaskViewModel(tasksRepository, taskViewSubject, focusModeSubject) {
+            @Override
+            public void append(Task task) {
+                tasksRepository.append(task);
+            }
+        };
     }
 
     @Test
