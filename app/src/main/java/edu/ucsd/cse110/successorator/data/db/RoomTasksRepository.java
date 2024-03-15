@@ -99,7 +99,7 @@ public class RoomTasksRepository implements ITasksRepository {
     public int generateRecurringID() {
         Optional<Task> recurringTasks = findAll().stream().max(Comparator.comparingInt(Task::getRecurringID));
 
-        return recurringTasks.isPresent() ? recurringTasks.get().getRecurringID() + 1 : 1;
+        return recurringTasks.map(task -> task.getRecurringID() + 1).orElse(1);
     }
 
     @Override
@@ -144,7 +144,10 @@ public class RoomTasksRepository implements ITasksRepository {
 
     @Override
     public void addOnetimeTask(Task task) {
-        List<Integer> taskRecurringID = findAll().stream().filter(e -> !e.isRecurring() && e.getView() == task.getView()).map(Task::getRecurringID).collect(Collectors.toList());
+        List<Integer> taskRecurringID = findAll().stream()
+                .filter(e -> !e.isRecurring() && e.getView().equals(task.getView()))
+                .map(Task::getRecurringID)
+                .collect(Collectors.toList());
         if (taskRecurringID.contains(task.getRecurringID())) {
             return;
         }

@@ -61,6 +61,7 @@ public class Task implements Serializable {
         return sortOrder;
     }
 
+    @NonNull
     public String getTaskName() {
         return taskName;
     }
