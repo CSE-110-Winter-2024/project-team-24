@@ -261,8 +261,55 @@ public class BddTests {
         assert "Move to Tomorrow".equals(tomorrowTasks.get(0).getTaskName());
     }
 
+    @Test
+    public void us12a_labelGoalWithWorkContext() {
+        var workTask = new TaskBuilder()
+                .withTaskName("Work Task")
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.WORK)
+                .withCheckedOff(false)
+                .build();
+        tasksRepository.append(workTask);
 
+        var taskList = tasksRepository.findAll();
+        assert taskList.size() == 1;
 
+        var workTasks = taskList.stream()
+                .filter(task -> task.getContext() == Contexts.Context.WORK)
+                .collect(Collectors.toList());
+        assert workTasks.size() == 1;
+        assert workTasks.get(0).getTaskName().equals("Work Task");
+    }
+
+    @Test
+    public void us12b_sortGoalsByContextLabels() {
+        var homeTask = new TaskBuilder()
+                .withTaskName("Home Task")
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.HOME)
+                .withCheckedOff(false)
+                .build();
+
+        var workTask = new TaskBuilder()
+                .withTaskName("Work Task")
+                .withView(Views.ViewEnum.TODAY)
+                .withContext(Contexts.Context.WORK)
+                .withCheckedOff(false)
+                .build();
+
+        tasksRepository.append(homeTask);
+        tasksRepository.append(workTask);
+
+        var sortedTasks = tasksRepository.findAll().stream()
+                .sorted(Comparator.comparing(task -> task.getContext().toString()))
+                .collect(Collectors.toList());
+
+        // Assuming Contexts are enum values sorted in the order they're declared,
+        // and Context.HOME comes before Context.WORK.
+        assert sortedTasks.size() == 2;
+        assert sortedTasks.get(0).getContext() == Contexts.Context.HOME;
+        assert sortedTasks.get(1).getContext() == Contexts.Context.WORK;
+    }
 
 
 }
