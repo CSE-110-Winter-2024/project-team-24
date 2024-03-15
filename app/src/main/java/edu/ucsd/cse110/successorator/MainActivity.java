@@ -1,7 +1,4 @@
-package edu.ucsd.cse110.successorator;    // might need in the future
-//    private void onNegativeButtonClick(DialogInterface dialog, int which) {
-//        dialog.cancel();
-//    }
+package edu.ucsd.cse110.successorator;
 
 import android.os.Bundle;
 import android.os.SystemClock;
