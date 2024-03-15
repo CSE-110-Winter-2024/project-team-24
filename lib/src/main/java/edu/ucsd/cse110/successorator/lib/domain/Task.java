@@ -97,11 +97,6 @@ public class Task implements Serializable {
         return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
     }
 
-    public Task withContext(Context context) {
-        return new Task(id, taskName, sortOrder, checkedOff, recurringType, recurring_id, view, context);
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
